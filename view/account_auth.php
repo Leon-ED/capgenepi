@@ -42,8 +42,20 @@ if (isset($_SESSION['user'])) {
                     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Mot de passe">
                 </div>
                 <div class="form-group">
+                    <label for="exampleInputPassword1">Courriel</label>
+                    <input type="mail" class="form-control" id="exampleInputPassword1" placeholder="exemple@mail.fr">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Nom</label>
+                    <input type="name" class="form-control" id="exampleInputPassword1" placeholder="Tran">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Prénom</label>
+                    <input type="prenom" class="form-control" id="exampleInputPassword1" placeholder="Louis">
+                </div>
+                <div class="form-group">
                     <label for="exampleInputPassword1">Jeton d'inscription</label>
-                    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Jeton">
+                    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="E45745ABD">
                 </div>
                 <button type="submit" class="btn btn-primary">Créer le compte</button>
             </form>
