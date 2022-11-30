@@ -1,6 +1,10 @@
 <?php
 global $conn;
 
-function header_from_permission()
+function is_connected()
 {
+    if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
+        return true;
+    }
+    return false;
 }

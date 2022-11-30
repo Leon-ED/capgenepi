@@ -5,6 +5,7 @@ if (isset($_SESSION['user'])) {
     header("Location: ./index.php");
     exit();
 }
+
 ?>
 
 <body>
@@ -16,23 +17,23 @@ if (isset($_SESSION['user'])) {
             <a id="logBtn" href="#">Se connecter</a>
             <a id="regBtn" href="#">S'inscrire</a>
         </div>
-        <section class="login-section" style="width: 30%; display:none;">
-            <form class="form" action="./controller/authentification.php" method="POST">
+        <section class="login-section" style="width: 30%; ">
+            <form class="form" method="POST" action="../controller/login.php">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Identifiant</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Identifiant">
+                    <input type="text" class="form-control" id="login" name="login" aria-describedby="emailHelp" placeholder="Identifiant" required>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Mot de passe</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Mot de passe">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Se connecter</button>
             </form>
 
             </form>
         </section>
-        <section class="register-section" style="width: 30%;">
-            <form class="form" action="./controller/authentification.php" method="POST">
+        <section class="register-section" style="width: 30%; display:none;">
+            <form class="form" action="./controller/auth.php" method="POST">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Identifiant</label>
                     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Identifiant">
