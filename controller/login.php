@@ -15,7 +15,7 @@ global $conn;
 $login = $_POST['login'];
 $password = $_POST['password'];
 
-$sql = "SELECT * FROM compte WHERE login = :login";
+$sql = "SELECT * FROM b__compte WHERE login = :login";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':login', $login);
 $stmt->execute();

@@ -9,6 +9,13 @@ if (isset($_SESSION['user'])) {
 ?>
 
 <body>
+    <style> 
+        body {
+            background-image: url("../files/img/genepi.png");
+            background-repeat: no-repeat;
+            background-size: 50%;
+        }
+    </style>
     <main style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
         <section style="margin-top: 10%; margin-bottom: 5%; ">
             <h1>Bienvenue sur votre gestionnaire des paiements et impayés !</h1>
