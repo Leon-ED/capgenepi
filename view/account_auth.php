@@ -21,7 +21,7 @@ if (isset($_SESSION['user'])) {
             font-weight: bold;
         }
 
-        
+
     </style>
     <main style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
         <section style="margin-top: 10%; margin-bottom: 5%; ">
