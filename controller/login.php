@@ -39,8 +39,17 @@ auth_fail();
 
 function auth_success()
 {
-    header("Location: ../view/index.php");
-    exit();
+    if ($_SESSION['role'] == "ADMIN") {
+        header("Location: ../view/admin/index.php");
+        exit();
+    } else if ($_SESSION['role'] == "PO") {
+        header("Location: ../view/po/index.php");
+        exit();
+    }
+    else if ($_SESSION['role'] == "CLIENT") {
+        header("Location: ../view/client/index.php");
+        exit();
+    }
 }
 
 function auth_fail()
