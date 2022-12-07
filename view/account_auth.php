@@ -13,8 +13,15 @@ if (isset($_SESSION['user'])) {
         body {
             background-image: url("../files/img/genepi.png");
             background-repeat: no-repeat;
-            background-size: 50%;
+            background-size: 47%;
+
         }
+
+        section {
+            font-weight: bold;
+        }
+
+        
     </style>
     <main style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
         <section style="margin-top: 10%; margin-bottom: 5%; ">
@@ -39,7 +46,7 @@ if (isset($_SESSION['user'])) {
 
             </form>
         </section>
-        <section class="register-section" style="width: 30%; display:none;">
+        <section class="register-section" style="width: 30%; display:none; ">
             <form class="form" action="./controller/auth.php" method="POST">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Identifiant</label>
