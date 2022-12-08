@@ -1,4 +1,60 @@
-#header{
+#header_nav {
+    padding: 0 10px 0 10px;
+    display: flex;
+    height: 2.5em;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #e6e6e6;
+    font-size: large;
+    margin-bottom: 0.5%;
+}
 
-    
+#header {
+    border-bottom: black 1px solid;
+    width: fit-content;
+}
+
+#header h1 {
+    font-size: 2em;
+
+}
+
+#liste-compte_client {
+    margin-top: 2px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.compte_client {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    padding: 5px;
+
+}
+
+.compte_client:hover {
+    background-color: #e6e6e6;
+}
+
+.compte_client-nom {
+    font-size: 1.1em;
+    text-decoration: underline;
+    margin: 0;
+}
+
+.compte_client-solde {
+    color: gray;
+    font-size: 0.7em;
+    margin: 0;
+}
+.solde-negatif {
+    color: red;
 }
