@@ -1,6 +1,8 @@
 <?php
 
 require_once("../../config/config.php");
+require_once("../../controller/po_controller.php");
+
 ?>
 
 <!DOCTYPE html>
@@ -23,9 +25,7 @@ require_once("../../config/config.php");
     <link rel="icon" href="../../files/img/genepi.png">
 </head>
 <?php
-if (($_SESSION['user'] == null)  ||  ($_SESSION['role'] != "PO")) {
-    header("Location: ../account_auth.php");
-}
+
 ?>
 <body>
 
@@ -38,35 +38,9 @@ if (($_SESSION['user'] == null)  ||  ($_SESSION['role'] != "PO")) {
     <h1>Capgénépi > Product Owner </h1>
 </section>
 <h2 class="text-center">Liste des comptes clients</h2>
+<p class="text-center">(cliquer pour accéder au compte client)</p>
 <section id="liste-compte_client">
-    <div class="compte_client">
-        <div class="compte_client-nom">Carrefour Paris 13</div>
-        <div class="compte_client-solde">Solde : 300 $</div>
-    </div>
-    <div class="compte_client">
-        <div class="compte_client-nom">Carrefour Paris 13</div>
-        <div class="compte_client-solde">Solde : 300 $</div>
-    </div>
-    <div class="compte_client">
-        <div class="compte_client-nom">Carrefour Paris 13</div>
-        <div class="compte_client-solde">Solde : 300 $</div>
-    </div>
-    <div class="compte_client">
-        <div class="compte_client-nom">Carrefour Paris 13</div>
-        <div class="compte_client-solde solde-negatif">Solde : - 300 $</div>
-    </div>
-    <div class="compte_client">
-        <div class="compte_client-nom">Carrefour Paris 13</div>
-        <div class="compte_client-solde solde-negatif">Solde : - 300 $</div>
-    </div>
-    <div class="compte_client">
-        <div class="compte_client-nom">Carrefour Paris 13</div>
-        <div class="compte_client-solde solde-negatif">Solde : - 300 $</div>
-    </div>
-    <div class="compte_client" onclick="click(1)">
-        <div class="compte_client-nom">Carrefour Paris 13</div>
-        <div class="compte_client-solde solde-negatif">Solde : - 300 $</div>
-    </div>
+  <?php  show_compte_liste(); ?>
 </section>
 
 
