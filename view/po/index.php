@@ -46,7 +46,7 @@ require_once("../../controller/po_controller.php");
                 <a href="#" data-tab="po_search-tab-remises" id="remises">Remises</a>
                 <a href="#" data-tab="po_search-tab-impayes" id="impayes">Impayés</a>
             </div>
-            <div id="po_search-tab-tresorerie" class="form_elems" style="display:none">
+            <div id="po_search-tab-tresorerie" class="form_elems" style="display:flex">
                 <input type="hidden" name="type_recherche" value="tresorerie">
                 <input id="po_search-tab-tresorerie-raison_sociale" type="text" placeholder="Recherche Raison Sociale">
                 <select id="po_search-tab-tresorerie-SIREN">
@@ -61,7 +61,7 @@ require_once("../../controller/po_controller.php");
                 </select>
             </div>
 
-            <div id="po_search-tab-remises" style="display:flex">
+            <div id="po_search-tab-remises" style="display:none">
                 <input type="hidden" name="type_recherche" value="remises">
                 <input id="po_search-tab-tresorerie-raison_sociale" type="text" placeholder="Recherche Raison Sociale">
                 <select id="po_search-tab-tresorerie-SIREN">
