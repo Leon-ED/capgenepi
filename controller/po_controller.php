@@ -1,8 +1,9 @@
 <?php
-require_once(__DIR__."../../config/config.php");
+require_once(__DIR__ . "../../config/config.php");
 
 
-function get_compte_list(){
+function get_compte_list()
+{
     global $conn;
     $sql = "SELECT * FROM b__entreprise;";
     $req = $conn->prepare($sql);
@@ -12,7 +13,8 @@ function get_compte_list(){
     return $result;
 }
 
-function show_compte_liste(){
+function show_compte_liste()
+{
     $liste = get_compte_list();
     foreach ($liste as $compte) {
         $SIREN = $compte['SIREN'];
@@ -20,12 +22,10 @@ function show_compte_liste(){
         $solde = get_solde_from_SIREN($SIREN);
         $solde_negatif = $solde < 0 ? "solde-negatif" : "";
         echo '
-        <div class="compte_client" onclick=showCompte("'.$SIREN.'")>
-        <div class="compte_client-nom">'.$nom.'</div>
-        <div class="compte_client-solde '.$solde_negatif.'"> Solde : '.$solde.' </div>
+        <div class="compte_client" onclick=showCompte("' . $SIREN . '")>
+        <div class="compte_client-nom">' . $nom . '</div>
+        <div class="compte_client-solde ' . $solde_negatif . '"> Solde : ' . $solde . ' </div>
+        <div class="compte_client-num_transacs"> Tran\'sactions : ' . get_nb_transac_from_SIREN($SIREN) . ' </div>
     </div>';
     }
-
-
-
 }
