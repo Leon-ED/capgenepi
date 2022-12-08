@@ -1,3 +1,8 @@
+a{
+    text-decoration: none;
+
+}
+
 #header_nav {
     padding: 0 10px 0 10px;
     display: flex;
@@ -15,8 +20,8 @@
     width: fit-content;
 }
 
-#header h1 {
-    font-size: 2em;
+h1 {
+    font-size: 1.8em;
 
 }
 
@@ -61,4 +66,20 @@
 }
 .solde-negatif {
     color: red;
+}
+#compte_client_details-libelle{
+    font-size: 1.1em;
+    text-decoration: underline;
+    margin: 0;
+}
+
+#compte_client_details-SIREN{
+    font-size: 0.8em !important;
+    margin: 0;
+}
+.compte_client_details-header{
+    display: flex;
+    flex-direction: row;
+    gap : 10px;
+    align-items: center;
 }

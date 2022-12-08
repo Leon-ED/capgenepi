@@ -42,6 +42,14 @@ require_once("../../controller/po_controller.php");
 <section id="liste-compte_client">
   <?php  show_compte_liste(); ?>
 </section>
+<section id="compte_client_details">
+    <div class="compte_client_details-header">
+    <h1>Details du compte client : </h1>
+    <span id="compte_client_details-libelle">NOM</span>, SIREN : <span id="compte_client_details-SIREN">SIREN</span>
+    </div>
+    <div class="compte_client_details-form">
+    </div>
+</section>
 
 
 
