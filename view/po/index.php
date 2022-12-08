@@ -42,7 +42,7 @@ require_once("../../controller/po_controller.php");
     <article id="po_recherche">
         <section class="po_search-form">
             <div class="po_search-tab">
-                <a href="#" data-tab="po_search-tab-tresorerie" data-selected="false" id="tresorerie">Trésorerie</a>
+                <a href="#" data-tab="po_search-tab-tresorerie" data-selected="true" id="tresorerie">Trésorerie</a>
                 <a href="#" data-tab="po_search-tab-remises" id="remises">Remises</a>
                 <a href="#" data-tab="po_search-tab-impayes" id="impayes">Impayés</a>
             </div>
@@ -88,7 +88,6 @@ require_once("../../controller/po_controller.php");
         </section>
         <section>
             <h2>Liste des comptes clients</h2>
-            <p>(cliquer pour accéder au compte client)</p>
             <section id="liste-compte_client">
                 <?php show_compte_liste(); ?>
             </section>

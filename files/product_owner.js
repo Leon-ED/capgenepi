@@ -1,4 +1,8 @@
 
+/**
+ * 
+ * Partie pour gérer l'affichage et le désaffichage des onglets de recherche
+ */
 const po_search_tab = document.querySelector('.po_search-tab');
 const po_search_tab_a = po_search_tab.querySelectorAll('a');
 
@@ -18,10 +22,8 @@ po_search_tab_a.forEach(a => {
             }
         }
         );
-
-
-
-
-
     });
+
 });
+
+
