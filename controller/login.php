@@ -40,14 +40,14 @@ auth_fail();
 function auth_success()
 {
     if ($_SESSION['role'] == "ADMIN") {
-        header("Location: ../view/admin/index.php");
+        header("Location: ../view/admin/");
         exit();
     } else if ($_SESSION['role'] == "PO") {
-        header("Location: ../view/po/index.php");
+        header("Location: ../view/po/");
         exit();
     }
     else if ($_SESSION['role'] == "CLIENT") {
-        header("Location: ../view/client/index.php");
+        header("Location: ../view/client/");
         exit();
     }
 }
