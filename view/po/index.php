@@ -366,8 +366,9 @@ require_once("../../controller/po_controller.php");
                     <div class="dropdown">
                         <button class="dropbtn">Exporter</button>
                         <div class="dropdown-content">
-                            <button value="csv">CSV</button>
-                            <button value="xls">XLS</button>
+                            <button value="pdf" disabled id="pdf_click">PDF</button>
+                            <!-- <button value="csv" disabled>CSV</button>
+                            <button value="xls" disabled>XLS</button> -->
                         </div>
                     </div>
                 </div>
@@ -451,30 +452,29 @@ require_once("../../controller/po_controller.php");
 
         // GERE LES DROPDOWN
         //if dropdown-content is clicked get the value of the clicked button 
-        $('.dropdown-content').click(function() {
-
+        $('#pdf_click').click(function() {
             // value of the button clicked
             var value = $(this).find('button').attr('value');
             console.log(value);
 
-            if (value == 'pdf') {
-                window.jsPDF = window.jspdf.jsPDF;
-                var value = $(this).find('button').attr('value');
 
-                // get the id of the visible 
-                var table = "#" + $('.tableau:visible').attr('id') + '_html';
+            window.jsPDF = window.jspdf.jsPDF;
+            var value = $(this).find('button').attr('value');
 
-                console.log(table);
+            // get the id of the visible 
+            var table = "#" + $('.tableau:visible').attr('id') + '_html';
+
+            console.log(table);
 
 
 
-                var doc = new jsPDF()
-                console.log(table);
-                doc.autoTable({
-                    html: table,
-                });
-                doc.save('table.pdf');
-            }
+            var doc = new jsPDF()
+            console.log(table);
+            doc.autoTable({
+                html: table,
+            });
+            doc.save('table.pdf');
+
         });
     </script>
 
