@@ -191,8 +191,9 @@ require_once("../../include/html.header.inc.php");
             </div>
         </section>
         <section id="comptes_clients">
-            <h1><span id="search_result">8</span> Résultat(s) recherche </h1>
+        <h1><span id="search_result">x</span> Résultat(s) recherche </h1>
             <div id="liste_clients">
+            
 
                 <!-- GENERER ICI LES DONNES SELON LA RECHERCHE -->
                 
@@ -201,17 +202,20 @@ require_once("../../include/html.header.inc.php");
                 fetch("../../api/compte.php").then(function(response) {
                     return response.json();
                 }).then(function(data) {
-                    console.log(data);
                     var comptes = data;
+
+                    document.getElementById("search_result").innerHTML = comptes.length;
+
                     var liste = document.getElementById("liste_clients");
                     for (var i = 0; i < comptes.length; i++) {
                         var compte = comptes[i];
                         var SIREN = compte['SIREN'];
                         var nom = compte['nom'];
                         var tresorerie = compte['tresorerie'];
+                        var type_solde = tresorerie >= 0 ? "client_solde" : "client_solde_negatif";
                         var client = document.createElement("div");
                         client.className = "client";
-                        client.innerHTML = '<div class="client_header"> <span class="client_nom">' + nom + '</span> <span class="client_solde_negatif">' + tresorerie + '€</span> </div> <span class="client_siren">SIREN : ' + SIREN + '</span>';
+                        client.innerHTML = '<div class="client_header"> <span class="client_nom">' + nom + '</span> <span class='+type_solde+'>' + tresorerie + '€</span> </div> <span class="client_siren">SIREN : ' + SIREN + '</span>';
                         liste.appendChild(client);
                     }
                     
