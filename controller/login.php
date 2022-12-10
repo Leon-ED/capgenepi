@@ -1,5 +1,6 @@
 <?php
 require_once("../config/config.php");
+require_once("functions.php");
 
 
 if (is_connected()) {
@@ -33,24 +34,6 @@ if ($result) {
     }
 }
 auth_fail();
-
-
-
-
-function auth_success()
-{
-    if ($_SESSION['role'] == "ADMIN") {
-        header("Location: ../view/admin/");
-        exit();
-    } else if ($_SESSION['role'] == "PO") {
-        header("Location: ../view/po/");
-        exit();
-    }
-    else if ($_SESSION['role'] == "CLIENT") {
-        header("Location: ../view/client/");
-        exit();
-    }
-}
 
 function auth_fail()
 {

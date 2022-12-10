@@ -9,6 +9,20 @@ function is_connected()
     return false;
 }
 
+function auth_success()
+{
+    if ($_SESSION['role'] == "ADMIN") {
+        header("Location: ../view/admin/");
+        exit();
+    } else if ($_SESSION['role'] == "PO") {
+        header("Location: ../view/po/");
+        exit();
+    }
+    else if ($_SESSION['role'] == "CLIENT") {
+        header("Location: ../view/client/");
+        exit();
+    }
+}
 
 
 function get_solde_from_SIREN($SIREN)
@@ -60,6 +74,17 @@ function get_all_client_data()
     $sql = "SELECT * FROM b__entreprise;";
     $req = $conn->prepare($sql);
     $req->execute();
+    $result = $req->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+}
+
+function get_compte_list()
+{
+    global $conn;
+    $sql = "SELECT * FROM b__entreprise;";
+    $req = $conn->prepare($sql);
+    $req->execute();
+
     $result = $req->fetchAll(PDO::FETCH_ASSOC);
     return $result;
 }
