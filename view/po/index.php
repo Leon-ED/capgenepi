@@ -19,6 +19,116 @@ require_once("../../include/html.header.inc.php");
         <a onclick="logout()" href="../index.php">Deconnexion</a>
     </nav>
 
+    <dialog id="dialog_transac">
+        <div class="dialog_header">
+            <button id="dialog_close" onclick="close_dialog()">X</button><br><br>
+            <h1 class="dialog_title">Transactions de la remise N° <span id="detail_remise_numero">5842684</span></h1>
+        </div>
+        <div class="dialog_content">
+            <div class="tableau_dialog_transac">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>SIREN</th>
+                            <th>Date</th>
+                            <th>Carte N°</th>
+                            <th>Réseau</th>
+                            <th>Autorisation N°</th>
+                            <th>Devise</th>
+                            <th>Sens</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>123456789</td>
+                            <td>01/01/2020</td>
+                            <td>123456789</td>
+                            <td>Visa</td>
+                            <td>123456789</td>
+                            <td>EUR</td>
+                            <td>+</td>
+                        </tr>
+                        <tr>
+                            <td>123456789</td>
+                            <td>01/01/2020</td>
+                            <td>123456789</td>
+                            <td>Visa</td>
+                            <td>123456789</td>
+                            <td>EUR</td>
+                            <td>+</td>
+                        </tr>
+                        <tr>
+                            <td>123456789</td>
+                            <td>01/01/2020</td>
+                            <td>123456789</td>
+                            <td>Visa</td>
+                            <td>123456789</td>
+                            <td>EUR</td>
+                            <td>+</td>
+                        </tr>
+                        <tr>
+                            <td>123456789</td>
+                            <td>01/01/2020</td>
+                            <td>123456789</td>
+                            <td>Visa</td>
+                            <td>123456789</td>
+                            <td>EUR</td>
+                            <td>+</td>
+                        </tr>
+                        <tr>
+                            <td>123456789</td>
+                            <td>01/01/2020</td>
+                            <td>123456789</td>
+                            <td>Visa</td>
+                            <td>123456789</td>
+                            <td>EUR</td>
+                            <td>+</td>
+                        </tr>
+                        <tr>
+                            <td>123456789</td>
+                            <td>01/01/2020</td>
+                            <td>123456789</td>
+                            <td>Visa</td>
+                            <td>123456789</td>
+                            <td>EUR</td>
+                            <td>+</td>
+                        </tr>
+                        <tr>
+                            <td>123456789</td>
+                            <td>01/01/2020</td>
+                            <td>123456789</td>
+                            <td>Visa</td>
+                            <td>123456789</td>
+                            <td>EUR</td>
+                            <td>+</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+
+            </div>
+        </div>
+    </dialog>
+    <!-- open dialog 1-->
+    <script defer>
+        function open_dialog() {
+            document.getElementById("dialog_transac").showModal();
+        }
+
+        function close_dialog() {
+            document.getElementById("dialog_transac").close();
+        }
+        // click outside the dialog 
+        document.getElementById("dialog_transac").addEventListener("click", function(event) {
+            if (event.target == this) {
+                close_dialog();
+            }
+        });
+    </script>
+
+
+
     <article id="article_po" class="flex_row">
         <section id="recherche">
             <h1>Recherche Clients</h1>
@@ -137,7 +247,7 @@ require_once("../../include/html.header.inc.php");
                     </thead>
                     <tbody>
                         <!-- GENERER ICI EN AJAX LES DONNES SELON LA RECHERCHE -->
-                        <tr>
+                        <tr onclick="open_dialog()">
                             <td>2057EJS65</td>
                             <td>Association Action contre la soif</td>
                             <td>01/01/2020</td>
