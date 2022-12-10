@@ -159,12 +159,12 @@ select {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     padding: 1rem 2rem;
     background-color: var(--white);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    height: 300px;
+    max-height: 300px;
     overflow: scroll;
     overflow-y: auto;
     overflow-x: hidden;
