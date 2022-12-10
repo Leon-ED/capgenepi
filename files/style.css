@@ -325,3 +325,28 @@ tbody tr:hover {
 .dropdown:hover .dropbtn {
     background-color: var(--blue);
 }
+
+
+dialog:is([open]) {
+    display: flex;
+    flex-direction: column;
+    border: none;
+}
+
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+
+/* position the button  in top right corner */
+dialog button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    padding: 10px;
+    border: none;
+    font-weight: bolder;
+    cursor: pointer;
+}
