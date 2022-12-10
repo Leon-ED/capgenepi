@@ -164,6 +164,7 @@ require_once("../../controller/po_controller.php");
                             <th>Date</th>
                             <th>ID Remise</th>
                             <th>Nombre de transactions</th>
+                            <th>Devise</th>
                             <th>Montant total</th>
                         </tr>
 
@@ -176,6 +177,7 @@ require_once("../../controller/po_controller.php");
                             <td>01/01/2020</td>
                             <td>1</td>
                             <td>10</td>
+                            <td>USD</td>
                             <td>1000€</td>
                         </tr>
                         <tr>
@@ -184,6 +186,7 @@ require_once("../../controller/po_controller.php");
                             <td>01/01/2020</td>
                             <td>1</td>
                             <td>10</td>
+                            <td>USD</td>
                             <td>1000€</td>
                         </tr>
                         <tr>
@@ -192,6 +195,7 @@ require_once("../../controller/po_controller.php");
                             <td>01/01/2020</td>
                             <td>1</td>
                             <td>10</td>
+                            <td>USD</td>
                             <td>1000€</td>
                         </tr>
                         <tr>
@@ -200,6 +204,7 @@ require_once("../../controller/po_controller.php");
                             <td>01/01/2020</td>
                             <td>1</td>
                             <td>10</td>
+                            <td>USD</td>
                             <td>1000€</td>
                         </tr>
                         <tr>
@@ -208,6 +213,7 @@ require_once("../../controller/po_controller.php");
                             <td>01/01/2020</td>
                             <td>1</td>
                             <td>10</td>
+                            <td>USD</td>
                             <td>1000€</td>
                         </tr>
                         <tr>
@@ -216,54 +222,7 @@ require_once("../../controller/po_controller.php");
                             <td>01/01/2020</td>
                             <td>1</td>
                             <td>10</td>
-                            <td>1000€</td>
-                        </tr>
-                        <tr>
-                            <td>2057EJS65</td>
-                            <td>Association Action contre la soif</td>
-                            <td>01/01/2020</td>
-                            <td>1</td>
-                            <td>10</td>
-                            <td>1000€</td>
-                        </tr>
-                        <tr>
-                            <td>2057EJS65</td>
-                            <td>Association Action contre la soif</td>
-                            <td>01/01/2020</td>
-                            <td>1</td>
-                            <td>10</td>
-                            <td>1000€</td>
-                        </tr>
-                        <tr>
-                            <td>2057EJS65</td>
-                            <td>Association Action contre la soif</td>
-                            <td>01/01/2020</td>
-                            <td>1</td>
-                            <td>10</td>
-                            <td>1000€</td>
-                        </tr>
-                        <tr>
-                            <td>2057EJS65</td>
-                            <td>Association Action contre la soif</td>
-                            <td>01/01/2020</td>
-                            <td>1</td>
-                            <td>10</td>
-                            <td>1000€</td>
-                        </tr>
-                        <tr>
-                            <td>2057EJS65</td>
-                            <td>Association Action contre la soif</td>
-                            <td>01/01/2020</td>
-                            <td>1</td>
-                            <td>10</td>
-                            <td>1000€</td>
-                        </tr>
-                        <tr>
-                            <td>2057EJS65</td>
-                            <td>Association Action contre la soif</td>
-                            <td>01/01/2020</td>
-                            <td>1</td>
-                            <td>10</td>
+                            <td>USD</td>
                             <td>1000€</td>
                         </tr>
 
