@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 4.6.6deb4
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost:3306
--- Généré le : mer. 30 nov. 2022 à 19:36
--- Version du serveur : 10.9.4-MariaDB-log
--- Version de PHP : 8.1.10
+-- Client :  sqletud.u-pem.fr
+-- Généré le :  Sam 10 Décembre 2022 à 10:14
+-- Version du serveur :  5.7.30-log
+-- Version de PHP :  7.0.33-0+deb9u7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -18,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `tran`
+-- Base de données :  `leon.edmee_db`
 --
 
 -- --------------------------------------------------------
@@ -35,17 +34,17 @@ CREATE TABLE `b__compte` (
   `nom` varchar(50) NOT NULL,
   `prenom` varchar(50) NOT NULL,
   `role` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Déchargement des données de la table `b__compte`
+-- Contenu de la table `b__compte`
 --
 
 INSERT INTO `b__compte` (`id`, `login`, `password`, `email`, `nom`, `prenom`, `role`) VALUES
 (1, '2001458436', '$2y$10$7xldYUDD6EVmjAPjg/UzBOYl/cjRSoYckiHP5ji7o0aojp/9EKNJG', 'admin@bank.eu', 'Admin', 'nistrateur', 'ADMIN'),
 (2, '4526452419', '$2y$10$9y16F6Qmt5.uR8MY8k2jNOTOhw77AdyRzL9zWs3Qj1dbBNRyYUGM2', 'PO@cap-gemi.ni', 'Product', 'Owner', 'PO'),
 (3, '8755269857', '$2y$10$mcEyY9CCt0US1mOwrxXFAOCjr8AU7JmLLlaVbZgD3NbBMFQ.PVzm.', 'pastille-vomitive@mc.do', 'Ronald', 'McDonald', 'CLIENT'),
-(4, '7745511214', '$2y$10$3iH9qViwGHBjr8V.QnATsOEIWaivRukzVOjvaypvSzf00FUp/r3Lq', 'leroy-sane@arnaq.ue', 'Leroy', 'Laura', 'CLIENT');
+(4, '7745511214', '$2y$10$3iH9qViwGHBjr8V.QnATsOEIWaivRukzVOjvaypvSzf00FUp/r3Lq', 'leroy-sane@arnaq.ue', 'Leroy', 'Merlin', 'CLIENT');
 
 -- --------------------------------------------------------
 
@@ -56,7 +55,7 @@ INSERT INTO `b__compte` (`id`, `login`, `password`, `email`, `nom`, `prenom`, `r
 CREATE TABLE `b__controle` (
   `id` int(11) NOT NULL,
   `SIREN` char(9) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -67,7 +66,15 @@ CREATE TABLE `b__controle` (
 CREATE TABLE `b__entreprise` (
   `SIREN` char(9) NOT NULL,
   `Raison_sociale` char(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Contenu de la table `b__entreprise`
+--
+
+INSERT INTO `b__entreprise` (`SIREN`, `Raison_sociale`) VALUES
+('111111111', 'Carrefour Banque'),
+('111111112', 'Pivoteau SARL');
 
 -- --------------------------------------------------------
 
@@ -78,7 +85,7 @@ CREATE TABLE `b__entreprise` (
 CREATE TABLE `b__impaye` (
   `numero_dossier_impaye` varchar(50) NOT NULL,
   `code` varchar(2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -89,7 +96,7 @@ CREATE TABLE `b__impaye` (
 CREATE TABLE `b__motifs_impayes` (
   `code` varchar(2) NOT NULL,
   `libelle` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -100,10 +107,10 @@ CREATE TABLE `b__motifs_impayes` (
 CREATE TABLE `b__role` (
   `role` varchar(50) NOT NULL,
   `libelle` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Déchargement des données de la table `b__role`
+-- Contenu de la table `b__role`
 --
 
 INSERT INTO `b__role` (`role`, `libelle`) VALUES
@@ -126,10 +133,17 @@ CREATE TABLE `b__transaction` (
   `numero_carte` char(16) NOT NULL,
   `numero_dossier_impaye` varchar(50) DEFAULT NULL,
   `SIREN` char(9) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Index pour les tables déchargées
+-- Contenu de la table `b__transaction`
+--
+
+INSERT INTO `b__transaction` (`numero_transaction`, `devise`, `montant`, `date_transaction`, `sens`, `numero_carte`, `numero_dossier_impaye`, `SIREN`) VALUES
+(1, 'EUR', 10, '2022-12-08', '-', '1111111111111111', NULL, '111111111');
+
+--
+-- Index pour les tables exportées
 --
 
 --
@@ -184,7 +198,7 @@ ALTER TABLE `b__transaction`
   ADD KEY `SIREN` (`SIREN`);
 
 --
--- AUTO_INCREMENT pour les tables déchargées
+-- AUTO_INCREMENT pour les tables exportées
 --
 
 --
@@ -192,9 +206,8 @@ ALTER TABLE `b__transaction`
 --
 ALTER TABLE `b__compte`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
--- Contraintes pour les tables déchargées
+-- Contraintes pour les tables exportées
 --
 
 --
@@ -222,7 +235,6 @@ ALTER TABLE `b__impaye`
 ALTER TABLE `b__transaction`
   ADD CONSTRAINT `b__transaction_ibfk_1` FOREIGN KEY (`numero_dossier_impaye`) REFERENCES `b__impaye` (`numero_dossier_impaye`),
   ADD CONSTRAINT `b__transaction_ibfk_2` FOREIGN KEY (`SIREN`) REFERENCES `b__entreprise` (`SIREN`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
