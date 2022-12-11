@@ -192,6 +192,7 @@ require_once("../../include/html.header.inc.php");
         </section>
         <section id="comptes_clients">
             <h1><span id="search_result">x</span> Résultat(s) recherche </h1>
+            <small>seul les clients avec au minimum 1 transaction sont affichés</small>
             <div id="liste_clients">
 
 
