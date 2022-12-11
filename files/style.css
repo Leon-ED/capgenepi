@@ -51,6 +51,17 @@ h2 {
     font-size: 1.5rem;
 }
 
+.flex_column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--white);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: fit-content
+}
+
 .flex_row {
     display: flex;
     flex-direction: row;
@@ -231,7 +242,13 @@ tbody tr:hover {
 
 }
 
-
+fieldset {
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 1rem 2rem;
+    background-color: var(--white);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
 
 #tableau {
     width: 50%;
@@ -348,4 +365,25 @@ dialog button {
     border: none;
     font-weight: bolder;
     cursor: pointer;
+}
+
+.admin_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    overflow: scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.admin_form input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid var(--blue);
+    border-radius: 4px;
 }

@@ -59,14 +59,6 @@ if (isset($_SESSION["connexion_blocked"]) && $_SESSION["connexion_blocked"] == t
         section {
             font-weight: bold;
         }
-
-        .login-section {
-
-
-            background-color: var(--white);
-            border-radius: 10px;
-            padding: 20px;
-        }
     </style>
     <main style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
         <section style="margin-top: 10%; margin-bottom: 5%; ">
