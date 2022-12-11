@@ -191,39 +191,37 @@ require_once("../../include/html.header.inc.php");
             </div>
         </section>
         <section id="comptes_clients">
-        <h1><span id="search_result">x</span> Résultat(s) recherche </h1>
+            <h1><span id="search_result">x</span> Résultat(s) recherche </h1>
             <div id="liste_clients">
-            
+
 
                 <!-- GENERER ICI LES DONNES SELON LA RECHERCHE -->
-                
-                <script type="text/javascript"> 
-                /**  FETCH API */
-                fetch("../../api/compte.php").then(function(response) {
-                    return response.json();
-                }).then(function(data) {
-                    var comptes = data;
 
-                    document.getElementById("search_result").innerHTML = comptes.length;
+                <script type="text/javascript">
+                    /**  FETCH API */
+                    fetch("../../api/compte.php").then(function(response) {
+                        return response.json();
+                    }).then(function(data) {
+                        var comptes = data;
 
-                    var liste = document.getElementById("liste_clients");
-                    for (var i = 0; i < comptes.length; i++) {
-                        var compte = comptes[i];
-                        var SIREN = compte['SIREN'];
-                        var nom = compte['nom'];
-                        var tresorerie = compte['tresorerie'];
-                        var type_solde = tresorerie >= 0 ? "client_solde" : "client_solde_negatif";
-                        var client = document.createElement("div");
-                        client.className = "client";
-                        client.innerHTML = '<div class="client_header"> <span class="client_nom">' + nom + '</span> <span class='+type_solde+'>' + tresorerie + '€</span> </div> <span class="client_siren">SIREN : ' + SIREN + '</span>';
-                        liste.appendChild(client);
-                    }
-                    
-                });
-                    
-            
+                        document.getElementById("search_result").innerHTML = comptes.length;
+
+                        var liste = document.getElementById("liste_clients");
+                        for (var i = 0; i < comptes.length; i++) {
+                            var compte = comptes[i];
+                            var SIREN = compte['SIREN'];
+                            var nom = compte['nom'];
+                            var tresorerie = compte['tresorerie'];
+                            var type_solde = tresorerie >= 0 ? "client_solde" : "client_solde_negatif";
+                            var client = document.createElement("div");
+                            client.className = "client";
+                            client.innerHTML = '<div class="client_header"> <span class="client_nom">' + nom + '</span> <span class=' + type_solde + '>' + tresorerie + '€</span> </div> <span class="client_siren">SIREN : ' + SIREN + '</span>';
+                            liste.appendChild(client);
+                        }
+
+                    });
                 </script>
-                
+
             </div>
 
 
@@ -233,8 +231,8 @@ require_once("../../include/html.header.inc.php");
         </section>
     </article>
     <article id="article_po" class="flex_row">
-        <section id="tableau">
-            <h1>Tableau</h1>
+        <section id="tableau" style="display: none">
+            <h1><span id="table_cat"></span><span id="table_desc"></span></h1>
             <div id="tableau_remises" class="tableau_remises tableau" style="display:none">
                 <table title="Tableau des remises" name="nom" id="tableau_remises_html">
                     <thead>
@@ -405,7 +403,7 @@ require_once("../../include/html.header.inc.php");
                     <div class="dropdown">
                         <button class="dropbtn">Exporter</button>
                         <div class="dropdown-content">
-                            <button value="pdf" disabled id="pdf_click">PDF</button>
+                            <button value="pdf" id="pdf_click">PDF</button>
                             <!-- <button value="csv" disabled>CSV</button>
                             <button value="xls" disabled>XLS</button> -->
                         </div>
@@ -480,6 +478,16 @@ require_once("../../include/html.header.inc.php");
                 // name of the form to display
                 var form_name = ".tableau_" + name;
 
+                //table_cat
+                $("#table_cat").text(name);
+
+                // if tresorerie hide table
+                if (name == "tresorerie") {
+                    $("#tableau").css('display', 'none');
+                } else {
+                    $("#tableau").css('display', 'flex');
+                }
+
                 var graph_name = "#" + name + "_graph";
                 console.log(graph_name);
                 $(graph_name).css('display', 'block');
@@ -491,28 +499,37 @@ require_once("../../include/html.header.inc.php");
 
         // GERE LES DROPDOWN
         //if dropdown-content is clicked get the value of the clicked button 
-        $('#pdf_click').click(function() {
-            // value of the button clicked
-            var value = $(this).find('button').attr('value');
-            console.log(value);
 
-
-            window.jsPDF = window.jspdf.jsPDF;
-            var value = $(this).find('button').attr('value');
-
-            // get the id of the visible 
-            var table = "#" + $('.tableau:visible').attr('id') + '_html';
-
-            console.log(table);
+        $(document).ready(function() {
+            $('#pdf_click').click(function() {
 
 
 
-            var doc = new jsPDF()
-            console.log(table);
-            doc.autoTable({
-                html: table,
+                window.jsPDF = window.jspdf.jsPDF;
+
+                // get the id of the visible 
+                var table = "#" + $('.tableau:visible').attr('id') + '_html';
+
+
+
+
+                var doc = new jsPDF()
+                // set header
+                doc.setFontSize(18);
+                doc.setTextColor(40);
+                doc.text("test", 14, 22);
+                doc.setFontSize(25);
+                //color to var(--blue)
+                doc.setTextColor(0, 0, 200);
+                const titre = $('#table_cat').text() + " " + $('#table_desc').text();
+                //doc.text(7, 15, titre);
+                doc.autoTable({
+                    html: table,
+                });
+                titre.replace(/[\/|\\:*?"<>]/g, " ");
+                doc.save(titre + '.pdf');
+
             });
-            doc.save('table.pdf');
 
         });
     </script>
