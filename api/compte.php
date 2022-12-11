@@ -87,7 +87,6 @@ function POST_REQUEST()
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':email', $emailCompte);
         $stmt->bindParam(':login', $login);
-        echo json_encode($_POST);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

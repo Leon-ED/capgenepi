@@ -114,9 +114,11 @@ require_once("../../include/html.header.inc.php");
                 fetch("../../api/compte.php", options)
                     .then(response => response.json())
                     .then(data => {
-                        console.log("eee");
-                        console.log(data);
+                        showStatus(200);
                     })
+                    .catch(error => {
+                        showStatus("error");
+                    });
 
 
 
@@ -128,25 +130,21 @@ require_once("../../include/html.header.inc.php");
 
 
         function showStatus(status) {
+            const dialog_title = document.querySelector(".dialog_title");
+            const dialog_content = document.querySelector(".dialog_content");
+
             if (status == 200) {
-                const dialog_title = document.querySelector(".dialog_title");
                 dialog_title.innerHTML = "Compte ajouté avec succès";
-                const dialog_content = document.querySelector(".dialog_content");
                 dialog_content.innerHTML = "Le compte et le client ont été ajoutés avec succès. <br> Il peut désormais se connecter avec les identifiants fournis.<br> RAPPEL :";
                 dialog_content.innerHTML += "<br>Identifiant : " + document.getElementById("login").value;
                 dialog_content.innerHTML += "<br>SIREN: " + document.getElementById("SIREN").value;
-                open_dialog();
-
 
             } else {
-                const dialog_title = document.querySelector(".dialog_title");
                 dialog_title.innerHTML = "Erreur lors de l'ajout du compte";
-                const dialog_content = document.querySelector(".dialog_content");
-                dialog_content.innerHTML = "Une erreur est survenue lors de l'ajout du compte. <br> Veuillez\
-                vérifier les informations saisies.";
-                open_dialog();
-
+                dialog_content.innerHTML = "Certaines informations sont manquantes ou invalides. Veuillez vérifier les informations saisies.";
             }
+            open_dialog();
+            $("form").trigger("reset");
         }
     </script>
 </article>
