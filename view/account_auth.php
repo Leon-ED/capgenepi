@@ -1,6 +1,7 @@
 <?php
 require_once("../config/config.php");
 ?>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +11,7 @@ require_once("../config/config.php");
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../files/style.css">
+    <link rel="stylesheet" href="../files/style.css?v<?= time() ?>">
 
     <title>Capgénépi Banque</title>
     <link rel="icon" href="../files/img/genepi.png">
@@ -21,10 +22,32 @@ if (isset($_SESSION['user'])) {
     exit();
 }
 
+// bootstrap alert
+$display = "none";
+$alert = "alert-danger";
+$message = "Attention : Ceci est votre dernier essai";
+
+$bloquer_formulaire = false;
+
+if (isset($_SESSION["wrong_auth"])) {
+    if ($_SESSION["wrong_auth"] == 2) {
+        $display = "block";
+    } else {
+        $display = "none";
+    }
+}
+if (isset($_SESSION["connexion_blocked"]) && $_SESSION["connexion_blocked"] == true) {
+    $display = "block";
+    $alert = "alert-danger";
+    $message = "Vous avez entré trop de mauvais identifiants. Vous êtes bloqué";
+    $bloquer_formulaire = true;
+}
+
+
 ?>
 
 <body>
-    <style> 
+    <style>
         body {
             background-image: url("../files/img/genepi.png");
             background-repeat: no-repeat;
@@ -32,85 +55,78 @@ if (isset($_SESSION['user'])) {
 
         }
 
+
         section {
             font-weight: bold;
         }
 
+        .login-section {
 
+
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 20px;
+        }
     </style>
     <main style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
         <section style="margin-top: 10%; margin-bottom: 5%; ">
-            <h1>Bienvenue sur votre gestionnaire des paiements et impayés !</h1>
+            <h1><strong> Bienvenue sur votre gestionnaire des paiements et impayés !</strong></h1>
         </section>
         <div>
-            <a id="logBtn" href="#">Se connecter</a>
-            <a id="regBtn" href="#">S'inscrire</a>
+            <h1>Se connecter</h1>
         </div>
         <section class="login-section" style="width: 30%; ">
-            <form class="form" method="POST" action="../controller/login.php">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Identifiant</label>
-                    <input type="text" class="form-control" id="login" name="login" aria-describedby="emailHelp" placeholder="Identifiant" required>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Mot de passe</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Se connecter</button>
-            </form>
+            <fieldset id="fieldset" <?php if ($bloquer_formulaire) {
+                                        echo "disabled";
+                                    }   ?>>
+                <form class="form" method="POST" action="../controller/login.php" disabled>
+                    <div class="form-group">
+                        <label for="login">Identifiant</label>
+                        <input type="text" class="form-control" id="login" name="login" aria-describedby="emailHelp" placeholder="Identifiant" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" required>
+                        <!-- show password -->
+                        <a href="#" id="click-password" onclick="showPassword()">
+                            <input type="checkbox" id="cb-password"> Afficher le mot de passe
+                        </a>
+                    </div>
+                    <br>
+                    <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre mot de passe avec qui que ce soit, faites-en de même</small>
 
-            </form>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Se connecter</button>
+                </form>
+            </fieldset>
+            <!-- bootstrap alert -->
+            <div class="alert <?= $alert ?>" role="alert" style="display: <?= $display ?>; margin-top: 10px;">
+                <?= $message ?>
+            </div>
         </section>
-        <section class="register-section" style="width: 30%; display:none; ">
-            <form class="form" action="./controller/auth.php" method="POST">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Identifiant</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Identifiant">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Mot de passe</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Mot de passe">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Courriel</label>
-                    <input type="mail" class="form-control" id="exampleInputPassword1" placeholder="exemple@mail.fr">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Nom</label>
-                    <input type="name" class="form-control" id="exampleInputPassword1" placeholder="Tran">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Prénom</label>
-                    <input type="prenom" class="form-control" id="exampleInputPassword1" placeholder="Louis">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Jeton d'inscription</label>
-                    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="E45745ABD">
-                </div>
-                <button type="submit" class="btn btn-primary">Créer le compte</button>
-            </form>
 
-            </form>
-        </section>
 
 
     </main>
-
-
     <script>
-        const loginBtn = document.querySelector("#logBtn");
-        const resisterBtn = document.querySelector("#regBtn");
-        const loginSection = document.querySelector(".login-section");
-        const registerSection = document.querySelector(".register-section");
-        loginBtn.addEventListener("click", () => {
-            loginSection.style.display = "block";
-            registerSection.style.display = "none";
-        })
-        resisterBtn.addEventListener("click", () => {
-            loginSection.style.display = "none";
-            registerSection.style.display = "block";
-        })
+        function showPassword() {
+            var inputPassword = document.getElementById("password");
+            var checkBoxPassword = document.getElementById("cb-password");
+            var fieldset = document.getElementById("fieldset");
+            if (fieldset.disabled == true) {
+                return;
+            }
+            if (inputPassword.type === "password") {
+                checkBoxPassword.checked = true;
+                inputPassword.type = "text";
+            } else {
+                checkBoxPassword.checked = false;
+                inputPassword.type = "password";
+            }
+        }
     </script>
+
+
 
 
 

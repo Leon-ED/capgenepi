@@ -11,14 +11,15 @@ function is_connected()
 
 function auth_success()
 {
+    $_SESSION["wrong_auth"] = 0;
+    $_SESSION["connexion_blocked"] = false;
     if ($_SESSION['role'] == "ADMIN") {
         header("Location: ../view/admin/");
         exit();
     } else if ($_SESSION['role'] == "PO") {
         header("Location: ../view/po/");
         exit();
-    }
-    else if ($_SESSION['role'] == "CLIENT") {
+    } else if ($_SESSION['role'] == "CLIENT") {
         header("Location: ../view/client/");
         exit();
     }

@@ -12,6 +12,16 @@ if (!test_form()) {
     exit();
 }
 
+if (!isset($_SESSION["wrong_auth"])) {
+    $_SESSION["wrong_auth"] = 0;
+} else {
+    if ($_SESSION["wrong_auth"] >= 3) {
+        $_SESSION["connexion_blocked"] = true;
+        header("Location: ../index.php");
+        exit();
+    }
+}
+
 global $conn;
 $login = $_POST['login'];
 $password = $_POST['password'];
@@ -37,6 +47,10 @@ auth_fail();
 
 function auth_fail()
 {
+    $_SESSION["wrong_auth"]++;
+    if ($_SESSION["wrong_auth"] >= 3) {
+        $_SESSION["connexion_blocked"] = true;
+    }
     header("Location: ../index.php");
     exit();
 }

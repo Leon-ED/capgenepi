@@ -24,7 +24,6 @@ a {
 /* animation border-bottom 0.5s */
 a:hover {
     border-bottom: 2px solid var(--sub_blue);
-    transition: 0.5s linear;
 }
 
 
