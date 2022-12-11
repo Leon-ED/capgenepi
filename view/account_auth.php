@@ -13,7 +13,7 @@ require_once("../config/config.php");
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../files/style.css?v<?= time() ?>">
 
-    <title>Capgénépi Banque</title>
+    <title>💸Capgénépi Banque💸</title>
     <link rel="icon" href="../files/img/genepi.png">
 </head>
 <?php
@@ -81,14 +81,14 @@ if (isset($_SESSION["connexion_blocked"]) && $_SESSION["connexion_blocked"] == t
                         <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" required>
                         <!-- show password -->
                         <a href="#" id="click-password" onclick="showPassword()">
-                            <input type="checkbox" id="cb-password"> Afficher le mot de passe
+                            <input type="checkbox" id="cb-password">👁️Afficher le mot de passe 👀
                         </a>
                     </div>
                     <br>
                     <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre mot de passe avec qui que ce soit, faites-en de même</small>
 
                     <br>
-                    <button type="submit" class="btn btn-primary">Se connecter</button>
+                    <button type="submit" class="btn btn-primary"> 😜 Se connecter 😛</button>
                 </form>
             </fieldset>
             <!-- bootstrap alert -->

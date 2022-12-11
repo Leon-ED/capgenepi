@@ -17,7 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js" integrity="sha512-03CCNkeosDFN2zCCu4vLpu3pJfZcrL48F3yB8k87ejT+OVMwco7IH3FW02vtbGhdncS6gyYZ/duYaC/K62xQPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/10.3.2/highcharts-3d.min.js" integrity="sha512-kiHRleMJNNgSe7q0AmaYa7CKE8abI5UlvCTIIvk4NtmqQV95rgNYixSqyBFs7AAPVGFgl8NoadDko9Z/9i2LIA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <title>Capgénépi Banque</title>
+    <title>💸 Capgénépi Banque 💸</title>
     <link rel="icon" href="../../files/img/genepi.png">
     <script src="../../controller/functions.js"></script>
 </head>
