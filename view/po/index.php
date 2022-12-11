@@ -404,8 +404,8 @@ require_once("../../include/html.header.inc.php");
                         <button class="dropbtn">Exporter</button>
                         <div class="dropdown-content">
                             <button value="pdf" id="pdf_click">PDF</button>
-                            <!-- <button value="csv" disabled>CSV</button>
-                            <button value="xls" disabled>XLS</button> -->
+                            <button value="csv" onclick="exportTableToCSV()">CSV</button>
+                            <button value="xls" onclick="exportTableToXLS()">XLS</button>
                         </div>
                     </div>
                 </div>
@@ -728,7 +728,113 @@ require_once("../../include/html.header.inc.php");
             }]
         });
     </script>
+    <script>
+        // export table to csv
+        function exportTableToCSV() {
+            // get table html elemen visible jquery
+            const id = $("table:visible").attr("id");
 
+
+
+
+            var csv = [];
+            var rows = document.querySelectorAll("table#" + id + " tr");
+
+            for (var i = 0; i < rows.length; i++) {
+                var row = [],
+                    cols = rows[i].querySelectorAll("td, th");
+
+                for (var j = 0; j < cols.length; j++)
+                    row.push(cols[j].innerText);
+
+                csv.push(row.join(";"));
+            }
+
+            // Download CSV
+            downloadCSV(csv.join("\n"), "tableau.csv");
+        }
+
+        function downloadCSV(csv, filename) {
+            var csvFile;
+            var downloadLink;
+
+            // CSV file
+            csvFile = new Blob([csv], {
+                type: "text/csv"
+            });
+
+            // Download link
+            downloadLink = document.createElement("a");
+
+            // File name
+            downloadLink.download = filename;
+
+            // Create a link to the file
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+
+            // Hide download link
+            downloadLink.style.display = "none";
+
+            // Add the link to DOM
+            document.body.appendChild(downloadLink);
+
+            // Click download link
+            downloadLink.click();
+        }
+
+        // export table to csv
+
+
+        // convert table to xls
+        function exportTableToXLS() {
+            // get table html elemen visible jquery
+            const id = $("table:visible").attr("id");
+
+            var csv = [];
+            var rows = document.querySelectorAll("table#" + id + " tr");
+
+            for (var i = 0; i < rows.length; i++) {
+                var row = [],
+                    cols = rows[i].querySelectorAll("td, th");
+
+                for (var j = 0; j < cols.length; j++)
+                    row.push(cols[j].innerText);
+
+                csv.push(row.join("\t"));
+            }
+
+            // Download CSV
+            downloadXLS(csv.join("\n"), "tableau.xls");
+        }
+
+        function downloadXLS(csv, filename) {
+            var csvFile;
+            var downloadLink;
+
+            // CSV file
+            csvFile = new Blob([csv], {
+                type: "application/vnd.ms-excel"
+            });
+
+            // Download link
+            downloadLink = document.createElement("a");
+
+            // File name
+            downloadLink.download = filename;
+
+            // Create a link to the file
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+
+            // Hide download link
+            downloadLink.style.display = "none";
+
+            // Add the link to DOM
+            document.body.appendChild(downloadLink);
+
+            // Click download link
+            downloadLink.click();
+        }
+    </script>
 
 </body>
 
