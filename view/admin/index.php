@@ -73,6 +73,11 @@ require_once("../../include/html.header.inc.php");
         <div>
             <input id="password_confirm" type="password" placeholder="Confirmer Mot de passe">
         </div>
+        <!-- Add a check box -->
+        <div>
+            <input type="checkbox" id="checkbox" name="checkbox" value="checkbox" required>
+            <label for="checkbox">J'ai eu l'accord du PO</label>
+        </div>
         <button id="btn_recherche">Ajouter</button>
 
 
@@ -80,6 +85,7 @@ require_once("../../include/html.header.inc.php");
     </form>
 
     <script defer>
+        
         // make post request to API
         const btn_recherche = document.getElementById("btn_recherche");
         const password = document.getElementById("password");
@@ -88,9 +94,17 @@ require_once("../../include/html.header.inc.php");
 
         btn_recherche.addEventListener("click", function() {
             event.preventDefault();
-            if (password.value != password_confirm.value) {
+            // check if the checkbox is checked
+
+            const checkbox = document.getElementById("checkbox");
+            if (!checkbox.checked) {
+                alert("Vous devez avoir l'accord du PO");
+            }
+            else if (password.value != password_confirm.value) {
                 alert("Les mots de passe ne correspondent pas");
-            } else {
+            } else
+            
+            {
                 const data = {
                     "SIREN": document.getElementById("SIREN").value,
                     "libelle": document.getElementById("libelle").value,
@@ -144,7 +158,7 @@ require_once("../../include/html.header.inc.php");
                 dialog_content.innerHTML = "Certaines informations sont manquantes ou invalides. Veuillez vérifier les informations saisies.";
             }
             open_dialog();
-            $("form").trigger("reset");
+            // $("form").trigger("reset");
         }
     </script>
 </article>
