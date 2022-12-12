@@ -29,7 +29,7 @@ if (isset($_GET["nom"])) {
 
 
 $sql = "
-SELECT remise.SIREN SIREN,client.Raison_sociale nom, remise.date_traitement date_traitement, COUNT(*) nombre_transaction, devise, SUM(montant) montant_total
+SELECT remise.SIREN SIREN, client.Raison_sociale nom,remise.date_traitement date_traitement, remise.id , COUNT(*) nombre_transaction, devise, SUM(montant) montant_total
 FROM b__remise remise , b__transaction transac, b__entreprise client
 WHERE remise.SIREN LIKE :SIREN 
 AND client.SIREN = remise.SIREN

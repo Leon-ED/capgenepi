@@ -39,69 +39,6 @@ require_once("../../include/html.header.inc.php");
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>123456789</td>
-                            <td>01/01/2020</td>
-                            <td>123456789</td>
-                            <td>Visa</td>
-                            <td>123456789</td>
-                            <td>EUR</td>
-                            <td>+</td>
-                        </tr>
-                        <tr>
-                            <td>123456789</td>
-                            <td>01/01/2020</td>
-                            <td>123456789</td>
-                            <td>Visa</td>
-                            <td>123456789</td>
-                            <td>EUR</td>
-                            <td>+</td>
-                        </tr>
-                        <tr>
-                            <td>123456789</td>
-                            <td>01/01/2020</td>
-                            <td>123456789</td>
-                            <td>Visa</td>
-                            <td>123456789</td>
-                            <td>EUR</td>
-                            <td>+</td>
-                        </tr>
-                        <tr>
-                            <td>123456789</td>
-                            <td>01/01/2020</td>
-                            <td>123456789</td>
-                            <td>Visa</td>
-                            <td>123456789</td>
-                            <td>EUR</td>
-                            <td>+</td>
-                        </tr>
-                        <tr>
-                            <td>123456789</td>
-                            <td>01/01/2020</td>
-                            <td>123456789</td>
-                            <td>Visa</td>
-                            <td>123456789</td>
-                            <td>EUR</td>
-                            <td>+</td>
-                        </tr>
-                        <tr>
-                            <td>123456789</td>
-                            <td>01/01/2020</td>
-                            <td>123456789</td>
-                            <td>Visa</td>
-                            <td>123456789</td>
-                            <td>EUR</td>
-                            <td>+</td>
-                        </tr>
-                        <tr>
-                            <td>123456789</td>
-                            <td>01/01/2020</td>
-                            <td>123456789</td>
-                            <td>Visa</td>
-                            <td>123456789</td>
-                            <td>EUR</td>
-                            <td>+</td>
-                        </tr>
                     </tbody>
 
                 </table>
@@ -220,62 +157,7 @@ require_once("../../include/html.header.inc.php");
                     </thead>
                     <tbody>
                         <!-- GENERER ICI EN AJAX LES DONNES SELON LA RECHERCHE -->
-                        <tr onclick="open_dialog()">
-                            <td>2057EJS65</td>
-                            <td>Association Action contre la soif</td>
-                            <td>01/01/2020</td>
-                            <td>1</td>
-                            <td>10</td>
-                            <td>USD</td>
-                            <td>1000€</td>
-                        </tr>
-                        <tr>
-                            <td>2057EJS65</td>
-                            <td>Association Action contre la soif</td>
-                            <td>01/01/2020</td>
-                            <td>1</td>
-                            <td>10</td>
-                            <td>USD</td>
-                            <td>1000€</td>
-                        </tr>
-                        <tr>
-                            <td>2057EJS65</td>
-                            <td>Association Action contre la soif</td>
-                            <td>01/01/2020</td>
-                            <td>1</td>
-                            <td>10</td>
-                            <td>USD</td>
-                            <td>1000€</td>
-                        </tr>
-                        <tr>
-                            <td>2057EJS65</td>
-                            <td>Association Action contre la soif</td>
-                            <td>01/01/2020</td>
-                            <td>1</td>
-                            <td>10</td>
-                            <td>USD</td>
-                            <td>1000€</td>
-                        </tr>
-                        <tr>
-                            <td>2057EJS65</td>
-                            <td>Association Action contre la soif</td>
-                            <td>01/01/2020</td>
-                            <td>1</td>
-                            <td>10</td>
-                            <td>USD</td>
-                            <td>1000€</td>
-                        </tr>
-                        <tr>
-                            <td>2057EJS65</td>
-                            <td>Association Action contre la soif</td>
-                            <td>01/01/2020</td>
-                            <td>1</td>
-                            <td>10</td>
-                            <td>USD</td>
-                            <td>1000€</td>
-                        </tr>
-
-
+                    </tbody>
                 </table>
 
             </div>
@@ -443,14 +325,21 @@ require_once("../../include/html.header.inc.php");
                 //disable all graphes 
                 $('.graph').css('display', 'none');
 
+
+
+
+
                 // form_type
                 const form_type = $("#form_type");
                 // get form_type value
                 var form_type_value = form_type.val();
                 // change form_type value
                 form_type.val($(this).attr('name'));
-                console.log(form_type_value);
+                if (form_type.val() == "tresorerie") {} else if (form_type.val() == "remises") {
+                    getRemiseList(all = true);
+                } else if (form_type.val() == "impayes") {
 
+                }
 
                 // name of form_link 
                 var name = $(this).attr('name');
@@ -800,13 +689,53 @@ require_once("../../include/html.header.inc.php");
 
         }
 
+        function afficheRemises(data) {
+            // clear tbody for tableau_remises_html
+            $("#tableau_remises_html tbody").empty();
 
-        function getRemiseList() {
+            // for each data 
+
+            console.log(data);
+            for (var remise of data) {
+                const tr = $("<tr></tr>");
+                // tr onclick
+
+                // add onclick to tr html
+                tr.attr("onclick", "affiche_details_remise(" + remise.id + ")");
+                console.log(typeof remise);
+                // remise = JSON.stringify(remise);
+                for (let [k, v] of Object.entries(remise)) {
+                    const td = $("<td></td>");
+                    td.text(v);
+                    tr.append(td);
+                }
+                // append tr to tbody
+                $("#tableau_remises_html tbody").append(tr);
+
+            }
+
+
+        }
+
+        function affiche_details_remise(idRemise) {
+            $("#detail_remise_numero").text(idRemise);
+            const dialog_content = $("#dialog_content");
+            open_dialog();
+        }
+
+        function get_transactions_from_remise(idRemise) {
+
+        }
+
+        function getRemiseList(all = false) {
 
             const SIREN_select = $("#SIREN_select").val();
             const libelle = $("#libelle").val();
             const SIREN_libre = $("#SIREN_libre").val();
             var SIREN = "";
+            var url = "";
+
+
             if (SIREN_select == SIREN_libre) {
                 SIREN = SIREN_select;
             } else if (SIREN_select == "none" && SIREN_libre != "") {
@@ -816,18 +745,26 @@ require_once("../../include/html.header.inc.php");
             } else {
                 SIREN = SIREN_select;
             }
-            console.log(SIREN_libre);
+            url = "../../api/remises.php?libelle=" + libelle + "&SIREN=" + SIREN;
+            if (SIREN_select == "none" && SIREN_libre == "" && libelle == "") {
+                url = "../../api/remises.php";
 
+            }
+            if (all) {
+                url = "../../api/remises.php";
+            }
 
             $.ajax({
-                url: "../../api/remises.php?libelle=" + libelle + "&SIREN=" + SIREN,
+                url: url,
                 type: "GET",
+                dataType: "json",
                 data: {
                     action: "getRemiseList"
                 },
                 success: function(data) {
-                    $("#remise_list").html(data);
+                    afficheRemises(data);
                 }
+
             });
         }
     </script>
