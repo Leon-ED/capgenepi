@@ -140,41 +140,11 @@ require_once("../../include/html.header.inc.php");
                 </div>
                 <!-- FORMULAIRE TRESORERIE -->
                 <div class="formulaire_input" id="form_tresorerie" style="display:flex">
-                    <input type="text" placeholder="Raison Sociale" name="raison_sociale">
-                    <input type="text" placeholder="SIREN" name="SIREN">
-                    <select>
-                        <?php
-                        $liste = get_compte_list();
-                        foreach ($liste as $compte) {
-                            $SIREN = $compte['SIREN'];
-                            $nom = $compte['Raison_sociale'];
-                            echo '<option value="' . $SIREN . '">' . $SIREN . ' - ' . $nom . '</option>';
-                        }
-
-                        ?>
-                    </select>
-                </div>
-                <!-- FORMULAIRE REMISES -->
-                <div class="formulaire_input" id="form_remises" style="display:none">
-                    <input type="text" placeholder="Raison Sociale" name="raison_sociale">
-                    <input type="text" placeholder="SIREN" name="SIREN">
-                    <select>
-                        <?php
-                        $liste = get_compte_list();
-                        foreach ($liste as $compte) {
-                            $SIREN = $compte['SIREN'];
-                            $nom = $compte['Raison_sociale'];
-                            echo '<option value="' . $SIREN . '">' . $SIREN . ' - ' . $nom . '</option>';
-                        }
-
-                        ?>
-                    </select>
-                </div>
-                <!-- FORMULAIRE IMPAYES -->
-                <div class="formulaire_input" id="form_impayes" style="display:none">
-                    <input type="text" placeholder="Raison Sociale" name="raison_sociale">
-                    <input type="text" placeholder="SIREN" name="SIREN">
-                    <select>
+                    <input type="text" placeholder="Raison Sociale" name="raison_sociale" id="libelle">
+                    <input type="text" placeholder="SIREN" name="SIREN" id="SIREN_libre">
+                    <input type="hidden" id="form_type" value="tresorerie">
+                    <select id="SIREN_select">
+                        <option value="none">--Sélectionner SIREN--</option>
                         <?php
                         $liste = get_compte_list();
                         foreach ($liste as $compte) {
@@ -187,7 +157,7 @@ require_once("../../include/html.header.inc.php");
                     </select>
                 </div>
 
-                <button id="btn_recherche">Rechercher</button>
+                <button id="btn_recherche" onclick="form_search()">Rechercher</button>
             </div>
         </section>
         <section id="comptes_clients">
@@ -473,6 +443,14 @@ require_once("../../include/html.header.inc.php");
                 //disable all graphes 
                 $('.graph').css('display', 'none');
 
+                // form_type
+                const form_type = $("#form_type");
+                // get form_type value
+                var form_type_value = form_type.val();
+                // change form_type value
+                form_type.val($(this).attr('name'));
+                console.log(form_type_value);
+
 
                 // name of form_link 
                 var name = $(this).attr('name');
@@ -732,7 +710,6 @@ require_once("../../include/html.header.inc.php");
     <script>
         // export table to csv
         function exportTableToCSV() {
-            // get table html elemen visible jquery
             const id = $("table:visible").attr("id");
 
 
@@ -751,7 +728,6 @@ require_once("../../include/html.header.inc.php");
                 csv.push(row.join(";"));
             }
 
-            // Download CSV
             downloadCSV(csv.join("\n"), "tableau.csv");
         }
 
@@ -759,36 +735,26 @@ require_once("../../include/html.header.inc.php");
             var csvFile;
             var downloadLink;
 
-            // CSV file
             csvFile = new Blob([csv], {
                 type: "text/csv"
             });
 
-            // Download link
             downloadLink = document.createElement("a");
 
-            // File name
             downloadLink.download = filename;
 
-            // Create a link to the file
             downloadLink.href = window.URL.createObjectURL(csvFile);
 
-            // Hide download link
             downloadLink.style.display = "none";
 
-            // Add the link to DOM
             document.body.appendChild(downloadLink);
 
-            // Click download link
             downloadLink.click();
         }
 
-        // export table to csv
 
 
-        // convert table to xls
         function exportTableToXLS() {
-            // get table html elemen visible jquery
             const id = $("table:visible").attr("id");
 
             var csv = [];
@@ -804,7 +770,6 @@ require_once("../../include/html.header.inc.php");
                 csv.push(row.join("\t"));
             }
 
-            // Download CSV
             downloadXLS(csv.join("\n"), "tableau.xls");
         }
 
@@ -816,24 +781,54 @@ require_once("../../include/html.header.inc.php");
             csvFile = new Blob([csv], {
                 type: "application/vnd.ms-excel"
             });
-
-            // Download link
             downloadLink = document.createElement("a");
-
-            // File name
             downloadLink.download = filename;
-
-            // Create a link to the file
             downloadLink.href = window.URL.createObjectURL(csvFile);
-
-            // Hide download link
             downloadLink.style.display = "none";
-
-            // Add the link to DOM
             document.body.appendChild(downloadLink);
-
-            // Click download link
             downloadLink.click();
+        }
+
+
+        function form_search() {
+            const form_type = $("#form_type").val();
+            if (form_type == "remises") {
+                getRemiseList();
+            }
+
+
+
+        }
+
+
+        function getRemiseList() {
+
+            const SIREN_select = $("#SIREN_select").val();
+            const libelle = $("#libelle").val();
+            const SIREN_libre = $("#SIREN_libre").val();
+            var SIREN = "";
+            if (SIREN_select == SIREN_libre) {
+                SIREN = SIREN_select;
+            } else if (SIREN_select == "none" && SIREN_libre != "") {
+                SIREN = SIREN_libre;
+            } else if (SIREN_libre == "" && SIREN_select != "none") {
+                SIREN = SIREN_select;
+            } else {
+                SIREN = SIREN_select;
+            }
+            console.log(SIREN_libre);
+
+
+            $.ajax({
+                url: "../../api/remises.php?libelle=" + libelle + "&SIREN=" + SIREN,
+                type: "GET",
+                data: {
+                    action: "getRemiseList"
+                },
+                success: function(data) {
+                    $("#remise_list").html(data);
+                }
+            });
         }
     </script>
 
