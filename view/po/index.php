@@ -518,14 +518,31 @@ require_once("../../include/html.header.inc.php");
                 // set header
                 doc.setFontSize(18);
                 doc.setTextColor(40);
-                doc.text("test", 14, 22);
                 doc.setFontSize(25);
+
+                // write a title in the pdf
+                var title_doc = "Liste des "+$('#table_cat').text();
+
+                // add siren,raison sociale et nom de l'entreprise si précisée dans le formulaire
+                if ($('#siren').val() != "") {
+                    title_doc += " de " + $('#siren').val();
+                }
+                if ($('#raison_sociale').val() != "") {
+                    title_doc += " de " + $('#raison_sociale').val();
+                }
+
+                doc.text(7, 15, title_doc.toUpperCase());
+                // add a white line to separe the title from the table
+                doc.setLineWidth(0.1);
+                doc.line(7, 17, 200, 17);
+                
                 //color to var(--blue)
                 doc.setTextColor(0, 0, 200);
                 const titre = $('#table_cat').text() + " " + $('#table_desc').text();
-                //doc.text(7, 15, titre);
+                
                 doc.autoTable({
                     html: table,
+                    startY : 30,
                 });
                 titre.replace(/[\/|\\:*?"<>]/g, " ");
                 doc.save(titre + '.pdf');
