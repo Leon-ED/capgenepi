@@ -51,7 +51,7 @@ function GET_REQUEST()
     }
 
     if (isset($_GET["SIREN"])) {
-        $SIREN = $_GET["SIREN"];
+        $SIREN = "%" . $_GET["SIREN"] . "%";
     }
 
     // N'affiche que les clients qui ont des transactions

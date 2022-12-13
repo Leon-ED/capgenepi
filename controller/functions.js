@@ -1,3 +1,5 @@
+getDataResultsSearch(); // get data ane update table on page load
+
 function logout() {
     var oReq = new XMLHttpRequest();
     oReq.onload = function () {
@@ -274,16 +276,80 @@ function downloadXLS(csv, filename) {
 
 function form_search() {
     const form_type = $("#form_type").val();
+    console.log(form_type);
     if (form_type == "remises") {
         getRemiseList();
     }
     if(form_type == "impayes"){
         getImpayesList();
     }
+    if(form_type == "tresorerie"){
+        getTresorerieList();
+    }
+    
 
     editNameTable(); // Modifier le nom du tableau recherché en fonction du formulaire
 
 
+}
+
+function getTresorerieList() {
+    const SIREN_select = $("#SIREN_select").val();
+    const libelle = $("#libelle").val();
+    const SIREN_libre = $("#SIREN_libre").val();
+    var SIREN = "";
+    var url = "";
+
+
+    if (SIREN_select == SIREN_libre) {
+        SIREN = SIREN_select;
+    } else if (SIREN_select == "none" && SIREN_libre != "") {
+        SIREN = SIREN_libre;
+    } else if (SIREN_select != "none" && SIREN_libre == "") {
+        SIREN = SIREN_select;
+    } else {
+        SIREN = SIREN_select;
+    }
+
+    fetch("../../api/compte.php?SIREN=" + SIREN + "&libelle=" + libelle).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        var comptes = data;
+        updateResultsSearch(comptes);
+    });
+}
+
+function getDataResultsSearch() {
+    fetch("../../api/compte.php").then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        var comptes = data;
+        updateResultsSearch(comptes);
+    });
+}
+
+function updateResultsSearch(data) {
+    var comptes = data;
+        //clear the list
+        document.getElementById("liste_clients").innerHTML = "";
+
+    
+        document.getElementById("search_result").innerHTML = comptes.length;
+    
+        var liste = document.getElementById("liste_clients");
+        for (var i = 0; i < comptes.length; i++) {
+            var compte = comptes[i];
+            var SIREN = compte['SIREN'];
+            var nom = compte['nom'];
+            var tresorerie = compte['tresorerie'];
+            var type_solde = tresorerie >= 0 ? "client_solde" : "client_solde_negatif";
+            var client = document.createElement("div");
+            client.className = "client";
+            client.innerHTML = '<div class="client_header"> <span class="client_nom">' + nom + '</span> <span class=' + type_solde + '>' + tresorerie + '€</span> </div> <span class="client_siren">SIREN : ' + SIREN + '</span>';
+            liste.appendChild(client);
+        }
+    
+    
 }
 
 function editNameTable() {
@@ -436,28 +502,7 @@ function getRemiseList(all = false) {
     });
 }
 
-/**  FETCH API */
-fetch("../../api/compte.php").then(function (response) {
-    return response.json();
-}).then(function (data) {
-    var comptes = data;
 
-    document.getElementById("search_result").innerHTML = comptes.length;
-
-    var liste = document.getElementById("liste_clients");
-    for (var i = 0; i < comptes.length; i++) {
-        var compte = comptes[i];
-        var SIREN = compte['SIREN'];
-        var nom = compte['nom'];
-        var tresorerie = compte['tresorerie'];
-        var type_solde = tresorerie >= 0 ? "client_solde" : "client_solde_negatif";
-        var client = document.createElement("div");
-        client.className = "client";
-        client.innerHTML = '<div class="client_header"> <span class="client_nom">' + nom + '</span> <span class=' + type_solde + '>' + tresorerie + '€</span> </div> <span class="client_siren">SIREN : ' + SIREN + '</span>';
-        liste.appendChild(client);
-    }
-
-});
 
 function getImpayesList(all = false) {
 
@@ -527,3 +572,4 @@ function afficheImpayes(data){
     
 
 }
+
