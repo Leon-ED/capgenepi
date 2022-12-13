@@ -8,6 +8,11 @@
 header('Content-Type: application/json');
 require_once("../config/config.php");
 
+if(!$_SESSION["user"]){
+    http_response_code(401);
+    echo "Vous n'êtes pas connecté";
+    exit();
+}
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
@@ -22,11 +27,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
 }
 
-if(!$_SESSION["user"] && $_SESSION["role"] != "PO"){
-    http_response_code(401);
-    echo "Vous n'êtes pas connecté";
-    exit();
-}
+
 
 
 function GET_REQUEST()
@@ -34,6 +35,16 @@ function GET_REQUEST()
     global $conn;
     $SIREN = "%%";
     $nom = "%%";
+
+    if($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])){
+        http_response_code(401);
+        echo "Vous n'avez pas le droit";
+        exit();
+    }elseif($_SESSION["role"] == "CLIENT" && isset($_SESSION["SIREN"])){
+        $SIREN = $_SESSION["SIREN"];
+    }
+    
+
 
     if (isset($_GET["libelle"])) {
         $nom = "%" . $_GET["libelle"] . "%";
@@ -67,6 +78,12 @@ function GET_REQUEST()
 
 function POST_REQUEST()
 {
+    if(!$_SESSION["role"] != "ADMIN" || !$_SESSION["role"] != "PO"){
+        http_response_code(401);
+        echo "Vous n'êtes pas connecté";
+        exit();
+    }
+
 
     $postBody = file_get_contents("php://input");
     $postBody = json_decode($postBody, true);
