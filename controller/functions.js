@@ -386,12 +386,13 @@ function getRemiseList(all = false) {
         SIREN = SIREN_select;
     } else if (SIREN_select == "none" && SIREN_libre != "") {
         SIREN = SIREN_libre;
-    } else if (SIREN_libre == "" && SIREN_select != "none") {
+    } else if (SIREN_select != "none" && SIREN_libre == "") {
         SIREN = SIREN_select;
     } else {
         SIREN = SIREN_select;
     }
-    url = "../../api/remises.php?libelle=" + libelle + "&SIREN=" + SIREN;
+    console.log(SIREN);
+    url = "../../api/remises.php?nom=" + libelle + "&SIREN=" + SIREN;
     if (SIREN_select == "none" && SIREN_libre == "" && libelle == "") {
         url = "../../api/remises.php";
 
