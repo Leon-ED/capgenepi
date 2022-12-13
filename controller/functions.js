@@ -83,7 +83,7 @@ $(document).ready(function () {
         if (form_type.val() == "tresorerie") { } else if (form_type.val() == "remises") {
             getRemiseList(all = true);
         } else if (form_type.val() == "impayes") {
-
+            getImpayesList(all = true);
         }
 
         // name of form_link 
@@ -237,6 +237,9 @@ function form_search() {
     if (form_type == "remises") {
         getRemiseList();
     }
+    if(form_type == "impayes"){
+        getImpayesList();
+    }
 
 
 
@@ -258,16 +261,7 @@ function afficheRemises(data) {
         console.log(typeof remise);
         // remise = JSON.stringify(remise);
         for (let [k, v] of Object.entries(remise)) {
-            var td = $("<td></td>");
-            if (k == "montant_total") {
-                if (parseInt(v) < 0) {
-                    td = $("<td class='client_solde_negatif'></td>");
-                }
-                else{
-                td = $("<td class='client_solde'></td>");
-                }
-            }
-
+            const td = $("<td></td>");
             td.text(v);
             tr.append(td);
         }
@@ -352,3 +346,72 @@ fetch("../../api/compte.php").then(function (response) {
     }
 
 });
+
+function getImpayesList(all = false) {
+
+    const SIREN_select = $("#SIREN_select").val();
+    const libelle = $("#libelle").val();
+    const SIREN_libre = $("#SIREN_libre").val();
+    var SIREN = "";
+    var url = "";
+
+
+    if (SIREN_select == SIREN_libre) {
+        SIREN = SIREN_select;
+    } else if (SIREN_select == "none" && SIREN_libre != "") {
+        SIREN = SIREN_libre;
+    } else if (SIREN_libre == "" && SIREN_select != "none") {
+        SIREN = SIREN_select;
+    } else {
+        SIREN = SIREN_select;
+    }
+    url = "../../api/impayes.php?libelle=" + libelle + "&SIREN=" + SIREN;
+    if (SIREN_select == "none" && SIREN_libre == "" && libelle == "") {
+        url = "../../api/impayes.php";
+
+    }
+    if (all) {
+        url = "../../api/impayes.php";
+    }
+
+    $.ajax({
+        url: url,
+        type: "GET",
+        dataType: "json",
+        data: {
+            action: "getImpayesList"
+        },
+        success: function (data) {
+            afficheImpayes(data);
+        }
+
+    });
+}
+
+function afficheImpayes(data){
+        // clear tbody for tableau_remises_html
+        $("#tableau_impayes_html tbody").empty();
+
+        // for each data 
+    
+        console.log(data);
+        for (var remise of data) {
+            const tr = $("<tr></tr>");
+            // tr onclick
+    
+            // add onclick to tr html
+            //tr.attr("onclick", "affiche_details_remise(" + remise.id + ")");
+            console.log(typeof remise);
+            // remise = JSON.stringify(remise);
+            for (let [k, v] of Object.entries(remise)) {
+                const td = $("<td></td>");
+                td.text(v);
+                tr.append(td);
+            }
+            // append tr to tbody
+            $("#tableau_impayes_html tbody").append(tr);
+    
+        }
+    
+
+}

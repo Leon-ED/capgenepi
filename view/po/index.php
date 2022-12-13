@@ -127,7 +127,10 @@ require_once("../../include/html.header.inc.php");
                             <th>Raison sociale</th>
                             <th>Date</th>
                             <th>Num. Dossier</th>
+                            <th>Num Transaction</th>
+                            <th>Num Remise</th>
                             <th>Carte N°</th>
+                            <th>Sens</th>
                             <th>Montant</th>
                             <th>Devise</th>
                             <th>Raison</th>
@@ -136,68 +139,8 @@ require_once("../../include/html.header.inc.php");
                     </thead>
                     <tbody>
                         <!-- GENERER ICI EN AJAX LES DONNES SELON LA RECHERCHE -->
-                        <tr>
-                            <td>2057EJS65</td>
-                            <td>Association Action contre la soif</td>
-                            <td>01/01/2020</td>
-                            <td>1</td>
-                            <td>10</td>
-                            <td>1000€</td>
-                            <td>EUR</td>
-                            <td>Titulaire Décédé</td>
-                        </tr>
-                        <tr>
-                            <td>2057EJS65</td>
-                            <td>Association Action contre la soif</td>
-                            <td>01/01/2020</td>
-                            <td>1</td>
-                            <td>10</td>
-                            <td>1000€</td>
-                            <td>EUR</td>
-                            <td>Titulaire Emprisonné</td>
-                        </tr>
-                        <tr>
-                            <td>2057EJS65</td>
-                            <td>Association Action contre la soif</td>
-                            <td>01/01/2020</td>
-                            <td>1</td>
-                            <td>10</td>
-                            <td>1000€</td>
-                            <td>EUR</td>
-                            <td>IZLY Refusé</td>
-                        </tr>
-                        <tr>
-                            <td>2057EJS65</td>
-                            <td>Association Action contre la soif</td>
-                            <td>01/01/2020</td>
-                            <td>1</td>
-                            <td>10</td>
-                            <td>1000€</td>
-                            <td>EUR</td>
-                            <td>Fraude CROUS</td>
-                        </tr>
-                        <tr>
-                            <td>2057EJS65</td>
-                            <td>Association Action contre la soif</td>
-                            <td>01/01/2020</td>
-                            <td>1</td>
-                            <td>10</td>
-                            <td>1000€</td>
-                            <td>EUR</td>
-                            <td>Remboursement</td>
-                        </tr>
-                        <tr>
-                            <td>2057EJS65</td>
-                            <td>Association Action contre la soif</td>
-                            <td>01/01/2020</td>
-                            <td>1</td>
-                            <td>10</td>
-                            <td>1000€</td>
-                            <td>EUR</td>
-                            <td>Remboursement</td>
-                        </tr>
 
-
+                    </tbody>
                 </table>
 
             </div>
