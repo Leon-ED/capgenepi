@@ -13,13 +13,21 @@ if (isset($_GET["date_du"]) && isset($_GET["date_au"])) {
 
 $SIREN = "%%";
 $nom = "%%";
+
+if($_SESSION["role"] == "PO"){
 if (isset($_GET["SIREN"])) {
     $SIREN = $_GET["SIREN"];
 }
 if (isset($_GET["nom"])) {
     $nom = $_GET["nom"];
 }
+}
 
+if(!$_SESSION["user"]){
+    http_response_code(401);
+    echo "Vous n'êtes pas connecté";
+    exit();
+}
 
 // Retourne la liste des remises pour un client une période donnée, nom donne et siren donnée sinon retourne toutes les remises pour une période de 1 mois
 /***

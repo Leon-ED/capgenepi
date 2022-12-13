@@ -3,6 +3,12 @@
 header('Content-Type: application/json');
 require_once("../config/config.php");
 
+if(!$_SESSION["user"]){
+    http_response_code(401);
+    echo "Vous n'êtes pas connecté";
+    exit();
+}
+
 $date_du = date("Y-m-d", strtotime("-1 month"));
 $date_au = date("Y-m-d");
 
@@ -13,11 +19,13 @@ if (isset($_GET["date_du"]) && isset($_GET["date_au"])) {
 
 $SIREN = "%%";
 $nom = "%%";
-if (isset($_GET["SIREN"])) {
-    $SIREN = $_GET["SIREN"];
-}
-if (isset($_GET["nom"])) {
-    $nom = $_GET["nom"];
+if($_SESSION["role"] == "PO"){
+    if (isset($_GET["SIREN"])) {
+        $SIREN = $_GET["SIREN"];
+    }
+    if (isset($_GET["nom"])) {
+        $nom = $_GET["nom"];
+    }
 }
 
 
