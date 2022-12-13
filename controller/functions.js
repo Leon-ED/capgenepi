@@ -267,17 +267,17 @@ function afficheRemises(data) {
                 td = $("<td class='client_solde'></td>");
                 }
             }
-
             td.text(v);
             tr.append(td);
         }
-        // append tr to tbody
         $("#tableau_remises_html tbody").append(tr);
-
     }
-
+        // append tr to tbody
 
 }
+
+
+
 
 function affiche_details_remise(idRemise) {
     $("#detail_remise_numero").text(idRemise);
