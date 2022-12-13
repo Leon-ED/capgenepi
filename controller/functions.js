@@ -93,14 +93,18 @@ $(document).ready(function () {
         var form_name = ".tableau_" + name;
 
         // edit the name if a elem is searched
-        if (document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text != "--Sélectionner SIREN--") {
-            splitted_name = document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text.split(" - ");
-            $("#table_cat").text(name+" de " + splitted_name[1]);
-        }
-        else {
-            //table_cat
-            $("#table_cat").text(name);
-        }
+
+        // Pas vraiment utile car la recherche n'est pas update en fonction du siren et de la raison sociale
+
+        // if (document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text != "--Sélectionner SIREN--") {
+        //     splitted_name = document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text.split(" - ");
+        //     $("#table_cat").text(name+" de " + splitted_name[1]);
+        // }
+        // else {
+        //     //table_cat
+        //     $("#table_cat").text(name);
+        // }
+        $("#table_cat").text(name);
 
         // if tresorerie hide table
         if (name == "tresorerie") {
@@ -277,8 +281,26 @@ function form_search() {
         getImpayesList();
     }
 
+    editNameTable(); // Modifier le nom du tableau recherché en fonction du formulaire
 
 
+}
+
+function editNameTable() {
+    if (document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text != "--Sélectionner SIREN--") {
+        splitted_name = document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text.split(" - ");
+        $("#table_desc").text(" de " + splitted_name[1] + " - " + splitted_name[0]);
+    }
+    else {
+        $("#table_desc").text("");
+    }
+    if ($("#libelle").val() != "") {
+        $("#table_desc").text(" de " + $("#libelle").val());
+    }
+    if ($("#SIREN_libre").val() != undefined && $("#SIREN_libre").val() != "") {
+        $("#table_desc").text($("#table_desc").text()+" - " + $("#SIREN_libre").val());
+    }
+    
 }
 
 function afficheRemises(data) {
@@ -391,7 +413,6 @@ function getRemiseList(all = false) {
     } else {
         SIREN = SIREN_select;
     }
-    console.log(SIREN);
     url = "../../api/remises.php?nom=" + libelle + "&SIREN=" + SIREN;
     if (SIREN_select == "none" && SIREN_libre == "" && libelle == "") {
         url = "../../api/remises.php";
