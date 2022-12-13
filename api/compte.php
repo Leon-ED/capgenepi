@@ -3,6 +3,7 @@
 
 
 
+
 // JSON
 header('Content-Type: application/json');
 require_once("../config/config.php");
@@ -21,7 +22,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
 }
 
-
+if(!$_SESSION["user"] && $_SESSION["role"] != "PO"){
+    http_response_code(401);
+    echo "Vous n'êtes pas connecté";
+    exit();
+}
 
 
 function GET_REQUEST()
