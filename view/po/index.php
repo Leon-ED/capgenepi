@@ -128,9 +128,9 @@ require_once("../../include/html.header.inc.php");
                             <th>SIREN</th>
                             <th>Raison sociale</th>
                             <th>Date</th>
-                            <th>Num. Dossier</th>
-                            <th>Num Transaction</th>
-                            <th>Num Remise</th>
+                            <th>N° Dossier</th>
+                            <th>N° Transaction</th>
+                            <th>Remise N°</th>
                             <th>Carte N°</th>
                             <th>Sens</th>
                             <th>Montant</th>
