@@ -13,6 +13,11 @@ if (isset($_GET["date_du"]) && isset($_GET["date_au"])) {
 
 $SIREN = "%%";
 $nom = "%%";
+$id = "%%";
+
+if (isset($_GET["id"])) {
+    $id = $_GET["id"];
+}
 
 if($_SESSION["role"] == "PO"){
 if (isset($_GET["SIREN"])) {
@@ -43,7 +48,8 @@ WHERE remise.SIREN LIKE :SIREN
 AND client.SIREN = remise.SIREN
 AND client.Raison_sociale LIKE :nom 
 AND remise.date_traitement BETWEEN :date_du AND :date_au
-AND remise.id = transac.id_remise
+AND remise.id = transac.id_remise 
+AND transac.id_remise LIKE :id
 GROUP BY remise.id;
 ";
 
@@ -55,6 +61,7 @@ try {
     $stmt->bindParam(':date_du', $date_du);
     $stmt->bindParam(':date_au', $date_au);
     $stmt->bindParam(':nom', $nom);
+    $stmt->bindParam(':id', $id);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($result);

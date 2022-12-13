@@ -26,7 +26,7 @@ require_once("../../include/html.header.inc.php");
         </div>
         <div class="dialog_content">
             <div class="tableau_dialog_transac">
-                <table>
+                <table id="table_dialog_transac">
                     <thead>
                         <tr>
                             <th>SIREN</th>
@@ -39,6 +39,7 @@ require_once("../../include/html.header.inc.php");
                         </tr>
                     </thead>
                     <tbody>
+
                     </tbody>
 
                 </table>
@@ -114,6 +115,7 @@ require_once("../../include/html.header.inc.php");
 
                     </thead>
                     <tbody>
+                        
                         <!-- GENERER ICI EN AJAX LES DONNES SELON LA RECHERCHE -->
                     </tbody>
                 </table>

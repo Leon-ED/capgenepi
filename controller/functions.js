@@ -287,11 +287,57 @@ function affiche_details_remise(idRemise) {
     $("#detail_remise_numero").text(idRemise);
     const dialog_content = $("#dialog_content");
     open_dialog();
+    get_transactions_from_remise(idRemise);
 }
 
 function get_transactions_from_remise(idRemise) {
+    $.ajax({
+        url: "../../api/remises.php?id=" + idRemise,
+        type: "GET",
+        success: function (data) {
+            console.log(data);
+            affiche_transactions_from_remise(data);
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
+
+function affiche_transactions_from_remise(data) {
+    // clear tbody for tableau_remises_html
+    $("#table_dialog_transac tbody").empty();
+
+    // for each data
+
+    console.log(data);
+    for (var transaction of data) {
+        const tr = $("<tr></tr>");
+
+        // add onclick to tr html
+        // tr.attr("onclick", "affiche_details_remise(" + remise.id + ")");
+        console.log(typeof transaction);
+        // remise = JSON.stringify(remise);
+        for (let [k, v] of Object.entries(transaction)) {
+            var td = $("<td></td>");
+            if (k == "montant") {
+                if (parseInt(v) < 0) {
+                    td = $("<td class='client_solde_negatif'></td>");
+                }
+                else{
+                td = $("<td class='client_solde'></td>");
+                }
+            }
+
+            td.text(v);
+            tr.append(td);
+        }
+        $("#table_dialog_transac tbody").append(tr);
+    }
+    // append tr to tbody
 
 }
+
 
 function getRemiseList(all = false) {
 
@@ -410,7 +456,7 @@ function afficheImpayes(data){
             // tr onclick
     
             // add onclick to tr html
-            //tr.attr("onclick", "affiche_details_remise(" + remise.id + ")");
+            tr.attr("onclick", "affiche_details_remise(" + remise.id + ")");
             console.log(typeof remise);
             // remise = JSON.stringify(remise);
             for (let [k, v] of Object.entries(remise)) {
