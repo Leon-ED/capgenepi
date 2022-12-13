@@ -123,21 +123,49 @@ $(document).ready(function () {
         // get the id of the visible 
         var table = "#" + $('.tableau:visible').attr('id') + '_html';
 
-
-
+        var titre = $('#table_cat').text();
+        // Définition du titre du pdf
+        if ($('#table_desc').text() != "") {
+            titre += " " + $('#table_desc').text();
+        }
 
         var doc = new jsPDF()
         // set header
         doc.setFontSize(18);
         doc.setTextColor(40);
-        doc.text("test", 14, 22);
         doc.setFontSize(25);
+
+        // write a title in the pdf
+        var title_doc = "Liste des "+titre;
+
+        // add siren,raison sociale et nom de l'entreprise si précisée dans le formulaire
+        if ($('#siren').val() != undefined) {
+            title_doc += " de " + $('#siren').val();
+        }
+        if ($('#raison_sociale').val() != undefined) {
+            title_doc += " de " + $('#raison_sociale').val();
+        }
+
+        doc.text(7, 15, title_doc.toUpperCase());
+
+        // write at the right of the title the date et heure of the pdf
+        var date = new Date();
+        var date_string = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes();
+        doc.setFontSize(10);
+        doc.text(180, 15, date_string);
+
+
+        // add a white line to separe the title from the table
+        doc.setLineWidth(0.1);
+        doc.line(7, 20, 200, 20);
+
         //color to var(--blue)
         doc.setTextColor(0, 0, 200);
-        const titre = $('#table_cat').text() + " " + $('#table_desc').text();
+        
         //doc.text(7, 15, titre);
         doc.autoTable({
             html: table,
+            startY: 30,
         });
         titre.replace(/[\/|\\:*?"<>]/g, " ");
         doc.save(titre + '.pdf');
@@ -276,8 +304,6 @@ function afficheRemises(data) {
         }
         $("#tableau_remises_html tbody").append(tr);
     }
-        // append tr to tbody
-
 }
 
 
