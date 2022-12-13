@@ -30,9 +30,19 @@ if($_SESSION["role"] == "PO"){
 
 
 $sql = "
-SELECT client.SIREN SIREN, client.Raison_sociale nom, transac.numero_transaction, transac.date_transaction, transac.sens, transac.numero_dossier_impaye, transac.id_remise, transac.montant, 
+SELECT client.SIREN SIREN, 
+client.Raison_sociale nom, 
+transac.date_transaction, 
+transac.numero_dossier_impaye, 
+transac.numero_transaction, 
+transac.numero_carte,
+transac.id_remise, 
+transac.sens,
+transac.montant,
+remise.devise,
 motif.libelle libelle_impaye
-FROM b__transaction transac, b__entreprise client, b__impaye impaye, b__motifs_impayes motif
+
+FROM b__transaction transac, b__entreprise client, b__impaye impaye, b__motifs_impayes motif, b__remise remise
 WHERE transac.SIREN LIKE :SIREN
 AND transac.numero_dossier_impaye IS NOT NULL
 AND transac.montant < 0
@@ -41,6 +51,7 @@ AND client.Raison_sociale LIKE :nom
 AND transac.date_transaction BETWEEN :date_du AND :date_au
 AND transac.numero_dossier_impaye = impaye.numero_dossier_impaye
 AND impaye.code = motif.code
+AND transac.id_remise = remise.id
 
 
 ";
