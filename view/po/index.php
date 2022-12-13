@@ -215,8 +215,8 @@ require_once("../../include/html.header.inc.php");
                         <button class="dropbtn">Exporter</button>
                         <div class="dropdown-content">
                             <button value="pdf" id="pdf_click">PDF</button>
-                            <button value="csv" onclick="exportTableToCSV()">CSV</button>
-                            <button value="xls" onclick="TableToCSV()">XLS</button>
+                            <button value="csv" onclick="TableToCSV()">CSV</button>
+                            <button value="xls" onclick="TableToXLS()">XLS</button>
                         </div>
                     </div>
                 </div>
