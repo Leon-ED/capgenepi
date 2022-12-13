@@ -258,7 +258,16 @@ function afficheRemises(data) {
         console.log(typeof remise);
         // remise = JSON.stringify(remise);
         for (let [k, v] of Object.entries(remise)) {
-            const td = $("<td></td>");
+            var td = $("<td></td>");
+            if (k == "montant_total") {
+                if (parseInt(v) < 0) {
+                    td = $("<td class='client_solde_negatif'></td>");
+                }
+                else{
+                td = $("<td class='client_solde'></td>");
+                }
+            }
+
             td.text(v);
             tr.append(td);
         }
