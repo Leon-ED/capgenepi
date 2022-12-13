@@ -88,11 +88,19 @@ $(document).ready(function () {
 
         // name of form_link 
         var name = $(this).attr('name');
+
         // name of the form to display
         var form_name = ".tableau_" + name;
 
-        //table_cat
-        $("#table_cat").text(name);
+        // edit the name if a elem is searched
+        if (document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text != "--Sélectionner SIREN--") {
+            splitted_name = document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text.split(" - ");
+            $("#table_cat").text(name+" de " + splitted_name[1]);
+        }
+        else {
+            //table_cat
+            $("#table_cat").text(name);
+        }
 
         // if tresorerie hide table
         if (name == "tresorerie") {
