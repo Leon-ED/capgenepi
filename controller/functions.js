@@ -145,6 +145,85 @@ $(document).ready(function () {
 // GERE LES DROPDOWN
 //if dropdown-content is clicked get the value of the clicked button 
 
+function updateGraphe(graph_name,data = false,nom = false) {
+    // chart by the name
+    var i = 0;
+    console.log(graph_name + " eeeeeeeeeee") ;
+    if(graph_name == "tresorerie"){
+        console.log("tresorerie");
+        i = 0;
+    }else if(graph_name == "remises"){
+        console.log("remises");
+        i = 1;
+    }else if(graph_name == "impayes"){
+        console.log("impayes");
+        i = 2;
+    }
+    console.log(i);
+
+
+
+
+
+    var chart = Highcharts.charts[i];
+
+    // if(graph_name == "impayes"){
+    //     console.log("pie");
+    //     // for each  elem in  data and str in name
+    //     var pie = [];
+    //     for (var j = 0; j < data.length; j++) {
+    //         pie.push([nom[j], data[j]]);
+    //     }
+    //     chart.series[0].setData(pie,true);
+    //     return;
+    // }
+
+
+    if(i == 2){
+        //call to api
+        fetch('../../api/motifs_impayes.php').then(function (response) {
+            response.json().then(function (data) {
+                console.log(data);
+                var pie = [];
+                for (var j = 0; j < data.length; j++) {
+                    // create JSon
+
+                    pie.push({
+                        name: data[j].motif,
+                        y: parseInt(data[j].nb)
+                    });
+
+                }
+                chart.series[0].update({ data: pie }, true);
+            });
+        });
+        return;
+    
+
+
+
+
+
+
+
+
+
+    }
+    
+
+    //change chart data
+    if(data == "all"){
+        chart.series[0].setData([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]); 
+        chart.xAxis[0].setCategories(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]);
+
+    }else{
+        chart.series[0].setData(data);
+        chart.xAxis[0].setCategories(nom);
+    }
+
+
+}
+
 $(document).ready(function () {
     $('#pdf_click').click(function () {
 
@@ -206,7 +285,7 @@ $(document).ready(function () {
 
 });
 
-// when click on th in thead of the table sort the table column
+// when click on th in thead of the table sort the table column set a ^ or v to show the sort after the column name
 $(document).ready(function () {
     $('th').click(function () {
         var table = $(this).parents('table').eq(0)
@@ -223,6 +302,10 @@ $(document).ready(function () {
     }
     function getCellValue(row, index) { return $(row).children('td').eq(index).text() }
 })
+
+
+
+
 
 
 
@@ -372,20 +455,23 @@ function updateResultsSearch(data) {
 
     
         document.getElementById("search_result").innerHTML = comptes.length;
-    
+        var dataGraphe = [];
+        var nomGraphe = [];
         var liste = document.getElementById("liste_clients");
         for (var i = 0; i < comptes.length; i++) {
             var compte = comptes[i];
             var SIREN = compte['SIREN'];
             var nom = compte['nom'];
             var tresorerie = compte['tresorerie'];
+            dataGraphe.push(parseInt(tresorerie));
+            nomGraphe.push(nom);
             var type_solde = tresorerie >= 0 ? "client_solde" : "client_solde_negatif";
             var client = document.createElement("div");
             client.className = "client";
             client.innerHTML = '<div class="client_header"> <span class="client_nom">' + nom + '</span> <span class=' + type_solde + '>' + tresorerie + '€</span> </div> <span class="client_siren">SIREN : ' + SIREN + '</span>';
             liste.appendChild(client);
         }
-    
+        updateGraphe("tresorerie",dataGraphe, nomGraphe);
     
 }
 
@@ -412,6 +498,22 @@ function afficheRemises(data) {
 
     // for each data 
 
+    var montants = [];
+    var noms = [];
+    for (var remise of data) {
+        montants.push(parseInt(remise.montant_total));
+        console.log(remise.montant_total);
+    }
+    for (var remise of data) {
+        noms.push(remise.nom);
+    }
+    
+    updateGraphe("remises",montants,noms);
+
+
+
+
+
     console.log(data);
     for (var remise of data) {
         const tr = $("<tr></tr>");
@@ -422,6 +524,7 @@ function afficheRemises(data) {
         console.log(typeof remise);
         // remise = JSON.stringify(remise);
         for (let [k, v] of Object.entries(remise)) {
+
             var td = $("<td></td>");
             if (k == "montant_total") {
                 if (parseInt(v) < 0) {
@@ -553,6 +656,7 @@ function getImpayesList(all = false,_SIREN = null) {
     var SIREN = "";
     var url = "";
 
+    updateGraphe("impayes",[],[]);
 
     if (SIREN_select == SIREN_libre) {
         SIREN = SIREN_select;
@@ -594,9 +698,7 @@ function afficheImpayes(data){
         // clear tbody for tableau_remises_html
         $("#tableau_impayes_html tbody").empty();
 
-        // for each data 
-    
-        console.log(data);
+
         for (var remise of data) {
             const tr = $("<tr></tr>");
             // tr onclick

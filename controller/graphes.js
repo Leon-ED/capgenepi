@@ -87,7 +87,6 @@ Highcharts.chart('remises_graph', {
         crosshair: true
     },
     yAxis: {
-        min: 0,
         title: {
             text: 'Montant (€)'
         }
@@ -135,9 +134,6 @@ Highcharts.chart('impayes_graph', {
     },
     title: {
         text: 'Répartition des motifs d\'impayés'
-    },
-    subtitle: {
-        text: 'Source: <a href="https://www.data.gouv.fr/fr/datasets/finances-publiques-departementales/">data.gouv.fr</a>'
     },
     tooltip: {
         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
