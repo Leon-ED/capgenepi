@@ -189,7 +189,7 @@ function updateGraphe(graph_name,data = false,nom = false) {
                     // create JSon
 
                     pie.push({
-                        name: data[j].motif,
+                        name: data[j].libelle,
                         y: parseInt(data[j].nb)
                     });
 

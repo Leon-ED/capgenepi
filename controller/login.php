@@ -42,13 +42,13 @@ if ($result) {
         $_SESSION['role'] = $result['role'];
 
         //get siren
-        $sql = "SELECT SIREN FROM b__entreprise WHERE id_compte = :id_compte";
+        $sql = "SELECT b__entreprise.SIREN FROM b__entreprise, b__compte, b__controle WHERE b__compte.id = :id_compte AND b__compte.id = b__controle.id AND b__controle.SIREN = b__entreprise.SIREN";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id_compte', $result['id']);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $_SESSION['SIREN'] = $result['SIREN'];
-        
+
 
         auth_success();
     }
