@@ -98,7 +98,13 @@ $(document).ready(function () {
 
 
         } else if (form_type.val() == "impayes") {
-            getImpayesList(all = true);
+            if(SIREN != "none"){
+                console.log()
+                getImpayesList(all = false, _SIREN = document.getElementById("SIREN_select").value);
+            }else{
+                getImpayesList(all = true);
+
+            }
         }
         // name of form_link 
         var name = $(this).attr('name');
@@ -199,6 +205,24 @@ $(document).ready(function () {
     });
 
 });
+
+// when click on th in thead of the table sort the table column
+$(document).ready(function () {
+    $('th').click(function () {
+        var table = $(this).parents('table').eq(0)
+        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+        this.asc = !this.asc
+        if (!this.asc) { rows = rows.reverse() }
+        for (var i = 0; i < rows.length; i++) { table.append(rows[i]) }
+    })
+    function comparer(index) {
+        return function (a, b) {
+            var valA = getCellValue(a, index), valB = getCellValue(b, index)
+            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
+        }
+    }
+    function getCellValue(row, index) { return $(row).children('td').eq(index).text() }
+})
 
 
 
@@ -521,7 +545,7 @@ function getRemiseList(all = false,_SIREN = null) {
 
 
 
-function getImpayesList(all = false) {
+function getImpayesList(all = false,_SIREN = null) {
 
     const SIREN_select = $("#SIREN_select").val();
     const libelle = $("#libelle").val();
@@ -538,6 +562,10 @@ function getImpayesList(all = false) {
         SIREN = SIREN_select;
     } else {
         SIREN = SIREN_select;
+    }
+    if(_SIREN != null){
+        SIREN = _SIREN;
+
     }
     url = "../../api/impayes.php?libelle=" + libelle + "&SIREN=" + SIREN;
     if (SIREN_select == "none" && SIREN_libre == "" && libelle == "") {
