@@ -3,7 +3,7 @@
 header('Content-Type: application/json');
 require_once("../config/config.php");
 
-$date_du = date("Y-m-d", strtotime("-1 month"));
+$date_du = date("Y-m-d", strtotime("-10 years"));
 $date_au = date("Y-m-d");
 
 if (isset($_GET["date_du"]) && isset($_GET["date_au"])) {
@@ -61,7 +61,24 @@ AND transac.id_remise LIKE :id
 GROUP BY remise.id;
 ";
 
+if($id != "%"){
+    $sql = 
+    "SELECT client.Raison_sociale, transac.date_transaction, transac.Reseau,transac.numero_carte, remise.devise, transac.montant,transac.sens,transac.num_autorisation
+    FROM b__entreprise client, b__remise remise, b__transaction transac
+    WHERE remise.id = :id
+    AND remise.SIREN = client.SIREN
+    AND remise.id = transac.id_remise
+    
+";
+$stmt = $conn->prepare($sql);
+$stmt->bindParam(':id', $id);
+$stmt->execute();
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+echo json_encode($result);
+exit();
 
+
+}
 
 try {
     $stmt = $conn->prepare($sql);
