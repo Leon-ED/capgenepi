@@ -98,7 +98,7 @@ require_once("../../include/html.header.inc.php");
 
             const checkbox = document.getElementById("checkbox");
             if (!checkbox.checked) {
-                alert("Vous devez avoir l'accord du PO");
+                alert("Vous devez avoir l'accord du PO Mr Tran pour réaliser cette action !!!");
             }
             else if (password.value != password_confirm.value) {
                 alert("Les mots de passe ne correspondent pas");
