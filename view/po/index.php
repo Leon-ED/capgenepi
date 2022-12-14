@@ -37,7 +37,6 @@ require_once("../../include/html.header.inc.php");
                             <th>Montant</th>
                             <th>Carte N°</th>
                             <th>Autorisation N°</th>
-                            <
                         </tr>
                     </thead>
                     <tbody>
@@ -68,6 +67,8 @@ require_once("../../include/html.header.inc.php");
                 <div class="formulaire_input" id="form_tresorerie" style="display:flex">
                     <input type="text" placeholder="Raison Sociale" name="raison_sociale" id="libelle">
                     <input type="text" placeholder="SIREN" name="SIREN" id="SIREN_libre">
+                    <input placeholder="Date de début" class="textbox-n" type="text" onfocus="(this.type='date')" name="date_debut" id="date_debut">
+                    <input placeholder="Date de fin" class="textbox-n" type="text" onfocus="(this.type='date')" name="date_fin" id="date_fin">
                     <input type="hidden" id="form_type" value="tresorerie">
                     <select id="SIREN_select">
                         <option value="none">--Sélectionner SIREN--</option>

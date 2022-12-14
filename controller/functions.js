@@ -417,6 +417,8 @@ function getTresorerieList() {
     const SIREN_select = $("#SIREN_select").val();
     const libelle = $("#libelle").val();
     const SIREN_libre = $("#SIREN_libre").val();
+    const date_du = $("#date_debut").val();
+    const date_au = $("#date_fin").val();
     var SIREN = "";
     var url = "";
 
@@ -431,7 +433,7 @@ function getTresorerieList() {
         SIREN = SIREN_select;
     }
 
-    fetch("../../api/compte.php?SIREN=" + SIREN + "&libelle=" + libelle).then(function (response) {
+    fetch("../../api/compte.php?SIREN=" + SIREN + "&libelle=" + libelle + "&date_du=" + date_du + "&date_au=" + date_au).then(function (response) {
         return response.json();
     }).then(function (data) {
         var comptes = data;
