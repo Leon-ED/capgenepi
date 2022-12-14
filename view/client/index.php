@@ -29,14 +29,15 @@ require_once("../../include/html.header.inc.php");
             <div class="tableau_dialog_transac">
                 <table id="table_dialog_transac">
                     <thead>
-                        <tr>
-                            <th>SIREN</th>
+                    <tr>
+                            <th>Raison Sociale</th>
                             <th>Date</th>
-                            <th>Carte N°</th>
                             <th>Réseau</th>
-                            <th>Autorisation N°</th>
+                            <th>Carte N°</th>
                             <th>Devise</th>
+                            <th>Montant</th>
                             <th>Sens</th>
+                            <th>Autorisation N°</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -65,20 +66,12 @@ require_once("../../include/html.header.inc.php");
                 </div>
                 <!-- FORMULAIRE TRESORERIE -->
                 <div class="formulaire_input" id="form_tresorerie" style="display:flex">
-                    <input type="text" placeholder="Raison Sociale" name="raison_sociale" id="libelle">
-                    <input type="text" placeholder="SIREN" name="SIREN" id="SIREN_libre">
                     <input type="hidden" id="form_type" value="tresorerie">
-                    <select id="SIREN_select">
+                    <input placeholder="Date de début" class="textbox-n" type="text" onfocus="(this.type='date')" name="date_debut" id="date_debut">
+                    <input placeholder="Date de fin" class="textbox-n" type="text" onfocus="(this.type='date')" name="date_fin" id="date_fin">
+                
+                    <select id="SIREN_select" disabled>
                         <option value="none">--Sélectionner SIREN--</option>
-                        <?php
-                        $liste = get_compte_list();
-                        foreach ($liste as $compte) {
-                            $SIREN = $compte['SIREN'];
-                            $nom = $compte['Raison_sociale'];
-                            echo '<option value="' . $SIREN . '">' . $SIREN . ' - ' . $nom . '</option>';
-                        }
-
-                        ?>
                     </select>
                 </div>
 
