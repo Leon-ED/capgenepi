@@ -28,6 +28,15 @@ if($_SESSION["role"] == "PO"){
     }
 }
 
+if($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])){
+    http_response_code(401);
+    echo "Vous n'avez pas le droit";
+    exit();
+}elseif($_SESSION["role"] == "CLIENT" && isset($_SESSION["SIREN"])){
+    $SIREN = $_SESSION["SIREN"];
+    $nom = "%";
+}
+
 
 $sql = "
 SELECT client.SIREN SIREN, 

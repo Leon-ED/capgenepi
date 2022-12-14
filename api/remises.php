@@ -19,6 +19,8 @@ if (isset($_GET["id"])) {
     $id = $_GET["id"];
 }
 
+
+
 if($_SESSION["role"] == "PO"){
 if (isset($_GET["SIREN"]) && $_GET["SIREN"] != "") {
     if ($_GET["SIREN"] == "none") {
@@ -34,6 +36,14 @@ if (isset($_GET["nom"]) && $_GET["nom"] != "") {
         $nom = "%".$_GET["nom"]."%";
     }
 }
+}
+if($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])){
+    http_response_code(401);
+    echo "Vous n'avez pas le droit";
+    exit();
+}elseif($_SESSION["role"] == "CLIENT" && isset($_SESSION["SIREN"])){
+    $SIREN = $_SESSION["SIREN"];
+    $nom = "%";
 }
 
 if(!$_SESSION["user"]){
