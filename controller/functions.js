@@ -492,8 +492,8 @@ function getRemiseList(all = false,_SIREN = null) {
     } else {
         SIREN = SIREN_select;
     }
-    if(_siren != null){
-        SIREN = _siren;
+    if(_SIREN != null){
+        SIREN = _SIREN;
 
     }
     url = "../../api/remises.php?nom=" + libelle + "&SIREN=" + SIREN;
