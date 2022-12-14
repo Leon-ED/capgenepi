@@ -35,6 +35,8 @@ function GET_REQUEST()
     global $conn;
     $SIREN = "%%";
     $nom = "%%";
+    $date_du = date("Y-m-d", strtotime("-10 year"));
+    $date_au = date("Y-m-d");
 
     if($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])){
         http_response_code(401);
@@ -43,8 +45,14 @@ function GET_REQUEST()
     }elseif($_SESSION["role"] == "CLIENT" && isset($_SESSION["SIREN"])){
         $SIREN = $_SESSION["SIREN"];
     }
-    
 
+    if (isset($_GET["date_du"]) && $_GET["date_du"] != "") {
+        $date_du = $_GET["date_du"];
+    }
+
+    if (isset($_GET["date_au"]) && $_GET["date_au"] != "") {
+        $date_au = $_GET["date_au"];
+    }
 
     if (isset($_GET["libelle"]) && !empty($_GET["libelle"])) {
         $nom = "%" . $_GET["libelle"] . "%";
@@ -62,12 +70,15 @@ function GET_REQUEST()
     WHERE client.SIREN = transac.SIREN 
     AND client.SIREN LIKE :SIREN 
     AND Raison_sociale LIKE :libelle 
+    AND transac.date_transaction BETWEEN :date_du AND :date_au
     GROUP BY client.SIREN;";
 
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':libelle', $nom);
         $stmt->bindParam(':SIREN', $SIREN);
+        $stmt->bindParam(':date_du', $date_du);
+        $stmt->bindParam(':date_au', $date_au);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         echo json_encode($result);
