@@ -123,16 +123,14 @@ $(document).ready(function () {
 
         // edit the name if a elem is searched
 
-        // Pas vraiment utile car la recherche n'est pas update en fonction du siren et de la raison sociale
 
-        // if (document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text != "--Sélectionner SIREN--") {
-        //     splitted_name = document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text.split(" - ");
-        //     $("#table_cat").text(name+" de " + splitted_name[1]);
-        // }
-        // else {
-        //     //table_cat
-        //     $("#table_cat").text(name);
-        // }
+        if (document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text != "--Sélectionner SIREN--") {
+            splitted_name = document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text.split(" - ");
+            $("#table_desc").text(" de " + splitted_name[1] + " - " + splitted_name[0]);
+        }
+        else {
+            $("#table_desc").text("");
+        }
         $("#table_cat").text(name);
 
         // if tresorerie hide table
