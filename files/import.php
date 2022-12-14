@@ -13,7 +13,12 @@ $result = $conn->prepare($sql);
 $result->execute();
 $LISTE_SIREN = $result->fetchAll(PDO::FETCH_COLUMN);
 
-const POURCENT_IMPAYE = 15; 
+const POURCENT_IMPAYE = 200; 
+
+
+// $LISTE_SIREN = ["147258369"];
+
+
 
 foreach($LISTE_SIREN as $SIREN){
     echo "SIREN : ".$SIREN." <br>";
@@ -25,7 +30,7 @@ foreach($LISTE_SIREN as $SIREN){
         for($j = 0; $j < rand(3,45); $j++){
             // date between $date and 2w before
             $date_facture = date("Y-m-d", rand(strtotime($date), strtotime("-2 week", strtotime($date))));
-            if(rand(0,100) < POURCENT_IMPAYE){
+            if(rand(0,100) <= POURCENT_IMPAYE){
                 $code = $impayes_code_libelle[array_rand($impayes_code_libelle, 1)];
                 //var_dump($code);
                 $id_impaye = create_impaye($conn,$code);
@@ -46,13 +51,14 @@ function create_transaction($conn,$id_remise,$date,$SIREN,$impaye = false, $id_i
     global $reseaux;
     global $lettres;
     if($impaye && $id_impaye != null){
+        $montant = rand(-2_000, -50);
         // echo "id impaye :";
         // var_dump($id_impaye);
     }else{
         $id_impaye = NULL;
-
+        $montant = rand(10, 2_000);
     }
-    $montant = rand(-3_000, 5_000);
+   
     $numero_carte = "****-****-****-".rand(1000,9999);
     $num_autorisation = $lettres[array_rand($lettres, 1)].$lettres[array_rand($lettres, 1)].$lettres[array_rand($lettres, 1)].$lettres[array_rand($lettres, 1)].rand(1000,9999).rand(1000,9999);
 

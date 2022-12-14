@@ -8,6 +8,7 @@ Highcharts.chart('tresorerie_graph', {
     title: {
         text: 'Tresorerie'
     },
+
     subtitle: {
         text: 'Source: <a href="https://www.data.gouv.fr/fr/datasets/finances-publiques-departementales/">data.gouv.fr</a>'
     },
@@ -51,7 +52,10 @@ Highcharts.chart('tresorerie_graph', {
         name: 'Dépenses',
         data: [0, 58, -690, 157, 541]
 
-    }]
+    }],
+    exporting: {
+        enabled: true
+    }
 });
 
 
@@ -61,6 +65,9 @@ Highcharts.chart('tresorerie_graph', {
 Highcharts.chart('remises_graph', {
     chart: {
         type: 'line'
+    },
+    exporting: {
+        enabled: true
     },
     title: {
         text: 'Remises'
@@ -131,6 +138,9 @@ Highcharts.chart('impayes_graph', {
         plotBorderWidth: null,
         plotShadow: false,
         type: 'pie'
+    },
+    exporting: {
+        enabled: true
     },
     title: {
         text: 'Répartition des motifs d\'impayés'

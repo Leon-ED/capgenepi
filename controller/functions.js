@@ -17,10 +17,15 @@ function logout() {
 
 function open_dialog() {
     document.getElementById("dialog_transac").showModal();
+    // disable scrolling behind the dialog
+    document.body.style.overflow = "hidden";
+
 }
 
 function close_dialog() {
     document.getElementById("dialog_transac").close();
+    // enable scrolling behind the dialog
+    document.body.style.overflow = "auto";
 }
 // click outside the dialog 
 document.getElementById("dialog_transac").addEventListener("click", function (event) {
@@ -45,6 +50,9 @@ $('#showPAGE').change(function () {
     $('.tableau thead tr').css('display', 'table-row');
 
 });
+
+// IF DIALOG IS OPEN PREVENT SCROLLING BEHIND IT
+
 
 
 // GERE LES LIGNES DU TABLEAU

@@ -70,7 +70,6 @@ try {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
  
-    
 
 
     echo json_encode($result);
