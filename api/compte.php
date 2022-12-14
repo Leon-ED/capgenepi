@@ -33,8 +33,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
 function GET_REQUEST()
 {
     global $conn;
-    $SIREN = "%%";
-    $nom = "%%";
+    $SIREN = "%";
+    $nom = "%";
     $date_du = date("Y-m-d", strtotime("-10 year"));
     $date_au = date("Y-m-d");
 
@@ -55,21 +55,15 @@ function GET_REQUEST()
     }
 
     if (isset($_GET["libelle"]) && !empty($_GET["libelle"])) {
-        $nom = "%" . $_GET["libelle"] . "%";
+        if ($_GET["libelle"] == "undefined") {
+            $nom = "%";
+        } else {
+            $nom = "%" . $_GET["libelle"] . "%";
+        }
     }
 
     if (isset($_GET["SIREN"]) && $_GET["SIREN"] != "none") {
         $SIREN = "%" . $_GET["SIREN"] . "%";
-    }
-
-
-    if($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])){
-        http_response_code(401);
-        echo "Vous n'avez pas le droit";
-        exit();
-    }elseif($_SESSION["role"] == "CLIENT" && isset($_SESSION["SIREN"])){
-        $SIREN = $_SESSION["SIREN"];
-        $nom = "%";
     }
 
     // N'affiche que les clients qui ont des transactions

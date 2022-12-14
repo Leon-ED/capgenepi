@@ -71,7 +71,18 @@ require_once("../../include/html.header.inc.php");
                     <input placeholder="Date de fin" class="textbox-n" type="text" onfocus="(this.type='date')" name="date_fin" id="date_fin">
                 
                     <select id="SIREN_select" disabled>
-                        <option value="none">--Sélectionner SIREN--</option>
+                        <option value="<?php echo $_SESSION["SIREN"] ?>">
+                        <?php
+                            // search for the name of the company
+                            $sql = "SELECT Raison_sociale FROM b__entreprise WHERE SIREN = ?";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute([$_SESSION["SIREN"]]);
+                            $result = $stmt->fetch();
+                            echo  $_SESSION["SIREN"] . " - " . $result["Raison_sociale"];
+                            
+
+                        ?>
+                        </option>
                     </select>
                 </div>
 

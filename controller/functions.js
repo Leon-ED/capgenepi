@@ -123,16 +123,14 @@ $(document).ready(function () {
 
         // edit the name if a elem is searched
 
-        // Pas vraiment utile car la recherche n'est pas update en fonction du siren et de la raison sociale
 
-        // if (document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text != "--Sélectionner SIREN--") {
-        //     splitted_name = document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text.split(" - ");
-        //     $("#table_cat").text(name+" de " + splitted_name[1]);
-        // }
-        // else {
-        //     //table_cat
-        //     $("#table_cat").text(name);
-        // }
+        if (document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text != "--Sélectionner SIREN--") {
+            splitted_name = document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text.split(" - ");
+            $("#table_desc").text(" de " + splitted_name[1] + " - " + splitted_name[0]);
+        }
+        else {
+            $("#table_desc").text("");
+        }
         $("#table_cat").text(name);
 
         // if tresorerie hide table
@@ -251,9 +249,8 @@ $(document).ready(function () {
 
         var doc = new jsPDF()
         // set header
-        doc.setFontSize(18);
         doc.setTextColor(40);
-        doc.setFontSize(25);
+        doc.setFontSize(15);
 
         // write a title in the pdf
         var title_doc = "Liste des "+titre;
@@ -507,7 +504,7 @@ function editNameTable() {
     else {
         $("#table_desc").text("");
     }
-    if ($("#libelle").val() != "") {
+    if ($("#libelle").val() != "" && $("#libelle").val() != undefined) {
         $("#table_desc").text(" de " + $("#libelle").val());
     }
     if ($("#SIREN_libre").val() != undefined && $("#SIREN_libre").val() != "") {
