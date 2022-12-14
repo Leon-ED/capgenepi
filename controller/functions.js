@@ -286,22 +286,35 @@ $(document).ready(function () {
 });
 
 // when click on th in thead of the table sort the table column set a ^ or v to show the sort after the column name
+
+// SORT TABLE BY COLUMN EVEN IF ROW IS NOT VISIBLE
+
 $(document).ready(function () {
     $('th').click(function () {
         var table = $(this).parents('table').eq(0)
+        //show all tr
+        table.find('tr').show();     
         var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
         this.asc = !this.asc
         if (!this.asc) { rows = rows.reverse() }
         for (var i = 0; i < rows.length; i++) { table.append(rows[i]) }
+        console.log("show 10 tr");
+        table.find('tr').css('display', 'none');
+        table.find('tr').slice(0, $('#showLINES').val()).css('display', 'table-row');
     })
     function comparer(index) {
         return function (a, b) {
             var valA = getCellValue(a, index), valB = getCellValue(b, index)
+
             return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
         }
     }
     function getCellValue(row, index) { return $(row).children('td').eq(index).text() }
-})
+    
+    //only show 10 tr
+
+
+});
 
 
 
@@ -514,10 +527,17 @@ function afficheRemises(data) {
 
 
 
+    //max lines to display
+    var max_lines = 10;
+    var lines = 0;
+    if(data.length < $("#max_lines").val()){
 
-
+    }
+    
     console.log(data);
     for (var remise of data) {
+
+
         const tr = $("<tr></tr>");
         // tr onclick
 
@@ -539,6 +559,10 @@ function afficheRemises(data) {
 
             td.text(v);
             tr.append(td);
+        }
+
+        if(lines++ >= max_lines){
+            tr.attr("style", "display:none");
         }
         $("#tableau_remises_html tbody").append(tr);
     }
@@ -583,10 +607,10 @@ function affiche_transactions_from_remise(data) {
     $("#table_dialog_transac tbody").empty();
 
     // for each data
-    for (var transaction of data) {
-        transaction.card_number = "**** "+Math.floor(Math.random() * (10000 - 0 + 1) + 0);
-        transaction.authNumber = makeAuthNum(6).toUpperCase();
-    }
+    // for (var transaction of data) {
+    //     transaction.card_number = "**** "+Math.floor(Math.random() * (10000 - 0 + 1) + 0);
+    //     transaction.authNumber = makeAuthNum(6).toUpperCase();
+    // }
 
     for (var transaction of data) {
         const tr = $("<tr></tr>");

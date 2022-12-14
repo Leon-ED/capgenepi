@@ -29,13 +29,13 @@ require_once("../../include/html.header.inc.php");
                 <table id="table_dialog_transac">
                     <thead>
                         <tr>
-                            <th>SIREN</th>
                             <th>Raison Sociale</th>
                             <th>Date</th>
                             <th>Réseau</th>
+                            <th>Carte N°</th>
                             <th>Devise</th>
                             <th>Montant</th>
-                            <th>Carte N°</th>
+                            <th>Sens</th>
                             <th>Autorisation N°</th>
                         </tr>
                     </thead>
@@ -152,7 +152,7 @@ require_once("../../include/html.header.inc.php");
             <div class="control_table">
                 <div>
                     <label>Afficher : </label>
-                    <input type="number" min="1" max="100" id="showLINES" value="15">
+                    <input type="number" min="1" max="100" id="showLINES" value="10">
                 </div>
                 <div>
                     <label>Page numéro : </label>
