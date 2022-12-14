@@ -8,7 +8,7 @@
 header('Content-Type: application/json');
 require_once("../config/config.php");
 
-if(!$_SESSION["user"]){
+if(!isset($_SESSION["role"])){
     http_response_code(401);
     echo "Vous n'êtes pas connecté";
     exit();
@@ -93,9 +93,9 @@ function GET_REQUEST()
 
 function POST_REQUEST()
 {
-    if(!$_SESSION["role"] != "ADMIN" || !$_SESSION["role"] != "PO"){
+    if($_SESSION["role"] != "ADMIN" ){
         http_response_code(401);
-        echo "Vous n'êtes pas connecté";
+        echo "Vous n'êtes pas autorisé à effectuer cette action";
         exit();
     }
 
