@@ -49,7 +49,7 @@ if($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])){
 
 // get number of remises in the given period by month
 $sql = 
-"SELECT COUNT(transaction.montant) AS nb, 
+"SELECT COUNT(*) AS nb, 
 DATE_FORMAT(date_traitement, '%m') AS date
  FROM b__remise remise, b__entreprise client, b__transaction transaction
  WHERE date_traitement BETWEEN :from AND :to 

@@ -86,10 +86,12 @@ if($id != "%"){
     WHERE remise.id = :id
     AND remise.SIREN = client.SIREN
     AND remise.id = transac.id_remise
+    AND remise.siren LIKE :SIREN
     
 ";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':id', $id);
+$stmt->bindParam(':SIREN',$SIREN, PDO::PARAM_STR);
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 echo json_encode($result);
