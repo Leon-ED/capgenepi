@@ -1,7 +1,7 @@
 <?php
 require_once '../config/config.php';
 
-$impayes_code_libelle = ["01","02","03","04","05","06","07","08","09"];
+$impayes_code_libelle = ["01","02","03","04","05","06","07","08","09","10","11","11","11"];
 $devises = ["EUR","CHF","CFA","USD","CAD","CNY"];
 
 $reseaux = ["VISA","CB","MasterCard","American Express","UP Déjeuner","IZY","IZLY"];
@@ -13,15 +13,15 @@ $result = $conn->prepare($sql);
 $result->execute();
 $LISTE_SIREN = $result->fetchAll(PDO::FETCH_COLUMN);
 
-const POURCENT_IMPAYE = 25; 
+const POURCENT_IMPAYE = 100; 
 
 
-// $LISTE_SIREN = ["147258369"];e
+$LISTE_SIREN = ["369258147"];
 
 
 foreach($LISTE_SIREN as $SIREN){
     echo "SIREN : ".$SIREN." <br>";
-    for($i = 0 ; $i < 30; $i++){
+    for($i = 0 ; $i < 3; $i++){
         $return = create_remise($SIREN, $conn);
         $id_remise = $return["id"];
         $date = $return["date"];
@@ -50,7 +50,7 @@ function create_transaction($conn,$id_remise,$date,$SIREN,$impaye = false, $id_i
     global $reseaux;
     global $lettres;
     if($impaye && $id_impaye != null){
-        $montant = rand(-2_000, -50);
+        $montant = rand(-20, -1);
         // echo "id impaye :";
         // var_dump($id_impaye);
     }else{
