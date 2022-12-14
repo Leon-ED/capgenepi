@@ -47,6 +47,7 @@ require_once("../../include/html.header.inc.php");
 
 
             </div>
+            
         </div>
     </dialog>
     <!-- open dialog 1-->
@@ -168,7 +169,7 @@ require_once("../../include/html.header.inc.php");
                         </div>
                     </div>
                 </div>
-
+            </div>
 
 
         </section>

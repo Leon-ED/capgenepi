@@ -35,6 +35,7 @@ $('#showPAGE').change(function () {
     var page = $(this).val();
     var lines = $('#showLINES').val();
     var table = $('.tableau:visible');
+    page++;
     var maxPage = Math.ceil(table.find('tr').length / lines);
     if (page > maxPage) {
         $(this).val(maxPage);
