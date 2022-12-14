@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  sqletud.u-pem.fr
--- Généré le :  Mer 14 Décembre 2022 à 16:07
+-- Généré le :  Mer 14 Décembre 2022 à 16:36
 -- Version du serveur :  5.7.30-log
 -- Version de PHP :  7.0.33-0+deb9u7
 
@@ -15,8 +15,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
-
-
 
 -- --------------------------------------------------------
 
@@ -218,6 +216,33 @@ INSERT INTO `b__role` (`role`, `libelle`) VALUES
 ('CLIENT', 'Client'),
 ('PO', 'Product Owner');
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `b__transaction`
+--
+
+CREATE TABLE `b__transaction` (
+  `numero_transaction` int(11) NOT NULL,
+  `montant` int(11) NOT NULL,
+  `date_transaction` date NOT NULL,
+  `sens` char(1) NOT NULL,
+  `numero_carte` char(16) NOT NULL,
+  `numero_dossier_impaye` int(11) DEFAULT NULL,
+  `SIREN` char(9) NOT NULL,
+  `id_remise` int(11) NOT NULL,
+  `Reseau` varchar(255) DEFAULT NULL,
+  `num_autorisation` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Contenu de la table `b__transaction`
+--
+
+INSERT INTO `b__transaction` (`numero_transaction`, `montant`, `date_transaction`, `sens`, `numero_carte`, `numero_dossier_impaye`, `SIREN`, `id_remise`, `Reseau`, `num_autorisation`) VALUES
+(1, 581, '2022-12-09', '+', '134543', NULL, '120027016', 1, NULL, ''),
+(2, -658, '2022-12-09', '-', 'EZE', 1, '120027017', 2, NULL, '');
+
 --
 -- Index pour les tables exportées
 --
@@ -273,6 +298,15 @@ ALTER TABLE `b__role`
   ADD UNIQUE KEY `libelle` (`libelle`);
 
 --
+-- Index pour la table `b__transaction`
+--
+ALTER TABLE `b__transaction`
+  ADD PRIMARY KEY (`numero_transaction`),
+  ADD KEY `numero_dossier_impaye` (`numero_dossier_impaye`),
+  ADD KEY `SIREN` (`SIREN`),
+  ADD KEY `id_remise` (`id_remise`);
+
+--
 -- AUTO_INCREMENT pour les tables exportées
 --
 
@@ -291,6 +325,11 @@ ALTER TABLE `b__impaye`
 --
 ALTER TABLE `b__remise`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT pour la table `b__transaction`
+--
+ALTER TABLE `b__transaction`
+  MODIFY `numero_transaction` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Contraintes pour les tables exportées
 --
@@ -319,6 +358,13 @@ ALTER TABLE `b__impaye`
 --
 ALTER TABLE `b__remise`
   ADD CONSTRAINT `b__remise_ibfk_1` FOREIGN KEY (`SIREN`) REFERENCES `b__entreprise` (`SIREN`);
+
+--
+-- Contraintes pour la table `b__transaction`
+--
+ALTER TABLE `b__transaction`
+  ADD CONSTRAINT `b__transaction_ibfk_2` FOREIGN KEY (`id_remise`) REFERENCES `b__remise` (`id`),
+  ADD CONSTRAINT `b__transaction_ibfk_3` FOREIGN KEY (`numero_dossier_impaye`) REFERENCES `b__impaye` (`numero_dossier_impaye`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
