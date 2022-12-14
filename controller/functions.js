@@ -82,12 +82,24 @@ $(document).ready(function () {
         var form_type_value = form_type.val();
         // change form_type value
         form_type.val($(this).attr('name'));
-        if (form_type.val() == "tresorerie") { } else if (form_type.val() == "remises") {
-            getRemiseList(all = true);
+        var SIREN = document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].value;
+        console.log(SIREN);
+        if (form_type.val() == "tresorerie") { 
+
+        } else if (form_type.val() == "remises") {
+
+            if(SIREN != "none"){
+                console.log()
+                getRemiseList(all = false, _SIREN = document.getElementById("SIREN_select").value);
+            }else{
+                getRemiseList(all = true);
+
+            }
+
+
         } else if (form_type.val() == "impayes") {
             getImpayesList(all = true);
         }
-
         // name of form_link 
         var name = $(this).attr('name');
 
@@ -275,6 +287,7 @@ function downloadXLS(csv, filename) {
 
 
 function form_search() {
+    getTresorerieList();
     const form_type = $("#form_type").val();
     console.log(form_type);
     if (form_type == "remises") {
@@ -461,7 +474,7 @@ function affiche_transactions_from_remise(data) {
 }
 
 
-function getRemiseList(all = false) {
+function getRemiseList(all = false,_SIREN = null) {
 
     const SIREN_select = $("#SIREN_select").val();
     const libelle = $("#libelle").val();
@@ -478,6 +491,10 @@ function getRemiseList(all = false) {
         SIREN = SIREN_select;
     } else {
         SIREN = SIREN_select;
+    }
+    if(_siren != null){
+        SIREN = _siren;
+
     }
     url = "../../api/remises.php?nom=" + libelle + "&SIREN=" + SIREN;
     if (SIREN_select == "none" && SIREN_libre == "" && libelle == "") {

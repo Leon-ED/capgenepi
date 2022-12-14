@@ -85,12 +85,12 @@ require_once("../../include/html.header.inc.php");
             </div>
         </section>
         <section id="comptes_clients">
-            <h1><span id="search_result">x</span> Résultat(s) recherche </h1>
+            <h1><span id="search_result">0</span> Résultat(s) recherche </h1>
             <small>seul les clients avec au minimum 1 transaction sont affichés</small>
             <div id="liste_clients">
+            <h1>Merci de patienter, le temps que chargeons les données</h1>
 
             </div>
-
 
             </div>
 

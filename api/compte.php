@@ -46,11 +46,11 @@ function GET_REQUEST()
     
 
 
-    if (isset($_GET["libelle"])) {
+    if (isset($_GET["libelle"]) && !empty($_GET["libelle"])) {
         $nom = "%" . $_GET["libelle"] . "%";
     }
 
-    if (isset($_GET["SIREN"])) {
+    if (isset($_GET["SIREN"]) && $_GET["SIREN"] != "none") {
         $SIREN = "%" . $_GET["SIREN"] . "%";
     }
 
