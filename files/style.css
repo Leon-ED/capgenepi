@@ -112,6 +112,12 @@ h2 {
     height: 100%;
 }
 
+thead tr th:hover {
+    background-color: var(--white_sub);
+    cursor: pointer;
+    user-select: none;
+}
+
 button {
     background-color: var(--sub_blue);
     color: var(--white);
