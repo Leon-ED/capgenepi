@@ -64,16 +64,13 @@ Highcharts.chart('tresorerie_graph', {
 // highcharts graph
 Highcharts.chart('remises_graph', {
     chart: {
-        type: 'line'
+        type: 'column'
     },
     exporting: {
         enabled: true
     },
     title: {
         text: 'Remises'
-    },
-    subtitle: {
-        text: 'Source: <a href="https://www.data.gouv.fr/fr/datasets/finances-publiques-departementales/">data.gouv.fr</a>'
     },
     xAxis: {
         // ici chopper les mois ou pas si t'as la flemme ou pas
@@ -95,7 +92,7 @@ Highcharts.chart('remises_graph', {
     },
     yAxis: {
         title: {
-            text: 'Montant (€)'
+            text: 'Nombre'
         }
     },
     tooltip: {
@@ -122,7 +119,7 @@ Highcharts.chart('remises_graph', {
     series: [{
         // ICI CHOPPER LES NOMBRE DE REMISES PAR MOIS ( selon la recherche , client ,date etc )
         name: 'Dépenses',
-        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 540000.4]
 
     }]
 });

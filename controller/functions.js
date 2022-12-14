@@ -185,6 +185,27 @@ function updateGraphe(graph_name,data = false,nom = false) {
     //     return;
     // }
 
+    if(i== 1){
+        fetch("../../api/stats_remises.php").then(function (response) {
+            response.json().then(function (data) {
+                console.log(data);
+                var mois = [];
+                var nbr = [];
+                for (var j = 0; j < data.length; j++) {
+                    mois.push(data[j].date);
+                    nbr.push(parseInt(data[j].nb));
+                }
+                chart.series[0].setData(nbr, true);
+                chart.xAxis[0].setCategories(mois, true);
+                return;
+
+            });
+            }
+        );
+            return;
+
+    }
+
 
     if(i == 2){
         //call to api

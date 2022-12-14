@@ -49,17 +49,18 @@ if($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])){
 
 // get number of remises in the given period by month
 $sql = 
-"SELECT COUNT(*) AS nb, 
-DATE_FORMAT(date, '%Y-%m') AS date
- FROM b__remises remise
+"SELECT COUNT(transaction.montant) AS nb, 
+DATE_FORMAT(date_traitement, '%m') AS date
+ FROM b__remise remise, b__entreprise client, b__transaction transaction
  WHERE date_traitement BETWEEN :from AND :to 
- AND SIREN LIKE :SIREN 
+ AND transaction.SIREN LIKE :SIREN 
  AND Raison_sociale LIKE :nom 
+AND client.SIREN = remise.SIREN
  AND remise.id LIKE :id_remise 
- GROUP BY DATE_FORMAT(date, '%Y-%m') 
+ GROUP BY DATE_FORMAT(date_traitement, '%m') 
  ORDER BY date_traitement ASC";
 
-$stmt = $pdo->prepare($sql);
+$stmt = $conn->prepare($sql);
 $stmt->execute([
     "from" => $date_du,
     "to" => $date_au,
@@ -67,3 +68,7 @@ $stmt->execute([
     "nom" => $nom,
     "id_remise" => $id
 ]);
+
+$remises = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+echo json_encode($remises);
