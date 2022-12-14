@@ -56,6 +56,10 @@ AND transac.id_remise = remise.id
 
 ";
 
+// GET RATIO FOR EACH motif_impaye
+
+
+
 try {
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':SIREN', $SIREN);
@@ -64,6 +68,11 @@ try {
     $stmt->bindParam(':nom', $nom);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+ 
+    
+
+
     echo json_encode($result);
 } catch (Exception $e) {
     echo $e->getMessage();

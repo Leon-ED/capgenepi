@@ -40,6 +40,16 @@ if ($result) {
         $_SESSION['prenom'] = $result['prenom'];
         $_SESSION['email'] = $result['email'];
         $_SESSION['role'] = $result['role'];
+
+        //get siren
+        $sql = "SELECT SIREN FROM b__entreprise WHERE id_compte = :id_compte";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id_compte', $result['id']);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $_SESSION['SIREN'] = $result['SIREN'];
+        
+
         auth_success();
     }
 }
