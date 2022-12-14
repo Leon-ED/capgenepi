@@ -13,11 +13,10 @@ $result = $conn->prepare($sql);
 $result->execute();
 $LISTE_SIREN = $result->fetchAll(PDO::FETCH_COLUMN);
 
-const POURCENT_IMPAYE = 200; 
+const POURCENT_IMPAYE = 25; 
 
 
-// $LISTE_SIREN = ["147258369"];
-
+// $LISTE_SIREN = ["147258369"];e
 
 
 foreach($LISTE_SIREN as $SIREN){
