@@ -566,13 +566,26 @@ function get_transactions_from_remise(idRemise) {
     });
 }
 
+function makeAuthNum(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
 function affiche_transactions_from_remise(data) {
     // clear tbody for tableau_remises_html
     $("#table_dialog_transac tbody").empty();
 
     // for each data
+    for (var transaction of data) {
+        transaction.card_number = "**** "+Math.floor(Math.random() * (10000 - 0 + 1) + 0);
+        transaction.authNumber = makeAuthNum(6).toUpperCase();
+    }
 
-    console.log(data);
     for (var transaction of data) {
         const tr = $("<tr></tr>");
 
@@ -581,6 +594,7 @@ function affiche_transactions_from_remise(data) {
         console.log(typeof transaction);
         // remise = JSON.stringify(remise);
         for (let [k, v] of Object.entries(transaction)) {
+            console.log(k, v)
             var td = $("<td></td>");
             if (k == "montant") {
                 if (parseInt(v) < 0) {
@@ -589,6 +603,16 @@ function affiche_transactions_from_remise(data) {
                 else{
                 td = $("<td class='client_solde'></td>");
                 }
+            }
+
+            if (k == "nombre_transaction") {
+                continue;
+            }
+
+            if (k == "id") {
+                // pick random in a list of card network
+                var card_network = ["visa", "mastercard", "american express", "diners club", "discover", "jcb", "unionpay", "maestro", "elo", "hipercard", "izly","izly","izly","izly","izly"]
+                v = card_network[Math.floor(Math.random() * card_network.length)].toUpperCase();
             }
 
             td.text(v);
@@ -701,10 +725,7 @@ function afficheImpayes(data){
 
         for (var remise of data) {
             const tr = $("<tr></tr>");
-            // tr onclick
     
-            // add onclick to tr html
-            tr.attr("onclick", "affiche_details_remise(" + remise.id + ")");
             console.log(typeof remise);
             // remise = JSON.stringify(remise);
             for (let [k, v] of Object.entries(remise)) {

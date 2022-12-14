@@ -30,12 +30,14 @@ require_once("../../include/html.header.inc.php");
                     <thead>
                         <tr>
                             <th>SIREN</th>
+                            <th>Raison Sociale</th>
                             <th>Date</th>
-                            <th>Carte N°</th>
                             <th>Réseau</th>
-                            <th>Autorisation N°</th>
                             <th>Devise</th>
-                            <th>Sens</th>
+                            <th>Montant</th>
+                            <th>Carte N°</th>
+                            <th>Autorisation N°</th>
+                            <
                         </tr>
                     </thead>
                     <tbody>
