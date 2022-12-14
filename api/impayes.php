@@ -71,10 +71,10 @@ AND transac.id_remise = remise.id
 
 try {
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':SIREN', $SIREN);
+    $stmt->bindParam(':SIREN', $SIREN, PDO::PARAM_STR);
     $stmt->bindParam(':date_du', $date_du);
     $stmt->bindParam(':date_au', $date_au);
-    $stmt->bindParam(':nom', $nom);
+    $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

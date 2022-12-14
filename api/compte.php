@@ -62,6 +62,16 @@ function GET_REQUEST()
         $SIREN = "%" . $_GET["SIREN"] . "%";
     }
 
+
+    if($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])){
+        http_response_code(401);
+        echo "Vous n'avez pas le droit";
+        exit();
+    }elseif($_SESSION["role"] == "CLIENT" && isset($_SESSION["SIREN"])){
+        $SIREN = $_SESSION["SIREN"];
+        $nom = "%";
+    }
+
     // N'affiche que les clients qui ont des transactions
     try {
         $sql = "

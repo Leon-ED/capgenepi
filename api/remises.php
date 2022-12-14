@@ -6,8 +6,11 @@ require_once("../config/config.php");
 $date_du = date("Y-m-d", strtotime("-10 years"));
 $date_au = date("Y-m-d");
 
-if (isset($_GET["date_du"]) && isset($_GET["date_au"])) {
+if (isset($_GET["date_du"]) && $_GET["date_du"] != "") {
     $date_du = $_GET["date_du"];
+}
+
+if (isset($_GET["date_au"]) && $_GET["date_au"] != "") {
     $date_au = $_GET["date_au"];
 }
 
@@ -37,6 +40,9 @@ if (isset($_GET["nom"]) && $_GET["nom"] != "") {
     }
 }
 }
+
+
+
 if($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])){
     http_response_code(401);
     echo "Vous n'avez pas le droit";
@@ -65,10 +71,12 @@ FROM b__remise remise , b__transaction transac, b__entreprise client
 WHERE remise.SIREN LIKE :SIREN
 AND client.SIREN = remise.SIREN
 AND client.Raison_sociale LIKE :nom 
-AND remise.date_traitement BETWEEN :date_du AND :date_au
+AND remise.date_traitement BETWEEN DATE(:date_du) AND DATE(:date_au)
 AND remise.id = transac.id_remise 
 AND transac.id_remise LIKE :id
-GROUP BY remise.id;
+GROUP BY remise.id
+
+
 ";
 
 if($id != "%"){
@@ -93,9 +101,9 @@ exit();
 try {
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':SIREN',$SIREN, PDO::PARAM_STR);
-    $stmt->bindParam(':date_du', $date_du);
-    $stmt->bindParam(':date_au', $date_au);
-    $stmt->bindParam(':nom', $nom);
+    $stmt->bindParam(':date_du', $date_du, PDO::PARAM_STR);
+    $stmt->bindParam(':date_au', $date_au, PDO::PARAM_STR);
+    $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
     $stmt->bindParam(':id', $id);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

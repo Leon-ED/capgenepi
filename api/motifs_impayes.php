@@ -9,7 +9,7 @@ if(!$_SESSION["user"]){
     exit();
 }
 
-$date_du = date("Y-m-d", strtotime("-1 month"));
+$date_du = date("Y-m-d", strtotime("-10 years"));
 $date_au = date("Y-m-d");
 
 if (isset($_GET["date_du"]) && isset($_GET["date_au"])) {

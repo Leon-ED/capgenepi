@@ -664,6 +664,8 @@ function getRemiseList(all = false,_SIREN = null) {
 
     const SIREN_select = $("#SIREN_select").val();
     const libelle = $("#libelle").val();
+    const date_du = $("#date_debut").val();
+    const date_au = $("#date_fin").val();
     const SIREN_libre = $("#SIREN_libre").val();
     var SIREN = "";
     var url = "";
@@ -682,7 +684,7 @@ function getRemiseList(all = false,_SIREN = null) {
         SIREN = _SIREN;
 
     }
-    url = "../../api/remises.php?nom=" + libelle + "&SIREN=" + SIREN;
+    url = "../../api/remises.php?SIREN=" + SIREN + "&libelle=" + libelle + "&date_du=" + date_du + "&date_au=" + date_au;
     if (SIREN_select == "none" && SIREN_libre == "" && libelle == "") {
         url = "../../api/remises.php";
 
@@ -756,7 +758,8 @@ function getImpayesList(all = false,_SIREN = null) {
 function afficheImpayes(data){
         // clear tbody for tableau_remises_html
         $("#tableau_impayes_html tbody").empty();
-
+        var max_lines = 10;
+        var lines = 0;
 
         for (var remise of data) {
             const tr = $("<tr></tr>");
@@ -769,6 +772,11 @@ function afficheImpayes(data){
                 tr.append(td);
             }
             // append tr to tbody
+            if(lines++ >= max_lines){
+                tr.attr("style", "display:none");
+
+
+            }
             $("#tableau_impayes_html tbody").append(tr);
     
         }
