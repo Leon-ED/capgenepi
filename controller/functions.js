@@ -92,13 +92,13 @@ $(document).ready(function () {
         // change form_type value
         form_type.val($(this).attr('name'));
         var SIREN = document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].value;
-        console.log(SIREN);
+        //console.log(SIREN);
         if (form_type.val() == "tresorerie") { 
 
         } else if (form_type.val() == "remises") {
 
             if(SIREN != "none"){
-                console.log()
+                //console.log()
                 getRemiseList(all = false, _SIREN = document.getElementById("SIREN_select").value);
             }else{
                 getRemiseList(all = true);
@@ -108,7 +108,7 @@ $(document).ready(function () {
 
         } else if (form_type.val() == "impayes") {
             if(SIREN != "none"){
-                console.log()
+                //console.log()
                 getImpayesList(all = false, _SIREN = document.getElementById("SIREN_select").value);
             }else{
                 getImpayesList(all = true);
@@ -141,7 +141,7 @@ $(document).ready(function () {
         }
 
         var graph_name = "#" + name + "_graph";
-        console.log(graph_name);
+        //console.log(graph_name);
         $(graph_name).css('display', 'block');
 
 
@@ -155,18 +155,18 @@ $(document).ready(function () {
 function updateGraphe(graph_name,data = false,nom = false) {
     // chart by the name
     var i = 0;
-    console.log(graph_name + " eeeeeeeeeee") ;
+    //console.log(graph_name + " eeeeeeeeeee") ;
     if(graph_name == "tresorerie"){
-        console.log("tresorerie");
+        //console.log("tresorerie");
         i = 0;
     }else if(graph_name == "remises"){
-        console.log("remises");
+        //console.log("remises");
         i = 1;
     }else if(graph_name == "impayes"){
-        console.log("impayes");
+        //console.log("impayes");
         i = 2;
     }
-    console.log(i);
+    //console.log(i);
 
 
 
@@ -175,7 +175,7 @@ function updateGraphe(graph_name,data = false,nom = false) {
     var chart = Highcharts.charts[i];
 
     // if(graph_name == "impayes"){
-    //     console.log("pie");
+    //     //console.log("pie");
     //     // for each  elem in  data and str in name
     //     var pie = [];
     //     for (var j = 0; j < data.length; j++) {
@@ -197,7 +197,7 @@ function updateGraphe(graph_name,data = false,nom = false) {
 
         fetch(url).then(function (response) {
             response.json().then(function (data) {
-                console.log(data);
+                //console.log(data);
                 var mois = [];
                 var nbr = [];
                 for (var j = 0; j < data.length; j++) {
@@ -221,7 +221,7 @@ function updateGraphe(graph_name,data = false,nom = false) {
         
         fetch(url).then(function (response) {
             response.json().then(function (data) {
-                console.log(data);
+                //console.log(data);
                 var pie = [];
                 for (var j = 0; j < data.length; j++) {
                     // create JSon
@@ -335,7 +335,7 @@ $(document).ready(function () {
         this.asc = !this.asc
         if (!this.asc) { rows = rows.reverse() }
         for (var i = 0; i < rows.length; i++) { table.append(rows[i]) }
-        console.log("show 10 tr");
+        //console.log("show 10 tr");
         table.find('tr').css('display', 'none');
         table.find('tr').slice(0, $('#showLINES').val()).css('display', 'table-row');
     })
@@ -446,7 +446,7 @@ function downloadXLS(csv, filename) {
 function form_search() {
     getTresorerieList();
     const form_type = $("#form_type").val();
-    console.log(form_type);
+    //console.log(form_type);
     if (form_type == "remises") {
         getRemiseList();
     }
@@ -553,14 +553,14 @@ function editNameTable() {
 function afficheRemises(data) {
     // clear tbody for tableau_remises_html
     $("#tableau_remises_html tbody").empty();
-
+    $("#total_lines").text(data.length + " lignes au total");
     // for each data 
 
     var montants = [];
     var noms = [];
     for (var remise of data) {
         montants.push(parseInt(remise.montant_total));
-        console.log(remise.montant_total);
+        //console.log(remise.montant_total);
     }
     for (var remise of data) {
         noms.push(remise.nom);
@@ -577,9 +577,9 @@ function afficheRemises(data) {
 
 
     }
-    // dat
-    var total_lines = $("#total_lines").text(data.length + " lignes au total");
-    console.log(data);
+    /// dat
+    //var total_lines = $("#total_lines").text(data.length + " lignes au total");
+    //console.log(data);
     for (var remise of data) {
 
 
@@ -588,7 +588,7 @@ function afficheRemises(data) {
 
         // add onclick to tr html
         tr.attr("onclick", "affiche_details_remise(" + remise.id + ")");
-        console.log(typeof remise);
+        //console.log(typeof remise);
         // remise = JSON.stringify(remise);
         for (let [k, v] of Object.entries(remise)) {
 
@@ -628,11 +628,11 @@ function get_transactions_from_remise(idRemise) {
         url: "../../api/remises.php?id=" + idRemise,
         type: "GET",
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             affiche_transactions_from_remise(data);
         },
         error: function (data) {
-            console.log(data);
+            //console.log(data);
         }
     });
 }
@@ -662,10 +662,10 @@ function affiche_transactions_from_remise(data) {
 
         // add onclick to tr html
         // tr.attr("onclick", "affiche_details_remise(" + remise.id + ")");
-        console.log(typeof transaction);
+        //console.log(typeof transaction);
         // remise = JSON.stringify(remise);
         for (let [k, v] of Object.entries(transaction)) {
-            console.log(k, v)
+            //console.log(k, v)
             var td = $("<td></td>");
             if (k == "montant") {
                 if (parseInt(v) < 0) {
@@ -750,6 +750,9 @@ function getImpayesList(all = false,_SIREN = null) {
     const SIREN_select = $("#SIREN_select").val();
     const libelle = $("#libelle").val();
     const SIREN_libre = $("#SIREN_libre").val();
+    const date_du = $("#date_debut").val();
+    const date_au = $("#date_fin").val();
+
     var SIREN = "";
     var url = "";
 
@@ -768,11 +771,11 @@ function getImpayesList(all = false,_SIREN = null) {
         SIREN = _SIREN;
 
     }
-    url = "../../api/impayes.php?libelle=" + libelle + "&SIREN=" + SIREN;
     if (SIREN_select == "none" && SIREN_libre == "" && libelle == "") {
         url = "../../api/impayes.php";
 
     }
+    url = "../../api/impayes.php?libelle=" + libelle + "&SIREN=" + SIREN + "&date_du=" + date_du + "&date_au=" + date_au;
     if (all) {
         url = "../../api/impayes.php";
     }
@@ -794,13 +797,14 @@ function getImpayesList(all = false,_SIREN = null) {
 function afficheImpayes(data){
         // clear tbody for tableau_remises_html
         $("#tableau_impayes_html tbody").empty();
+        $("#total_lines").text(data.length + " lignes au total");
         var max_lines = 10;
         var lines = 0;
 
         for (var remise of data) {
             const tr = $("<tr></tr>");
     
-            console.log(typeof remise);
+            //console.log(typeof remise);
             // remise = JSON.stringify(remise);
             for (let [k, v] of Object.entries(remise)) {
                 const td = $("<td></td>");

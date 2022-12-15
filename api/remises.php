@@ -101,8 +101,8 @@ exit();
 try {
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':SIREN',$SIREN, PDO::PARAM_STR);
-    $stmt->bindParam(':date_du', $date_du, PDO::PARAM_STR);
-    $stmt->bindParam(':date_au', $date_au, PDO::PARAM_STR);
+    $stmt->bindParam(':date_du', $date_du);
+    $stmt->bindParam(':date_au', $date_au);
     $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
     $stmt->bindParam(':id', $id);
     $stmt->execute();

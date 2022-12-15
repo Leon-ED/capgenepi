@@ -55,7 +55,7 @@ AND transac.numero_dossier_impaye = b__impaye.numero_dossier_impaye
 AND b__impaye.code = motif.code
 AND client.SIREN = remise.SIREN
 AND client.Raison_sociale LIKE :nom 
-AND remise.date_traitement BETWEEN DATE(:date_du) AND DATE(:date_au)
+AND transac.date_transaction BETWEEN DATE(:date_du) AND DATE(:date_au)
 AND remise.id = transac.id_remise 
 
 
