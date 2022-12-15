@@ -69,7 +69,7 @@ function GET_REQUEST()
     // N'affiche que les clients qui ont des transactions
     try {
         $sql = "
-    SELECT Raison_sociale nom, client.SIREN, SUM(montant) tresorerie  
+    SELECT Raison_sociale nom, client.SIREN, SUM(montant) tresorerie, COUNT(DISTINCT transac.numero_transaction) transactions, COUNT(DISTINCT remise.id) remises  
     FROM b__entreprise client, b__transaction transac , b__remise remise
     WHERE client.SIREN = transac.SIREN 
     AND transac.id_remise = remise.id
