@@ -151,6 +151,7 @@ require_once("../../include/html.header.inc.php");
 
             </div>
             <div class="control_table">
+            <p id = "total_lines"></p>
                 <div>
                     <label>Afficher : </label>
                     <input type="number" min="1" max="100" id="showLINES" value="10">
