@@ -185,12 +185,13 @@ function updateGraphe(graph_name,data = false,nom = false) {
     //     return;
     // }
 
+    var date_debut = document.getElementById("date_debut").value;
+    var date_fin = document.getElementById("date_fin").value;
+    var SIREN = document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].value;
+    var raison = document.getElementsByName("raison_sociale")[0].value;
+
     if(i== 1){
         // get form fields 
-        var date_debut = document.getElementById("date_debut").value;
-        var date_fin = document.getElementById("date_fin").value;
-        var SIREN = document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].value;
-        var raison = document.getElementsByName("raison_sociale")[0].value;
         var url = "../../api/stats_remises.php?date_debut=" + date_debut + "&date_fin=" + date_fin + "&SIREN=" + SIREN + "&libelle=" + raison;
 
 
@@ -216,8 +217,9 @@ function updateGraphe(graph_name,data = false,nom = false) {
 
 
     if(i == 2){
-        //call to api
-        fetch('../../api/motifs_impayes.php').then(function (response) {
+        var url = "../../api/motifs_impayes.php?date_debut=" + date_debut + "&date_fin=" + date_fin + "&SIREN=" + SIREN + "&libelle=" + raison;
+        
+        fetch(url).then(function (response) {
             response.json().then(function (data) {
                 console.log(data);
                 var pie = [];

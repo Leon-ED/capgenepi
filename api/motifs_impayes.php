@@ -19,14 +19,7 @@ if (isset($_GET["date_du"]) && isset($_GET["date_au"])) {
 
 $SIREN = "%%";
 $nom = "%%";
-if($_SESSION["role"] == "PO"){
-    if (isset($_GET["SIREN"])) {
-        $SIREN = $_GET["SIREN"];
-    }
-    if (isset($_GET["nom"])) {
-        $nom = $_GET["nom"];
-    }
-}
+
 
 if($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])){
     http_response_code(401);
@@ -34,16 +27,40 @@ if($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])){
     exit();
 }elseif($_SESSION["role"] == "CLIENT" && isset($_SESSION["SIREN"])){
     $SIREN = $_SESSION["SIREN"];
+}
+
+
+
+if (isset($_GET["date_au"]) && strpos($_GET["date_au"], "-") !== false) {
+    $date_au = $_GET["date_au"];
+} 
+
+if (isset($_GET["date_du"]) && strpos($_GET["date_du"], "-") !== false) {
+    $date_du = $_GET["date_du"];
+} 
+
+if (isset($_GET["libelle"]) && !empty($_GET["libelle"]) && $_GET["libelle"] != "none" && $_GET["libelle"] != "undefined" && $_GET["libelle"] != "") {
+        $nom = "%" . $_GET["libelle"] . "%";
+}else{
     $nom = "%";
 }
 
-$sql2 = "SELECT COUNT(*) as nb, libelle FROM b__transaction transac, b__impaye impaye, b__motifs_impayes motif
+if (isset($_GET["SIREN"]) && $_GET["SIREN"] != "none" && $_GET["SIREN"] != "undefined" && !empty($_GET["SIREN"])) {
+    $SIREN = "%" . $_GET["SIREN"] . "%";
+}
+
+
+
+$sql2 = "SELECT COUNT(*) as nb, libelle FROM b__transaction transac, b__impaye impaye, b__motifs_impayes motif, b__entreprise client
 WHERE transac.numero_dossier_impaye IS NOT NULL 
+
 AND transac.montant < 0
 AND transac.numero_dossier_impaye = impaye.numero_dossier_impaye
 AND impaye.code = motif.code
 AND transac.date_transaction BETWEEN :date_du AND :date_au
 AND transac.SIREN LIKE :SIREN
+AND client.SIREN LIKE transac.SIREN
+AND client.Raison_sociale LIKE :nom
 GROUP BY motif.libelle
 ORDER BY nb DESC;  ";
 
@@ -53,6 +70,7 @@ $stmt2 = $conn->prepare($sql2);
 $stmt2->bindParam(':date_du', $date_du);
 $stmt2->bindParam(':date_au', $date_au);
 $stmt2->bindParam(':SIREN', $SIREN);
+$stmt2->bindParam(':nom', $nom);
 $stmt2->execute();
 $motifs = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
