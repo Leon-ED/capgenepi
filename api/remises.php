@@ -24,39 +24,37 @@ if (isset($_GET["id"])) {
 
 
 
-if($_SESSION["role"] == "PO"){
-if (isset($_GET["SIREN"]) && $_GET["SIREN"] != "") {
-    if ($_GET["SIREN"] == "none") {
-        $SIREN = "%";
-    } else {
-        $SIREN = "%".$_GET["SIREN"]."%";
-    }
-}
-if (isset($_GET["nom"]) && $_GET["nom"] != "") {
-    if ($_GET["nom"] == "none") {
-        $nom = "%";
-    } else {
-        $nom = "%".$_GET["nom"]."%";
-    }
-}
-}
-
-
-
 if($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])){
     http_response_code(401);
     echo "Vous n'avez pas le droit";
     exit();
 }elseif($_SESSION["role"] == "CLIENT" && isset($_SESSION["SIREN"])){
     $SIREN = $_SESSION["SIREN"];
+}
+
+
+
+if (isset($_GET["date_au"]) && strpos($_GET["date_au"], "-") !== false) {
+    $date_au = $_GET["date_au"];
+} 
+
+if (isset($_GET["date_du"]) && strpos($_GET["date_du"], "-") !== false) {
+    $date_du = $_GET["date_du"];
+} 
+
+if (isset($_GET["libelle"]) && !empty($_GET["libelle"]) && $_GET["libelle"] != "none" && $_GET["libelle"] != "undefined" && $_GET["libelle"] != "") {
+        $nom = "%" . $_GET["libelle"] . "%";
+}else{
     $nom = "%";
 }
 
-if(!$_SESSION["user"]){
-    http_response_code(401);
-    echo "Vous n'êtes pas connecté";
-    exit();
+if (isset($_GET["SIREN"]) && $_GET["SIREN"] != "none" && $_GET["SIREN"] != "undefined" && !empty($_GET["SIREN"])) {
+    $SIREN = "%" . $_GET["SIREN"] . "%";
 }
+
+
+
+
 
 // Retourne la liste des remises pour un client une période donnée, nom donne et siren donnée sinon retourne toutes les remises pour une période de 1 mois
 /***
