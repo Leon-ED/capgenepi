@@ -515,12 +515,13 @@ function updateResultsSearch(data) {
             var tresorerie = compte['tresorerie'];
             var nombre_transaction = compte['transactions'];
             var remises = compte['remises'];
+            var impayes = compte['impayes'];
             dataGraphe.push(parseInt(tresorerie));
             nomGraphe.push(nom);
             var type_solde = tresorerie >= 0 ? "client_solde" : "client_solde_negatif";
             var client = document.createElement("div");
             client.className = "client";
-            client.innerHTML = '<div class="client_header"> <span class="client_nom">' + nom + '</span> <span class=' + type_solde + '>' + tresorerie + '€</span> </div> <span class="client_siren">SIREN : ' + SIREN + '</span><p> Nombre de transactions : ' + nombre_transaction + '<br> Nombre de Remises : ' + remises + '</p>';
+            client.innerHTML = '<div class="client_header"> <span class="client_nom">' + nom + '</span> <span class=' + type_solde + '>' + tresorerie + '€</span> </div> <span class="client_siren">SIREN : ' + SIREN + '</span><p> Nombre de Remises : ' + remises + ' | Nombre de transactions : ' + nombre_transaction + ' | Nombre d\'impayés : ' + impayes +  '</p>';
             liste.appendChild(client);
         }
         updateGraphe("tresorerie",dataGraphe, nomGraphe);

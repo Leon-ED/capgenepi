@@ -77,15 +77,30 @@ function GET_REQUEST()
     AND Raison_sociale LIKE :libelle 
     AND (transac.date_transaction BETWEEN :date_du AND :date_au OR remise.date_traitement BETWEEN :date_du AND :date_au)
     GROUP BY client.SIREN;";
-
-
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':libelle', $nom);
         $stmt->bindParam(':SIREN', $SIREN);
         $stmt->bindParam(':date_du', $date_du);
         $stmt->bindParam(':date_au', $date_au);
         $stmt->execute();
+
+        $sql = "
+        SELECT COUNT(DISTINCT numero_transaction) impayes FROM b__transaction
+        where SIREN LIKE :SIREN
+        AND numero_dossier_impaye IS NOT NULL;
+        ";
+        $stmt2 = $conn->prepare($sql);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($result as $key => $value) {
+            $stmt2->bindParam(':SIREN', $value["SIREN"]);
+            $stmt2->execute();
+            $result[$key]["impayes"] = $stmt2->fetchAll(PDO::FETCH_ASSOC)[0]["impayes"];            
+        }
+
+
+
+
+
         echo json_encode($result);
     } catch (Exception $e) {
         echo $e->getMessage();
