@@ -89,12 +89,25 @@ function GET_REQUEST()
         where SIREN LIKE :SIREN
         AND numero_dossier_impaye IS NOT NULL;
         ";
+
+        $sql3 = "
+        SELECT SUM(montant) impayes FROM b__transaction
+        where SIREN LIKE :SIREN AND numero_dossier_impaye IS NOT NULL;
+        ";
         $stmt2 = $conn->prepare($sql);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($result as $key => $value) {
             $stmt2->bindParam(':SIREN', $value["SIREN"]);
             $stmt2->execute();
-            $result[$key]["impayes"] = $stmt2->fetchAll(PDO::FETCH_ASSOC)[0]["impayes"];            
+            $result[$key]["impayes"] = $stmt2->fetchAll(PDO::FETCH_ASSOC)[0]["impayes"];   
+            
+            $stmt3 = $conn->prepare($sql3);
+            $stmt3->bindParam(':SIREN', $value["SIREN"]);
+            $stmt3->execute();
+            $result[$key]["impayes_montant"] = $stmt3->fetchAll(PDO::FETCH_ASSOC)[0]["impayes"];
+
+            
+
         }
 
 
