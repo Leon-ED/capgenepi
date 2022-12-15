@@ -535,6 +535,7 @@ function editNameTable() {
         splitted_name = document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text.split(" - ");
         $("#table_desc").text(" de " + splitted_name[1] + " - " + splitted_name[0]);
     }
+
     else {
         $("#table_desc").text("");
     }
@@ -544,6 +545,7 @@ function editNameTable() {
     if ($("#SIREN_libre").val() != undefined && $("#SIREN_libre").val() != "") {
         $("#table_desc").text($("#table_desc").text()+" - " + $("#SIREN_libre").val());
     }
+
     
 }
 
@@ -572,8 +574,10 @@ function afficheRemises(data) {
     var lines = 0;
     if(data.length < $("#max_lines").val()){
 
+
     }
-    
+    // dat
+    var total_lines = $("#total_lines").text(data.length + " lignes au total");
     console.log(data);
     for (var remise of data) {
 
