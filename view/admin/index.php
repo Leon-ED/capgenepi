@@ -16,7 +16,8 @@ require_once("../../include/html.header.inc.php");
     <h2 id="name"> <?= $_SESSION['prenom'] . " " . $_SESSION['nom'] ?></h2>
     <a onclick="logout()" href="../index.php">Deconnexion</a>
 </nav>
-<article class="flex_column m-auto mt-5">
+<article class="flex_row m-auto mt-5">
+    <section>
     <h1>Ajouter un compte client</h1>
 
 
@@ -85,7 +86,6 @@ require_once("../../include/html.header.inc.php");
     </form>
 
     <script defer>
-        
         // make post request to API
         const btn_recherche = document.getElementById("btn_recherche");
         const password = document.getElementById("password");
@@ -128,10 +128,12 @@ require_once("../../include/html.header.inc.php");
                 fetch("../../api/compte.php", options)
                     .then(response => response.json())
                     .then(data => {
-                        showStatus(200);
-                    })
-                    .catch(error => {
-                        showStatus("error");
+                        console.log(data);
+                        if(data.error == "true"){
+                            showStatus("erreur")
+                        }else{
+                            showStatus(200)
+                        }
                     });
 
 
@@ -155,10 +157,61 @@ require_once("../../include/html.header.inc.php");
 
             } else {
                 dialog_title.innerHTML = "Erreur lors de l'ajout du compte";
-                dialog_content.innerHTML = "Certaines informations sont manquantes ou invalides. Veuillez vérifier les informations saisies.";
+                dialog_content.innerHTML = "Certaines informations sont manquantes ou invalides ou alors le compte/client  existe déjà. Veuillez vérifier les informations saisies.";
             }
             open_dialog();
             // $("form").trigger("reset");
         }
     </script>
+    </section>
+    <section>
+    <h1>Supprimer un compte client</h1>
+    <form>
+    <select id="SIREN_select">
+        <option value="none">--Sélectionner SIREN--</option>
+        <?php
+        $liste = get_compte_list();
+        foreach ($liste as $compte) {
+            $SIREN = $compte['SIREN'];
+            $nom = $compte['Raison_sociale'];
+            echo '<option value="' . $SIREN . '">' . $SIREN . ' - ' . $nom . '</option>';
+        }
+
+        ?>
+    </select>
+    </form>
+    <button id="btn_delete">Supprimer</button>
+    <script defer>
+        // make post request to API
+        const btn_delete = document.getElementById("btn_delete");
+        
+        btn_delete.addEventListener("click", function() {
+            event.preventDefault();
+            const SIREN = document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text.split(" - ");
+
+            var url = "../../api/deleteAccount.php";
+            const data = {
+                "SIREN": SIREN[0]
+            }
+            const options = {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data),
+                credentials: "include"
+            }
+            fetch("../../api/deleteAccount.php", options)
+                .then(response => response.json())
+                .then(data => { 
+                    //alert success
+                    alert("Compte supprimé avec succès");                                       
+                })
+                .catch(error => {
+                    // alert error
+                    alert("Erreur lors de la suppression du compte");
+                });
+        });
+        </script>
+    </section>
 </article>

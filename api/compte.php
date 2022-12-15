@@ -144,7 +144,6 @@ function POST_REQUEST()
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if (count($result) > 0) {
-            http_response_code(409);
             echo json_encode(array("message" => "Le compte existe déjà", "error" => "true"));
             return;
         }
@@ -167,7 +166,8 @@ function POST_REQUEST()
         $stmt->bindParam(':email', $emailCompte);
         $stmt->bindParam(':nom', $nomCompte);
         $stmt->bindParam(':prenom', $prenomCompte);
-        $stmt->bindParam(':password', password_hash($password, PASSWORD_DEFAULT));
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        $stmt->bindParam(':password', $password);   
         $stmt->execute();
         $id_user = $conn->lastInsertId();
 
