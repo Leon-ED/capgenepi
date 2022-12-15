@@ -3,38 +3,35 @@
 header('Content-Type: application/json');
 require_once("../config/config.php");
 
-if(!$_SESSION["user"]){
-    http_response_code(401);
-    echo "Vous n'êtes pas connecté";
-    exit();
-}
-
-$date_du = date("Y-m-d", strtotime("-10 years"));
-$date_au = date("Y-m-d");
-
-if (isset($_GET["date_du"]) && isset($_GET["date_au"])) {
-    $date_du = $_GET["date_du"];
-    $date_au = $_GET["date_au"];
-}
-
-$SIREN = "%%";
-$nom = "%%";
-if($_SESSION["role"] == "PO"){
-    if (isset($_GET["SIREN"])) {
-        $SIREN = $_GET["SIREN"];
-    }
-    if (isset($_GET["nom"])) {
-        $nom = $_GET["nom"];
-    }
-}
-
 if($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])){
     http_response_code(401);
     echo "Vous n'avez pas le droit";
     exit();
 }elseif($_SESSION["role"] == "CLIENT" && isset($_SESSION["SIREN"])){
     $SIREN = $_SESSION["SIREN"];
-    $nom = "%";
+}
+
+$nom = "%";
+$SIREN  = "%";
+$date_du = date("Y-m-d", strtotime("-10 year"));
+$date_au = date("Y-m-d");
+
+
+
+if (isset($_GET["date_au"]) && strpos($_GET["date_au"], "-") !== false) {
+    $date_au = $_GET["date_au"];
+} 
+
+if (isset($_GET["date_du"]) && strpos($_GET["date_du"], "-") !== false) {
+    $date_du = $_GET["date_du"];
+} 
+
+if (isset($_GET["libelle"]) && !empty($_GET["libelle"]) && $_GET["libelle"] != "none" && $_GET["libelle"] != "undefined" && $_GET["libelle"] != "") {
+        $nom = "%" . $_GET["libelle"] . "%";
+}
+
+if (isset($_GET["SIREN"]) && $_GET["SIREN"] != "none" && $_GET["SIREN"] != "undefined" && !empty($_GET["SIREN"])) {
+    $SIREN = "%" . $_GET["SIREN"] . "%";
 }
 
 
@@ -51,16 +48,15 @@ transac.montant,
 remise.devise,
 motif.libelle libelle_impaye
 
-FROM b__transaction transac, b__entreprise client, b__impaye impaye, b__motifs_impayes motif, b__remise remise
-WHERE transac.SIREN LIKE :SIREN
+FROM b__remise remise , b__transaction transac, b__entreprise client, b__motifs_impayes motif, b__impaye
+WHERE remise.SIREN LIKE :SIREN
 AND transac.numero_dossier_impaye IS NOT NULL
-AND transac.montant < 0
-AND client.SIREN = transac.SIREN
-AND client.Raison_sociale LIKE :nom
-AND transac.date_transaction BETWEEN :date_du AND :date_au
-AND transac.numero_dossier_impaye = impaye.numero_dossier_impaye
-AND impaye.code = motif.code
-AND transac.id_remise = remise.id
+AND transac.numero_dossier_impaye = b__impaye.numero_dossier_impaye
+AND b__impaye.code = motif.code
+AND client.SIREN = remise.SIREN
+AND client.Raison_sociale LIKE :nom 
+AND remise.date_traitement BETWEEN DATE(:date_du) AND DATE(:date_au)
+AND remise.id = transac.id_remise 
 
 
 ";
@@ -70,11 +66,14 @@ AND transac.id_remise = remise.id
 
 
 try {
+
+
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':SIREN', $SIREN, PDO::PARAM_STR);
     $stmt->bindParam(':date_du', $date_du);
     $stmt->bindParam(':date_au', $date_au);
-    $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
+    $stmt->bindParam(':nom', $nom);
+    
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
