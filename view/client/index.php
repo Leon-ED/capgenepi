@@ -66,6 +66,7 @@ require_once("../../include/html.header.inc.php");
                 </div>
                 <!-- FORMULAIRE TRESORERIE -->
                 <div class="formulaire_input" id="form_tresorerie" style="display:flex">
+                    <input type="hidden" placeholder="Raison Sociale" name="raison_sociale" id="libelle" disabled>
                     <input type="hidden" id="form_type" value="tresorerie">
                     <input placeholder="Date de début" class="textbox-n" type="text" onfocus="(this.type='date')" name="date_debut" id="date_debut">
                     <input placeholder="Date de fin" class="textbox-n" type="text" onfocus="(this.type='date')" name="date_fin" id="date_fin">
