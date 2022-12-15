@@ -186,7 +186,15 @@ function updateGraphe(graph_name,data = false,nom = false) {
     // }
 
     if(i== 1){
-        fetch("../../api/stats_remises.php").then(function (response) {
+        // get form fields 
+        var date_debut = document.getElementById("date_debut").value;
+        var date_fin = document.getElementById("date_fin").value;
+        var SIREN = document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].value;
+        var raison = document.getElementsByName("raison_sociale")[0].value;
+        var url = "../../api/stats_remises.php?date_debut=" + date_debut + "&date_fin=" + date_fin + "&SIREN=" + SIREN + "&libelle=" + raison;
+
+
+        fetch(url).then(function (response) {
             response.json().then(function (data) {
                 console.log(data);
                 var mois = [];

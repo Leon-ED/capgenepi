@@ -70,11 +70,12 @@ function GET_REQUEST()
     try {
         $sql = "
     SELECT Raison_sociale nom, client.SIREN, SUM(montant) tresorerie  
-    FROM b__entreprise client, b__transaction transac 
+    FROM b__entreprise client, b__transaction transac , b__remise remise
     WHERE client.SIREN = transac.SIREN 
+    AND transac.id_remise = remise.id
     AND client.SIREN LIKE :SIREN 
     AND Raison_sociale LIKE :libelle 
-    AND transac.date_transaction BETWEEN :date_du AND :date_au
+    AND (transac.date_transaction BETWEEN :date_du AND :date_au OR remise.date_traitement BETWEEN :date_du AND :date_au)
     GROUP BY client.SIREN;";
 
 
