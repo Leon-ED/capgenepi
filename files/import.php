@@ -13,15 +13,15 @@ $result = $conn->prepare($sql);
 $result->execute();
 $LISTE_SIREN = $result->fetchAll(PDO::FETCH_COLUMN);
 
-const POURCENT_IMPAYE = 100; 
+const POURCENT_IMPAYE =30; 
 
 
-$LISTE_SIREN = ["369258147"];
+//$LISTE_SIREN = ["369258147"];
 
 
 foreach($LISTE_SIREN as $SIREN){
     echo "SIREN : ".$SIREN." <br>";
-    for($i = 0 ; $i < 3; $i++){
+    for($i = 0 ; $i < 20; $i++){
         $return = create_remise($SIREN, $conn);
         $id_remise = $return["id"];
         $date = $return["date"];

@@ -46,23 +46,23 @@ function GET_REQUEST()
         $SIREN = $_SESSION["SIREN"];
     }
 
-    if (isset($_GET["date_du"]) && $_GET["date_du"] != "") {
-        $date_du = $_GET["date_du"];
-    }
 
-    if (isset($_GET["date_au"]) && $_GET["date_au"] != "") {
+
+    if (isset($_GET["date_au"]) && strpos($_GET["date_au"], "-") !== false) {
         $date_au = $_GET["date_au"];
-    }
+    } 
 
-    if (isset($_GET["libelle"]) && !empty($_GET["libelle"])) {
-        if ($_GET["libelle"] == "undefined") {
-            $nom = "%";
-        } else {
+    if (isset($_GET["date_du"]) && strpos($_GET["date_du"], "-") !== false) {
+        $date_du = $_GET["date_du"];
+    } 
+
+    if (isset($_GET["libelle"]) && !empty($_GET["libelle"]) && $_GET["libelle"] != "none" && $_GET["libelle"] != "undefined" && $_GET["libelle"] != "") {
             $nom = "%" . $_GET["libelle"] . "%";
-        }
+    }else{
+        $nom = "%";
     }
 
-    if (isset($_GET["SIREN"]) && $_GET["SIREN"] != "none") {
+    if (isset($_GET["SIREN"]) && $_GET["SIREN"] != "none" && $_GET["SIREN"] != "undefined" && !empty($_GET["SIREN"])) {
         $SIREN = "%" . $_GET["SIREN"] . "%";
     }
 
