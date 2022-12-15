@@ -229,7 +229,7 @@ select {
 
 table {
     border-collapse: collapse;
-    width: 100%;
+    /* width: 100%; */
     border: 1px solid var(--blue);
     border-radius: 10px;
     overflow: hidden;
@@ -240,7 +240,7 @@ table {
 th,
 td {
     text-align: left;
-    padding: 8px;
+    padding: 2px;
     border: 1px solid var(--blue);
 }
 
@@ -271,7 +271,7 @@ fieldset {
 
 #tableau {
     
-    width: 60%;
+    max-width: 80%;
     
 }
 
@@ -297,6 +297,7 @@ fieldset {
 
     #tableau {
         width: 100%;
+        max-width: 100%;
     }
 
     table {
