@@ -3,11 +3,11 @@
 header('Content-Type: application/json');
 require_once("../config/config.php");
 
-if($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])){
+if ($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])) {
     http_response_code(401);
     echo "Vous n'avez pas le droit";
     exit();
-}elseif($_SESSION["role"] == "CLIENT" && isset($_SESSION["SIREN"])){
+} elseif ($_SESSION["role"] == "CLIENT" && isset($_SESSION["SIREN"])) {
     $SIREN = $_SESSION["SIREN"];
 }
 
@@ -20,14 +20,14 @@ $date_au = date("Y-m-d");
 
 if (isset($_GET["date_au"]) && strpos($_GET["date_au"], "-") !== false) {
     $date_au = $_GET["date_au"];
-} 
+}
 
 if (isset($_GET["date_du"]) && strpos($_GET["date_du"], "-") !== false) {
     $date_du = $_GET["date_du"];
-} 
+}
 
 if (isset($_GET["libelle"]) && !empty($_GET["libelle"]) && $_GET["libelle"] != "none" && $_GET["libelle"] != "undefined" && $_GET["libelle"] != "") {
-        $nom = "%" . $_GET["libelle"] . "%";
+    $nom = "%" . $_GET["libelle"] . "%";
 }
 
 if (isset($_GET["SIREN"]) && $_GET["SIREN"] != "none" && $_GET["SIREN"] != "undefined" && !empty($_GET["SIREN"])) {
@@ -73,11 +73,11 @@ try {
     $stmt->bindParam(':date_du', $date_du);
     $stmt->bindParam(':date_au', $date_au);
     $stmt->bindParam(':nom', $nom);
-    
+
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
- 
+
 
 
     echo json_encode($result);

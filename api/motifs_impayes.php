@@ -3,7 +3,7 @@
 header('Content-Type: application/json');
 require_once("../config/config.php");
 
-if(!$_SESSION["user"]){
+if (!$_SESSION["user"]) {
     http_response_code(401);
     echo "Vous n'êtes pas connecté";
     exit();
@@ -21,11 +21,11 @@ $SIREN = "%%";
 $nom = "%%";
 
 
-if($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])){
+if ($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])) {
     http_response_code(401);
     echo "Vous n'avez pas le droit";
     exit();
-}elseif($_SESSION["role"] == "CLIENT" && isset($_SESSION["SIREN"])){
+} elseif ($_SESSION["role"] == "CLIENT" && isset($_SESSION["SIREN"])) {
     $SIREN = $_SESSION["SIREN"];
 }
 
@@ -33,15 +33,15 @@ if($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])){
 
 if (isset($_GET["date_au"]) && strpos($_GET["date_au"], "-") !== false) {
     $date_au = $_GET["date_au"];
-} 
+}
 
 if (isset($_GET["date_du"]) && strpos($_GET["date_du"], "-") !== false) {
     $date_du = $_GET["date_du"];
-} 
+}
 
 if (isset($_GET["libelle"]) && !empty($_GET["libelle"]) && $_GET["libelle"] != "none" && $_GET["libelle"] != "undefined" && $_GET["libelle"] != "") {
-        $nom = "%" . $_GET["libelle"] . "%";
-}else{
+    $nom = "%" . $_GET["libelle"] . "%";
+} else {
     $nom = "%";
 }
 

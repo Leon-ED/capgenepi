@@ -22,7 +22,6 @@ if (isset($_SESSION['user'])) {
     exit();
 }
 
-// bootstrap alert
 $display = "none";
 $alert = "alert-danger";
 $message = "Attention : Ceci est votre dernier essai";
@@ -45,7 +44,6 @@ if (isset($_SESSION["connexion_blocked"]) && $_SESSION["connexion_blocked"] == t
 
 
 ?>
-
 <body>
     <style>
         body {
@@ -54,8 +52,6 @@ if (isset($_SESSION["connexion_blocked"]) && $_SESSION["connexion_blocked"] == t
             background-size: 47%;
 
         }
-
-
         section {
             font-weight: bold;
         }
@@ -79,14 +75,12 @@ if (isset($_SESSION["connexion_blocked"]) && $_SESSION["connexion_blocked"] == t
                     <div class="form-group">
                         <label for="password">Mot de passe</label>
                         <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" required>
-                        <!-- show password -->
                         <a href="#" id="click-password" onclick="showPassword()">
                             <input type="checkbox" id="cb-password">👁️Afficher le mot de passe 👀
                         </a>
                     </div>
                     <br>
                     <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre mot de passe avec qui que ce soit, faites-en de même</small>
-
                     <br>
                     <button type="submit" class="btn btn-primary"> 😜 Se connecter 😛</button>
                 </form>
@@ -96,9 +90,6 @@ if (isset($_SESSION["connexion_blocked"]) && $_SESSION["connexion_blocked"] == t
                 <?= $message ?>
             </div>
         </section>
-
-
-
     </main>
     <script>
         function showPassword() {
@@ -117,15 +108,4 @@ if (isset($_SESSION["connexion_blocked"]) && $_SESSION["connexion_blocked"] == t
             }
         }
     </script>
-
-
-
-
-
-
-
-
-
-
-
 </body>

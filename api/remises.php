@@ -24,11 +24,11 @@ if (isset($_GET["id"])) {
 
 
 
-if($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])){
+if ($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])) {
     http_response_code(401);
     echo "Vous n'avez pas le droit";
     exit();
-}elseif($_SESSION["role"] == "CLIENT" && isset($_SESSION["SIREN"])){
+} elseif ($_SESSION["role"] == "CLIENT" && isset($_SESSION["SIREN"])) {
     $SIREN = $_SESSION["SIREN"];
 }
 
@@ -36,15 +36,15 @@ if($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])){
 
 if (isset($_GET["date_au"]) && strpos($_GET["date_au"], "-") !== false) {
     $date_au = $_GET["date_au"];
-} 
+}
 
 if (isset($_GET["date_du"]) && strpos($_GET["date_du"], "-") !== false) {
     $date_du = $_GET["date_du"];
-} 
+}
 
 if (isset($_GET["libelle"]) && !empty($_GET["libelle"]) && $_GET["libelle"] != "none" && $_GET["libelle"] != "undefined" && $_GET["libelle"] != "") {
-        $nom = "%" . $_GET["libelle"] . "%";
-}else{
+    $nom = "%" . $_GET["libelle"] . "%";
+} else {
     $nom = "%";
 }
 
@@ -77,9 +77,9 @@ GROUP BY remise.id
 
 ";
 
-if($id != "%"){
-    $sql = 
-    "SELECT client.Raison_sociale, transac.date_transaction, transac.Reseau,transac.numero_carte, remise.devise, transac.montant,transac.sens,transac.num_autorisation
+if ($id != "%") {
+    $sql =
+        "SELECT client.Raison_sociale, transac.date_transaction, transac.Reseau,transac.numero_carte, remise.devise, transac.montant,transac.sens,transac.num_autorisation
     FROM b__entreprise client, b__remise remise, b__transaction transac
     WHERE remise.id = :id
     AND remise.SIREN = client.SIREN
@@ -87,20 +87,18 @@ if($id != "%"){
     AND remise.siren LIKE :SIREN
     
 ";
-$stmt = $conn->prepare($sql);
-$stmt->bindParam(':id', $id);
-$stmt->bindParam(':SIREN',$SIREN, PDO::PARAM_STR);
-$stmt->execute();
-$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-echo json_encode($result);
-exit();
-
-
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':SIREN', $SIREN, PDO::PARAM_STR);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode($result);
+    exit();
 }
 
 try {
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':SIREN',$SIREN, PDO::PARAM_STR);
+    $stmt->bindParam(':SIREN', $SIREN, PDO::PARAM_STR);
     $stmt->bindParam(':date_du', $date_du);
     $stmt->bindParam(':date_au', $date_au);
     $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
@@ -108,8 +106,6 @@ try {
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($result);
-    
 } catch (Exception $e) {
     echo $e->getMessage();
-    
 }

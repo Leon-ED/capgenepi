@@ -71,58 +71,35 @@ $('#showLINES').change(function () {
 // GERE LES FORMULAIRES POUR AFFICHER LES TABLEAUX ET GRAPHES CORRESPONDANTS
 $(document).ready(function () {
     $('.form_link').click(function () {
-        // hide all the forms with class tableau
         $('.tableau').css('display', 'none');
-        // add data-selected="false" to all the links but this one 
         $('.form_link').attr('data-selected', 'false');
-        // add data-selected="true" to this link
         $(this).attr('data-selected', 'true');
-
-        //disable all graphes 
         $('.graph').css('display', 'none');
-
-
-
-
-
-        // form_type
         const form_type = $("#form_type");
-        // get form_type value
         var form_type_value = form_type.val();
-        // change form_type value
         form_type.val($(this).attr('name'));
         var SIREN = document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].value;
-        //console.log(SIREN);
-        if (form_type.val() == "tresorerie") { 
+        if (form_type.val() == "tresorerie") {
 
         } else if (form_type.val() == "remises") {
 
-            if(SIREN != "none"){
-                //console.log()
+            if (SIREN != "none") {
                 getRemiseList(all = false, _SIREN = document.getElementById("SIREN_select").value);
-            }else{
+            } else {
                 getRemiseList(all = true);
 
             }
-
-
         } else if (form_type.val() == "impayes") {
-            if(SIREN != "none"){
-                //console.log()
+            if (SIREN != "none") {
                 getImpayesList(all = false, _SIREN = document.getElementById("SIREN_select").value);
-            }else{
+            } else {
                 getImpayesList(all = true);
 
             }
         }
-        // name of form_link 
         var name = $(this).attr('name');
 
-        // name of the form to display
         var form_name = ".tableau_" + name;
-
-        // edit the name if a elem is searched
-
 
         if (document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text != "--Sélectionner SIREN--") {
             splitted_name = document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].text.split(" - ");
@@ -133,7 +110,6 @@ $(document).ready(function () {
         }
         $("#table_cat").text(name);
 
-        // if tresorerie hide table
         if (name == "tresorerie") {
             $("#tableau").css('display', 'none');
         } else {
@@ -141,7 +117,6 @@ $(document).ready(function () {
         }
 
         var graph_name = "#" + name + "_graph";
-        //console.log(graph_name);
         $(graph_name).css('display', 'block');
 
 
@@ -150,54 +125,30 @@ $(document).ready(function () {
 });
 
 // GERE LES DROPDOWN
-//if dropdown-content is clicked get the value of the clicked button 
 
-function updateGraphe(graph_name,data = false,nom = false) {
-    // chart by the name
+
+function updateGraphe(graph_name, data = false, nom = false) {
     var i = 0;
-    //console.log(graph_name + " eeeeeeeeeee") ;
-    if(graph_name == "tresorerie"){
-        //console.log("tresorerie");
+    if (graph_name == "tresorerie") {
         i = 0;
-    }else if(graph_name == "remises"){
-        //console.log("remises");
+    } else if (graph_name == "remises") {
         i = 1;
-    }else if(graph_name == "impayes"){
-        //console.log("impayes");
+    } else if (graph_name == "impayes") {
         i = 2;
     }
-    //console.log(i);
-
-
-
-
 
     var chart = Highcharts.charts[i];
-
-    // if(graph_name == "impayes"){
-    //     //console.log("pie");
-    //     // for each  elem in  data and str in name
-    //     var pie = [];
-    //     for (var j = 0; j < data.length; j++) {
-    //         pie.push([nom[j], data[j]]);
-    //     }
-    //     chart.series[0].setData(pie,true);
-    //     return;
-    // }
-
     var date_debut = document.getElementById("date_debut").value;
     var date_fin = document.getElementById("date_fin").value;
     var SIREN = document.getElementById("SIREN_select").options[document.getElementById("SIREN_select").selectedIndex].value;
     var raison = document.getElementsByName("raison_sociale")[0].value;
 
-    if(i== 1){
-        // get form fields 
+    if (i == 1) {
         var url = "../../api/stats_remises.php?date_debut=" + date_debut + "&date_fin=" + date_fin + "&SIREN=" + SIREN + "&libelle=" + raison;
 
 
         fetch(url).then(function (response) {
             response.json().then(function (data) {
-                //console.log(data);
                 var mois = [];
                 var nbr = [];
                 for (var j = 0; j < data.length; j++) {
@@ -209,23 +160,19 @@ function updateGraphe(graph_name,data = false,nom = false) {
                 return;
 
             });
-            }
+        }
         );
-            return;
-
+        return;
     }
 
 
-    if(i == 2){
+    if (i == 2) {
         var url = "../../api/motifs_impayes.php?date_debut=" + date_debut + "&date_fin=" + date_fin + "&SIREN=" + SIREN + "&libelle=" + raison;
-        
+
         fetch(url).then(function (response) {
             response.json().then(function (data) {
-                //console.log(data);
                 var pie = [];
                 for (var j = 0; j < data.length; j++) {
-                    // create JSon
-
                     pie.push({
                         name: data[j].libelle,
                         y: parseInt(data[j].nb)
@@ -236,25 +183,14 @@ function updateGraphe(graph_name,data = false,nom = false) {
             });
         });
         return;
-    
-
-
-
-
-
-
-
-
-
     }
-    
 
     //change chart data
-    if(data == "all"){
-        chart.series[0].setData([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]); 
+    if (data == "all") {
+        chart.series[0].setData([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
         chart.xAxis[0].setCategories(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]);
 
-    }else{
+    } else {
         chart.series[0].setData(data);
         chart.xAxis[0].setCategories(nom);
     }
@@ -265,11 +201,8 @@ function updateGraphe(graph_name,data = false,nom = false) {
 $(document).ready(function () {
     $('#pdf_click').click(function () {
 
-
-
         window.jsPDF = window.jspdf.jsPDF;
 
-        // get the id of the visible 
         var table = "#" + $('.tableau:visible').attr('id') + '_html';
 
         var titre = $('#table_cat').text();
@@ -279,13 +212,9 @@ $(document).ready(function () {
         }
 
         var doc = new jsPDF()
-        // set header
         doc.setTextColor(40);
         doc.setFontSize(15);
-
-        // write a title in the pdf
-        var title_doc = "Liste des "+titre;
-
+        var title_doc = "Liste des " + titre;
         // add siren,raison sociale et nom de l'entreprise si précisée dans le formulaire
         if ($('#siren').val() != undefined) {
             title_doc += " de " + $('#siren').val();
@@ -295,22 +224,15 @@ $(document).ready(function () {
         }
 
         doc.text(7, 15, title_doc.toUpperCase());
-
-        // write at the right of the title the date et heure of the pdf
         var date = new Date();
         var date_string = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes();
         doc.setFontSize(10);
         doc.text(180, 15, date_string);
-
-
-        // add a white line to separe the title from the table
         doc.setLineWidth(0.1);
         doc.line(7, 20, 200, 20);
 
-        //color to var(--blue)
         doc.setTextColor(0, 0, 200);
-        
-        //doc.text(7, 15, titre);
+
         doc.autoTable({
             html: table,
             startY: 30,
@@ -322,20 +244,17 @@ $(document).ready(function () {
 
 });
 
-// when click on th in thead of the table sort the table column set a ^ or v to show the sort after the column name
 
 // SORT TABLE BY COLUMN EVEN IF ROW IS NOT VISIBLE
 
 $(document).ready(function () {
     $('th').click(function () {
         var table = $(this).parents('table').eq(0)
-        //show all tr
-        table.find('tr').show();     
+        table.find('tr').show();
         var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
         this.asc = !this.asc
         if (!this.asc) { rows = rows.reverse() }
         for (var i = 0; i < rows.length; i++) { table.append(rows[i]) }
-        //console.log("show 10 tr");
         table.find('tr').css('display', 'none');
         table.find('tr').slice(0, $('#showLINES').val()).css('display', 'table-row');
     })
@@ -347,25 +266,14 @@ $(document).ready(function () {
         }
     }
     function getCellValue(row, index) { return $(row).children('td').eq(index).text() }
-    
-    //only show 10 tr
+
 
 
 });
 
 
-
-
-
-
-
-
-
-//  table to csv
 function TableToCSV() {
     const id = $("table:visible").attr("id");
-
-
 
 
     var csv = [];
@@ -430,7 +338,6 @@ function downloadXLS(csv, filename) {
     var csvFile;
     var downloadLink;
 
-    // CSV file
     csvFile = new Blob([csv], {
         type: "application/vnd.ms-excel"
     });
@@ -446,17 +353,16 @@ function downloadXLS(csv, filename) {
 function form_search() {
     getTresorerieList();
     const form_type = $("#form_type").val();
-    //console.log(form_type);
     if (form_type == "remises") {
         getRemiseList();
     }
-    if(form_type == "impayes"){
+    if (form_type == "impayes") {
         getImpayesList();
     }
-    if(form_type == "tresorerie"){
+    if (form_type == "tresorerie") {
         getTresorerieList();
     }
-    
+
 
     editNameTable(); // Modifier le nom du tableau recherché en fonction du formulaire
 
@@ -502,33 +408,32 @@ function getDataResultsSearch() {
 
 function updateResultsSearch(data) {
     var comptes = data;
-        //clear the list
-        document.getElementById("liste_clients").innerHTML = "";
+    document.getElementById("liste_clients").innerHTML = "";
 
-    
-        document.getElementById("search_result").innerHTML = comptes.length;
-        var dataGraphe = [];
-        var nomGraphe = [];
-        var liste = document.getElementById("liste_clients");
-        for (var i = 0; i < comptes.length; i++) {
-            var compte = comptes[i];
-            var SIREN = compte['SIREN'];
-            var nom = compte['nom'];
-            var tresorerie = compte['tresorerie'];
-            var nombre_transaction = compte['transactions'];
-            var remises = compte['remises'];
-            var somme_impayes = compte['impayes_montant'];
-            var impayes = compte['impayes'];
-            dataGraphe.push(parseInt(tresorerie));
-            nomGraphe.push(nom);
-            var type_solde = tresorerie >= 0 ? "client_solde" : "client_solde_negatif";
-            var client = document.createElement("div");
-            client.className = "client";
-            client.innerHTML = '<div class="client_header"> <span class="client_nom">' + nom + '</span> <span class=' + type_solde + '>' + tresorerie + '€</span> </div> <span class="client_siren">SIREN : ' + SIREN + '</span><p> Nombre de Remises : ' + remises + ' | Nombre de transactions : ' + nombre_transaction + ' | Nombre d\'impayés : ' + impayes +  '<br> Montant impayés : '+ somme_impayes  +' €</p>';
-            liste.appendChild(client);
-        }
-        updateGraphe("tresorerie",dataGraphe, nomGraphe);
-    
+
+    document.getElementById("search_result").innerHTML = comptes.length;
+    var dataGraphe = [];
+    var nomGraphe = [];
+    var liste = document.getElementById("liste_clients");
+    for (var i = 0; i < comptes.length; i++) {
+        var compte = comptes[i];
+        var SIREN = compte['SIREN'];
+        var nom = compte['nom'];
+        var tresorerie = compte['tresorerie'];
+        var nombre_transaction = compte['transactions'];
+        var remises = compte['remises'];
+        var somme_impayes = compte['impayes_montant'];
+        var impayes = compte['impayes'];
+        dataGraphe.push(parseInt(tresorerie));
+        nomGraphe.push(nom);
+        var type_solde = tresorerie >= 0 ? "client_solde" : "client_solde_negatif";
+        var client = document.createElement("div");
+        client.className = "client";
+        client.innerHTML = '<div class="client_header"> <span class="client_nom">' + nom + '</span> <span class=' + type_solde + '>' + tresorerie + '€</span> </div> <span class="client_siren">SIREN : ' + SIREN + '</span><p> Nombre de Remises : ' + remises + ' | Nombre de transactions : ' + nombre_transaction + ' | Nombre d\'impayés : ' + impayes + '<br> Montant impayés : ' + somme_impayes + ' €</p>';
+        liste.appendChild(client);
+    }
+    updateGraphe("tresorerie", dataGraphe, nomGraphe);
+
 }
 
 function editNameTable() {
@@ -544,52 +449,38 @@ function editNameTable() {
         $("#table_desc").text(" de " + $("#libelle").val());
     }
     if ($("#SIREN_libre").val() != undefined && $("#SIREN_libre").val() != "") {
-        $("#table_desc").text($("#table_desc").text()+" - " + $("#SIREN_libre").val());
+        $("#table_desc").text($("#table_desc").text() + " - " + $("#SIREN_libre").val());
     }
 
-    
+
 }
 
 function afficheRemises(data) {
-    // clear tbody for tableau_remises_html
     $("#tableau_remises_html tbody").empty();
     $("#total_lines").text(data.length + " lignes au total");
-    // for each data 
 
     var montants = [];
     var noms = [];
     for (var remise of data) {
         montants.push(parseInt(remise.montant_total));
-        //console.log(remise.montant_total);
     }
     for (var remise of data) {
         noms.push(remise.nom);
     }
-    
-    updateGraphe("remises",montants,noms);
 
+    updateGraphe("remises", montants, noms);
 
-
-    //max lines to display
     var max_lines = 10;
     var lines = 0;
-    if(data.length < $("#max_lines").val()){
+    if (data.length < $("#max_lines").val()) {
 
 
     }
-    /// dat
-    //var total_lines = $("#total_lines").text(data.length + " lignes au total");
-    //console.log(data);
     for (var remise of data) {
 
-
         const tr = $("<tr></tr>");
-        // tr onclick
 
-        // add onclick to tr html
         tr.attr("onclick", "affiche_details_remise(" + remise.id + ")");
-        //console.log(typeof remise);
-        // remise = JSON.stringify(remise);
         for (let [k, v] of Object.entries(remise)) {
 
             var td = $("<td></td>");
@@ -597,8 +488,8 @@ function afficheRemises(data) {
                 if (parseInt(v) < 0) {
                     td = $("<td class='client_solde_negatif'></td>");
                 }
-                else{
-                td = $("<td class='client_solde'></td>");
+                else {
+                    td = $("<td class='client_solde'></td>");
                 }
             }
 
@@ -606,7 +497,7 @@ function afficheRemises(data) {
             tr.append(td);
         }
 
-        if(lines++ >= max_lines){
+        if (lines++ >= max_lines) {
             tr.attr("style", "display:none");
         }
         $("#tableau_remises_html tbody").append(tr);
@@ -628,51 +519,37 @@ function get_transactions_from_remise(idRemise) {
         url: "../../api/remises.php?id=" + idRemise,
         type: "GET",
         success: function (data) {
-            //console.log(data);
             affiche_transactions_from_remise(data);
         },
         error: function (data) {
-            //console.log(data);
         }
     });
 }
 
 function makeAuthNum(length) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
+    for (var i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
 }
 
 function affiche_transactions_from_remise(data) {
-    // clear tbody for tableau_remises_html
     $("#table_dialog_transac tbody").empty();
 
-    // for each data
-    // for (var transaction of data) {
-    //     transaction.card_number = "**** "+Math.floor(Math.random() * (10000 - 0 + 1) + 0);
-    //     transaction.authNumber = makeAuthNum(6).toUpperCase();
-    // }
 
     for (var transaction of data) {
         const tr = $("<tr></tr>");
-
-        // add onclick to tr html
-        // tr.attr("onclick", "affiche_details_remise(" + remise.id + ")");
-        //console.log(typeof transaction);
-        // remise = JSON.stringify(remise);
         for (let [k, v] of Object.entries(transaction)) {
-            //console.log(k, v)
             var td = $("<td></td>");
             if (k == "montant") {
                 if (parseInt(v) < 0) {
                     td = $("<td class='client_solde_negatif'></td>");
                 }
-                else{
-                td = $("<td class='client_solde'></td>");
+                else {
+                    td = $("<td class='client_solde'></td>");
                 }
             }
 
@@ -681,8 +558,7 @@ function affiche_transactions_from_remise(data) {
             }
 
             if (k == "id") {
-                // pick random in a list of card network
-                var card_network = ["visa", "mastercard", "american express", "diners club", "discover", "jcb", "unionpay", "maestro", "elo", "hipercard", "izly","izly","izly","izly","izly"]
+                var card_network = ["visa", "mastercard", "american express", "diners club", "discover", "jcb", "unionpay", "maestro", "elo", "hipercard", "izly", "izly", "izly", "izly", "izly"]
                 v = card_network[Math.floor(Math.random() * card_network.length)].toUpperCase();
             }
 
@@ -691,12 +567,11 @@ function affiche_transactions_from_remise(data) {
         }
         $("#table_dialog_transac tbody").append(tr);
     }
-    // append tr to tbody
 
 }
 
 
-function getRemiseList(all = false,_SIREN = null) {
+function getRemiseList(all = false, _SIREN = null) {
 
     const SIREN_select = $("#SIREN_select").val();
     const libelle = $("#libelle").val();
@@ -716,7 +591,7 @@ function getRemiseList(all = false,_SIREN = null) {
     } else {
         SIREN = SIREN_select;
     }
-    if(_SIREN != null){
+    if (_SIREN != null) {
         SIREN = _SIREN;
 
     }
@@ -745,7 +620,7 @@ function getRemiseList(all = false,_SIREN = null) {
 
 
 
-function getImpayesList(all = false,_SIREN = null) {
+function getImpayesList(all = false, _SIREN = null) {
 
     const SIREN_select = $("#SIREN_select").val();
     const libelle = $("#libelle").val();
@@ -756,7 +631,7 @@ function getImpayesList(all = false,_SIREN = null) {
     var SIREN = "";
     var url = "";
 
-    updateGraphe("impayes",[],[]);
+    updateGraphe("impayes", [], []);
 
     if (SIREN_select == SIREN_libre) {
         SIREN = SIREN_select;
@@ -767,7 +642,7 @@ function getImpayesList(all = false,_SIREN = null) {
     } else {
         SIREN = SIREN_select;
     }
-    if(_SIREN != null){
+    if (_SIREN != null) {
         SIREN = _SIREN;
 
     }
@@ -794,33 +669,29 @@ function getImpayesList(all = false,_SIREN = null) {
     });
 }
 
-function afficheImpayes(data){
-        // clear tbody for tableau_remises_html
-        $("#tableau_impayes_html tbody").empty();
-        $("#total_lines").text(data.length + " lignes au total");
-        var max_lines = 10;
-        var lines = 0;
+function afficheImpayes(data) {
+    $("#tableau_impayes_html tbody").empty();
+    $("#total_lines").text(data.length + " lignes au total");
+    var max_lines = 10;
+    var lines = 0;
 
-        for (var remise of data) {
-            const tr = $("<tr></tr>");
-    
-            //console.log(typeof remise);
-            // remise = JSON.stringify(remise);
-            for (let [k, v] of Object.entries(remise)) {
-                const td = $("<td></td>");
-                td.text(v);
-                tr.append(td);
-            }
-            // append tr to tbody
-            if(lines++ >= max_lines){
-                tr.attr("style", "display:none");
+    for (var remise of data) {
+        const tr = $("<tr></tr>");
 
-
-            }
-            $("#tableau_impayes_html tbody").append(tr);
-    
+        for (let [k, v] of Object.entries(remise)) {
+            const td = $("<td></td>");
+            td.text(v);
+            tr.append(td);
         }
-    
+        if (lines++ >= max_lines) {
+            tr.attr("style", "display:none");
+
+
+        }
+        $("#tableau_impayes_html tbody").append(tr);
+
+    }
+
 
 }
 

@@ -8,7 +8,7 @@
 header('Content-Type: application/json');
 require_once("../config/config.php");
 
-if(!isset($_SESSION["role"])){
+if (!isset($_SESSION["role"])) {
     http_response_code(401);
     echo "Vous n'êtes pas connecté";
     exit();
@@ -38,11 +38,11 @@ function GET_REQUEST()
     $date_du = date("Y-m-d", strtotime("-10 year"));
     $date_au = date("Y-m-d");
 
-    if($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])){
+    if ($_SESSION["role"] == "CLIENT" && !isset($_SESSION["SIREN"])) {
         http_response_code(401);
         echo "Vous n'avez pas le droit";
         exit();
-    }elseif($_SESSION["role"] == "CLIENT" && isset($_SESSION["SIREN"])){
+    } elseif ($_SESSION["role"] == "CLIENT" && isset($_SESSION["SIREN"])) {
         $SIREN = $_SESSION["SIREN"];
     }
 
@@ -50,15 +50,15 @@ function GET_REQUEST()
 
     if (isset($_GET["date_au"]) && strpos($_GET["date_au"], "-") !== false) {
         $date_au = $_GET["date_au"];
-    } 
+    }
 
     if (isset($_GET["date_du"]) && strpos($_GET["date_du"], "-") !== false) {
         $date_du = $_GET["date_du"];
-    } 
+    }
 
     if (isset($_GET["libelle"]) && !empty($_GET["libelle"]) && $_GET["libelle"] != "none" && $_GET["libelle"] != "undefined" && $_GET["libelle"] != "") {
-            $nom = "%" . $_GET["libelle"] . "%";
-    }else{
+        $nom = "%" . $_GET["libelle"] . "%";
+    } else {
         $nom = "%";
     }
 
@@ -99,15 +99,12 @@ function GET_REQUEST()
         foreach ($result as $key => $value) {
             $stmt2->bindParam(':SIREN', $value["SIREN"]);
             $stmt2->execute();
-            $result[$key]["impayes"] = $stmt2->fetchAll(PDO::FETCH_ASSOC)[0]["impayes"];   
-            
+            $result[$key]["impayes"] = $stmt2->fetchAll(PDO::FETCH_ASSOC)[0]["impayes"];
+
             $stmt3 = $conn->prepare($sql3);
             $stmt3->bindParam(':SIREN', $value["SIREN"]);
             $stmt3->execute();
             $result[$key]["impayes_montant"] = $stmt3->fetchAll(PDO::FETCH_ASSOC)[0]["impayes"];
-
-            
-
         }
 
 
@@ -122,7 +119,7 @@ function GET_REQUEST()
 
 function POST_REQUEST()
 {
-    if($_SESSION["role"] != "ADMIN" ){
+    if ($_SESSION["role"] != "ADMIN") {
         http_response_code(401);
         echo "Vous n'êtes pas autorisé à effectuer cette action";
         exit();
@@ -180,7 +177,7 @@ function POST_REQUEST()
         $stmt->bindParam(':nom', $nomCompte);
         $stmt->bindParam(':prenom', $prenomCompte);
         $password = password_hash($password, PASSWORD_DEFAULT);
-        $stmt->bindParam(':password', $password);   
+        $stmt->bindParam(':password', $password);
         $stmt->execute();
         $id_user = $conn->lastInsertId();
 

@@ -11,15 +11,12 @@ require_once("../../include/html.header.inc.php");
 
 ?>
 
-
 <body>
-
     <nav id="header_nav">
         <h1>Gestionnaire de paiements</h1>
         <h2 id="name"> <?= $_SESSION['prenom'] . " " . $_SESSION['nom'] ?></h2>
         <a onclick="logout()" href="../index.php">Deconnexion</a>
     </nav>
-
     <dialog id="dialog_transac">
         <div class="dialog_header">
             <button id="dialog_close" onclick="close_dialog()">X</button><br><br>
@@ -29,7 +26,7 @@ require_once("../../include/html.header.inc.php");
             <div class="tableau_dialog_transac">
                 <table id="table_dialog_transac">
                     <thead>
-                    <tr>
+                        <tr>
                             <th>Raison Sociale</th>
                             <th>Date</th>
                             <th>Réseau</th>
@@ -41,20 +38,12 @@ require_once("../../include/html.header.inc.php");
                         </tr>
                     </thead>
                     <tbody>
-
                     </tbody>
-
                 </table>
-
-
             </div>
         </div>
     </dialog>
     <!-- open dialog 1-->
-
-
-
-
     <article id="article_admin" class="flex_row">
         <section id="recherche">
             <h1>Recherche Clients</h1>
@@ -70,23 +59,21 @@ require_once("../../include/html.header.inc.php");
                     <input type="hidden" id="form_type" value="tresorerie">
                     <input placeholder="Date de début" class="textbox-n" type="text" onfocus="(this.type='date')" name="date_debut" id="date_debut">
                     <input placeholder="Date de fin" class="textbox-n" type="text" onfocus="(this.type='date')" name="date_fin" id="date_fin">
-                
+
                     <select id="SIREN_select" disabled>
                         <option value="<?php echo $_SESSION["SIREN"] ?>">
-                        <?php
+                            <?php
                             // search for the name of the company
                             $sql = "SELECT Raison_sociale FROM b__entreprise WHERE SIREN = ?";
                             $stmt = $conn->prepare($sql);
                             $stmt->execute([$_SESSION["SIREN"]]);
                             $result = $stmt->fetch();
                             echo  $_SESSION["SIREN"] . " - " . $result["Raison_sociale"];
-                            
 
-                        ?>
+                            ?>
                         </option>
                     </select>
                 </div>
-
                 <button id="btn_recherche" onclick="form_search()">Rechercher</button>
             </div>
         </section>
@@ -94,13 +81,9 @@ require_once("../../include/html.header.inc.php");
             <h1><span id="search_result">0</span> Résultat(s) recherche </h1>
             <small>seul les clients avec au minimum 1 transaction sont affichés</small>
             <div id="liste_clients">
-            <h1>Merci de patienter, le temps que chargeons les données</h1>
-
+                <h1>Merci de patienter, le temps que chargeons les données</h1>
             </div>
-
             </div>
-
-
         </section>
     </article>
     <article id="article_po" class="flex_row">
@@ -118,14 +101,11 @@ require_once("../../include/html.header.inc.php");
                             <th>Devise</th>
                             <th>Montant total</th>
                         </tr>
-
                     </thead>
                     <tbody>
-                        
                         <!-- GENERER ICI EN AJAX LES DONNES SELON LA RECHERCHE -->
                     </tbody>
                 </table>
-
             </div>
             <div id="tableau_impayes" class="tableau_impayes tableau" style="display:none;">
                 <table id="tableau_impayes_html">
@@ -143,17 +123,14 @@ require_once("../../include/html.header.inc.php");
                             <th>Devise</th>
                             <th>Raison</th>
                         </tr>
-
                     </thead>
                     <tbody>
                         <!-- GENERER ICI EN AJAX LES DONNES SELON LA RECHERCHE -->
-
                     </tbody>
                 </table>
-
             </div>
             <div class="control_table">
-            <p id = "total_lines">X</p>
+                <p id="total_lines">X</p>
                 <div>
                     <label>Afficher : </label>
                     <input type="number" min="1" max="100" id="showLINES" value="15">
@@ -172,9 +149,6 @@ require_once("../../include/html.header.inc.php");
                         </div>
                     </div>
                 </div>
-
-
-
         </section>
         <section id=" graphique">
             <h1>Graphique</h1>
@@ -182,14 +156,6 @@ require_once("../../include/html.header.inc.php");
             <div id="tresorerie_graph" class="graph" style=" display:block;margin: 0 auto"></div>
             <div id="remises_graph" class="graph" style=" display:none;margin: 0 auto"></div>
             <div id="impayes_graph" class="graph" style=" display:none;margin: 0 auto"></div>
-
-
-
-
-
-
         </section>
     </article>
-
-
 </body>
