@@ -25,4 +25,5 @@ Ce projet utilise les technologies suivantes:
 - [Highcharts](https://www.highcharts.com/)
 - [JSPDF](https://github.com/parallax/jsPDF)
 - [JSPDF-AutoTable](https://github.com/simonbengtsson/jsPDF-AutoTable)
+- Il s'agit de notre premier projet en AJAX
 
