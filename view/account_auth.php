@@ -55,6 +55,18 @@ if (isset($_SESSION["connexion_blocked"]) && $_SESSION["connexion_blocked"] == t
         section {
             font-weight: bold;
         }
+
+        @media screen and (max-width: 600px) {
+            /* body {
+                background-image: url("../files/img/genepi.png");
+                background-repeat: no-repeat;
+                background-size: 100%;
+            } */
+            .login-section{
+                width: 95% !important;
+            }
+        }
+            
     </style>
     <main style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
         <section style="margin-top: 10%; margin-bottom: 5%; ">
@@ -70,11 +82,11 @@ if (isset($_SESSION["connexion_blocked"]) && $_SESSION["connexion_blocked"] == t
                 <form class="form" method="POST" action="../controller/login.php" disabled>
                     <div class="form-group">
                         <label for="login">Identifiant</label>
-                        <input type="text" class="form-control" id="login" name="login" aria-describedby="emailHelp" placeholder="Identifiant" required>
+                        <input type="text" class="form-control" id="login" name="login" aria-describedby="emailHelp" placeholder="Identifiant" required value="4526452419">
                     </div>
                     <div class="form-group">
                         <label for="password">Mot de passe</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" required>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe" required value="4526452419">
                         <a href="#" id="click-password" onclick="showPassword()">
                             <input type="checkbox" id="cb-password">👁️Afficher le mot de passe 👀
                         </a>
@@ -82,6 +94,8 @@ if (isset($_SESSION["connexion_blocked"]) && $_SESSION["connexion_blocked"] == t
                     <br>
                     <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre mot de passe avec qui que ce soit, faites-en de même</small>
                     <br>
+                    <small> (appuyer directement sur "se connecter")</small><br>
+                    <small><a href="https://github.com/Leon-ED/capgenepi">Code source</a></small><br>
                     <button type="submit" class="btn btn-primary"> 😜 Se connecter 😛</button>
                 </form>
             </fieldset>
